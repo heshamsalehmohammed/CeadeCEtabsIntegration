@@ -80,11 +80,15 @@ namespace CeadeCEtabs
         public void contact_Etabs()
         {
             etabsAttach();
-            mySapModel = default(ETABS2016.cSapModel);
-            mySapModel = myETABSObject.SapModel;
-           
-            mySapModel = null;
-            myETABSObject = null;
+            modelAttach();
+            List<string> selectedFrames = etabsSelected(2);
+            if(selectedFrames.Count != 1){
+               MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
+            }
+
+
+
+            etabsClean();
 
         }
 
@@ -141,5 +145,25 @@ namespace CeadeCEtabs
 
             }
         }
+public void modelAttach()
+        {
+            try
+            {
+               mySapModel = default(ETABS2016.cSapModel);
+               mySapModel = myETABSObject.SapModel;
+           
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No running model found or failed to attach.");
+
+            }
+        }
+public void etabsClean()
+        {
+            mySapModel = null;
+            myETABSObject = null;
+        }
+
     }
 }
