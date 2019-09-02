@@ -46,7 +46,7 @@ namespace CeadeCEtabs
             rectangle2.shapeChildType = "rebarsObject";
             rectangle2.rebars = new RectangleRebar(10, 400, false, true, true);
 
-            var singleRebar1 = new CeadeCSingleRebar(new Vector3(50, 50, 0),10,"mm",true);
+            var singleRebar1 = new CeadeCSingleRebar(new Vector3(50, 50, 0), 10, "mm", true);
             rectangle2.rebars.singleRebars.Add(singleRebar1);
 
             var singleRebar2 = new CeadeCSingleRebar(new Vector3(450, 50, 0), 10, "mm", true);
@@ -58,7 +58,7 @@ namespace CeadeCEtabs
             var singleRebar4 = new CeadeCSingleRebar(new Vector3(50, 450, 0), 10, "mm", true);
             rectangle2.rebars.singleRebars.Add(singleRebar4);
 
-            CeadeCShapes shape1 = new CeadeCShapes(new List<CeadeCObject>() { rectangle1 , rectangle2 });
+            CeadeCShapes shape1 = new CeadeCShapes(new List<CeadeCObject>() { rectangle1, rectangle2 });
             model.objects.Add(shape1);
 
 
@@ -71,9 +71,9 @@ namespace CeadeCEtabs
             string strModified = Convert.ToBase64String(byt);
 
 
-            System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php"+"?"+ "model=" + strModified);
+            System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php" + "?" + "model=" + strModified);
 
-  
+
         }
 
 
@@ -82,8 +82,9 @@ namespace CeadeCEtabs
             etabsAttach();
             modelAttach();
             List<string> selectedFrames = etabsSelected(2);
-            if(selectedFrames.Count != 1){
-               MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
+            if (selectedFrames.Count != 1)
+            {
+                MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
             }
 
 
@@ -95,24 +96,24 @@ namespace CeadeCEtabs
 
         public void etabsAnalysisResults(string objectName)
         {
-         int NumberResults = 0;
-	 string[] Obj = new string [0];
-	 double[] ObjSta = new double [0];
-	 string[] Elm = new string [0];
-	 double[] ElmSta = new double [0];
-	 string[] LoadCase = new string [0];
-	 string[] StepType= new string [0];
-	 double[] StepNum = new double [0];
-	 double[] P = new double [0];
-	 double[] V2 = new double [0];
-	 double[] V3 = new double [0];
-	 double[] T = new double [0];
-	 double[] M2 = new double [0];
-	 double[] M3 = new double [0];
+            int NumberResults = 0;
+            string[] Obj = new string[0];
+            double[] ObjSta = new double[0];
+            string[] Elm = new string[0];
+            double[] ElmSta = new double[0];
+            string[] LoadCase = new string[0];
+            string[] StepType = new string[0];
+            double[] StepNum = new double[0];
+            double[] P = new double[0];
+            double[] V2 = new double[0];
+            double[] V3 = new double[0];
+            double[] T = new double[0];
+            double[] M2 = new double[0];
+            double[] M3 = new double[0];
 
 
 
-       mySapModel.Results. FrameForce(objectName,eItemTypeElm .ObjectElm,ref  NumberResults,ref  Obj,ref  ObjSta,ref  Elm,ref  ElmSta,ref  LoadCase,ref  StepType,ref  StepNum,ref  P,ref  V2,ref  V3,ref  T,ref  M2,ref  M3);
+            mySapModel.Results.FrameForce(objectName, eItemTypeElm.ObjectElm, ref NumberResults, ref Obj, ref ObjSta, ref Elm, ref ElmSta, ref LoadCase, ref StepType, ref StepNum, ref P, ref V2, ref V3, ref T, ref M2, ref M3);
 
 
         }
@@ -122,32 +123,33 @@ namespace CeadeCEtabs
 
         public List<string> etabsSelected(int type)
         {
-// Object Type 
-// 1 -  Point object
-// 2 -  Frame object
-// 3 -  Cable object
-// 4 -  Tendon object
-// 5 -  Area object
-// 6 -  Solid object
-// 7 -  Link object
+            // Object Type 
+            // 1 -  Point object
+            // 2 -  Frame object
+            // 3 -  Cable object
+            // 4 -  Tendon object
+            // 5 -  Area object
+            // 6 -  Solid object
+            // 7 -  Link object
 
-        List<string> selectedType = new List<string>();
+            List<string> selectedType = new List<string>();
 
-        
-        int NumberItems = 0;
-	int[] ObjectType = new int[0];
-        string[] ObjectName = new string[0];
 
-        mySapModel.Select.GetSelected(ref  NumberItems,ref  ObjectType,ref  ObjectName);
+            int NumberItems = 0;
+            int[] ObjectType = new int[0];
+            string[] ObjectName = new string[0];
 
-        for (int i = 0; i < NumberItems; i++)
-        {
-          if(ObjectType[i] ==  type  ){
-             selectedType.Add(ObjectName[i] );
-          }
-        }
+            mySapModel.Select.GetSelected(ref NumberItems, ref ObjectType, ref ObjectName);
 
-        return selectedType;
+            for (int i = 0; i < NumberItems; i++)
+            {
+                if (ObjectType[i] == type)
+                {
+                    selectedType.Add(ObjectName[i]);
+                }
+            }
+
+            return selectedType;
 
         }
 
@@ -173,13 +175,13 @@ namespace CeadeCEtabs
 
             }
         }
-public void modelAttach()
+        public void modelAttach()
         {
             try
             {
-               mySapModel = default(ETABS2016.cSapModel);
-               mySapModel = myETABSObject.SapModel;
-           
+                mySapModel = default(ETABS2016.cSapModel);
+                mySapModel = myETABSObject.SapModel;
+
             }
             catch (Exception ex)
             {
@@ -187,7 +189,7 @@ public void modelAttach()
 
             }
         }
-public void etabsClean()
+        public void etabsClean()
         {
             mySapModel = null;
             myETABSObject = null;
