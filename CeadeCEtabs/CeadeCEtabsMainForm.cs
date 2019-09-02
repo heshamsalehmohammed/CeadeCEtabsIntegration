@@ -88,8 +88,16 @@ namespace CeadeCEtabs
 
         }
 
-        public List<string> etabsSelected(string type)
+        public List<string> etabsSelected(int type)
         {
+// Object Type 
+// 1 -  Point object
+// 2 -  Frame object
+// 3 -  Cable object
+// 4 -  Tendon object
+// 5 -  Area object
+// 6 -  Solid object
+// 7 -  Link object
 
         List<string> selectedType = new List<string>();
 
@@ -98,11 +106,11 @@ namespace CeadeCEtabs
 	int[] ObjectType = new int[](0);
         string[] ObjectName = new string[](0);
 
-        mySapModel. GetSelected(ref  NumberItems,ref  ObjectType,ref  ObjectName);
+        mySapModel.Select.GetSelected(ref  NumberItems,ref  ObjectType,ref  ObjectName);
 
         for (int i = 0; i < NumberItems; i++)
         {
-          if(ObjectType[i] ==type  ){
+          if(ObjectType[i] ==  type  ){
              selectedType.Add(ObjectName[i] );
           }
         }
