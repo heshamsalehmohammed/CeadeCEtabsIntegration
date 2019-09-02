@@ -19,6 +19,7 @@ namespace CeadeCEtabs
         }
 
         ETABS2016.cOAPI myETABSObject = null;
+        ETABS2016.cSapModel mySapModel = null;
 
         public void contact_CeadeC()
         {
@@ -79,14 +80,36 @@ namespace CeadeCEtabs
         public void contact_Etabs()
         {
             etabsAttach();
-            ETABS2016.cSapModel mySapModel = default(ETABS2016.cSapModel);
+            mySapModel = default(ETABS2016.cSapModel);
             mySapModel = myETABSObject.SapModel;
+           
             mySapModel = null;
             myETABSObject = null;
 
         }
 
+        public List<string> etabsSelected(string type)
+        {
 
+        List<string> selectedType = new List<string>();
+
+        
+        int NumberItems = 0;
+	int[] ObjectType = new int[](0);
+        string[] ObjectName = new string[](0);
+
+        mySapModel. GetSelected(ref  NumberItems,ref  ObjectType,ref  ObjectName);
+
+        for (int i = 0; i < NumberItems; i++)
+        {
+          if(ObjectType[i] ==type  ){
+             selectedType.Add(ObjectName[i] );
+          }
+        }
+
+        return selectedType;
+
+        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
