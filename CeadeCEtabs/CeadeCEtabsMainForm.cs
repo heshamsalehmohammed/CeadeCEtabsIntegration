@@ -91,8 +91,15 @@ namespace CeadeCEtabs
         public int contact_Etabs()
         {
             Clean();
-            etabsAttach();
-            modelAttach();
+            if (etabsAttach() ==0)
+            {
+                return 0;
+            }
+            if (modelAttach()==0)
+            {
+                return 0;
+            }
+            
             selected = new etabsSelectedObjects(mySapModel);
             selectedFrames = selected.selectedType(2);
             listBox2.Items.AddRange(selectedFrames.ToArray());
@@ -131,7 +138,7 @@ namespace CeadeCEtabs
         }
 
 
-        public void etabsAttach()
+        public int etabsAttach()
         {
             try
             {
@@ -140,10 +147,11 @@ namespace CeadeCEtabs
             catch (Exception ex)
             {
                 MessageBox.Show("No running instance of the program found or failed to attach.");
-
+                return 0;
             }
+            return 1;
         }
-        public void modelAttach()
+        public int modelAttach()
         {
             try
             {
@@ -154,8 +162,9 @@ namespace CeadeCEtabs
             catch (Exception ex)
             {
                 MessageBox.Show("No running model found or failed to attach.");
-
+                return 0;
             }
+            return 1;
         }
 
         public int fillDataGridFromAnalysisResults()
