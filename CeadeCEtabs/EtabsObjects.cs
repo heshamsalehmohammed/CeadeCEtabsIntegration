@@ -170,5 +170,21 @@ namespace EtabsObjects
 
     }
 
+    public class etabsSectionProperty
+    {
+        cSapModel mySapModel;
+        public string PropName;
+        public string SAut;
+
+        public etabsSectionProperty(cSapModel mySapModel , string frameName)
+        {
+            this.mySapModel = mySapModel;
+            this.PropName = string.Empty;
+            this.SAut = string.Empty;
+            this.mySapModel.FrameObj.GetSection(frameName,ref this.PropName, ref this.SAut);
+        }
+
+
+    }
 
 }
