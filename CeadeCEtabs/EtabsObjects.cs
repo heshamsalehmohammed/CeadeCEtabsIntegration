@@ -9,7 +9,7 @@ namespace EtabsObjects
 {
     public class etabsAnalysisResults
     {
-Private cSapModel mySapModel;
+        cSapModel mySapModel;
         public int NumberResults;
         public string[] Obj;
         public double[] ObjSta;
@@ -25,9 +25,9 @@ Private cSapModel mySapModel;
         public double[] M2;
         public double[] M3;
 
-        public etabsAnalysisResults(cSapModel mySapModel, string objectName, eItemTypeElm itemType, List<string> loadCaseNames, string[] comboNames)
+        public etabsAnalysisResults(cSapModel mySapModel, string objectName, eItemTypeElm itemType, List<string> loadCaseNames, List<string> comboNames)
         {
-this.mySapModel = mySapModel;
+            this.mySapModel = mySapModel;
             this.NumberResults = 0;
             this.Obj = new string[0];
             this.ObjSta = new double[0];
@@ -50,7 +50,7 @@ this.mySapModel = mySapModel;
                 this.mySapModel.Results.Setup.SetCaseSelectedForOutput(loadCaseNames[i]);
             }
 
-            for (int i = 0; i < comboNames.Length; i++)
+            for (int i = 0; i < comboNames.Count; i++)
             {
                 this.mySapModel.Results.Setup.SetComboSelectedForOutput(comboNames[i]);
             }
@@ -64,14 +64,14 @@ this.mySapModel = mySapModel;
 
     public class etabsSelectedObjects
     {
-Private cSapModel mySapModel;
+        cSapModel mySapModel;
         public int NumberItems;
         public int[] ObjectType;
         public string[] ObjectName;
 
         public etabsSelectedObjects(cSapModel mySapModel)
         {
-this.mySapModel = mySapModel;
+            this.mySapModel = mySapModel;
             this.NumberItems = 0;
             this.ObjectType = new int[0];
             this.ObjectName = new string[0];
@@ -93,14 +93,15 @@ this.mySapModel = mySapModel;
     }
 
     public class etabsRunnedLoadCases
-        Private cSapModel mySapModel;
+    {
+        cSapModel mySapModel;
         public int NumberItems;
         public string[] CaseName;
         public int[] Status;
 
         public etabsRunnedLoadCases(cSapModel mySapModel)
         {
-this.mySapModel = mySapModel;
+            this.mySapModel = mySapModel;
             this.mySapModel = mySapModel;
             this.NumberItems = 0;
             this.CaseName = new string[0];
@@ -108,7 +109,7 @@ this.mySapModel = mySapModel;
             this.mySapModel.Analyze.GetCaseStatus(ref this.NumberItems, ref this.CaseName, ref this.Status);
         }
 
-        public List<string> getWithStatues(int statues ,bool withModal = false, bool onlyInLoadPatterns = true)
+        public List<string> getWithStatues(int statues, bool withModal = false, bool onlyInLoadPatterns = true)
         {
             // statues 
             //1- Not run
@@ -119,12 +120,14 @@ this.mySapModel = mySapModel;
             etabsLoadPatterns loadPatterns = new etabsLoadPatterns(this.mySapModel);
             for (int i = 0; i < this.NumberItems; i++)
             {
-                if (this.Status[i] == statues )
+                if (this.Status[i] == statues)
                 {
-                    if( withModal == true || (withModal == false && this.CaseName[i] != "modal") ){
-                       if( onlyInLoadPatterns == false || (onlyInLoadPatterns == true && loadPatterns.loadPatternNames.Contains(this.CaseName[i] ) ) ){
-                         cases.Add(this.CaseName[i]);
-                       }
+                    if (withModal == true || (withModal == false && this.CaseName[i] != "modal"))
+                    {
+                        if (onlyInLoadPatterns == false || (onlyInLoadPatterns == true && loadPatterns.loadPatternNames.Contains(this.CaseName[i])))
+                        {
+                            cases.Add(this.CaseName[i]);
+                        }
                     }
                 }
             }
@@ -135,13 +138,13 @@ this.mySapModel = mySapModel;
 
     public class etabsCombos
     {
-Private cSapModel mySapModel;
+        cSapModel mySapModel;
         public int NumberNames;
         public string[] comboNames;
 
         public etabsCombos(cSapModel mySapModel)
         {
-this.mySapModel = mySapModel;
+            this.mySapModel = mySapModel;
             this.NumberNames = 0;
             this.comboNames = new string[0];
             this.mySapModel.RespCombo.GetNameList(ref this.NumberNames, ref this.comboNames);
@@ -150,18 +153,18 @@ this.mySapModel = mySapModel;
 
     }
 
-     public class etabsLoadPatterns
+    public class etabsLoadPatterns
     {
-Private cSapModel mySapModel;
+        cSapModel mySapModel;
         public int NumberNames;
         public string[] loadPatternNames;
 
         public etabsLoadPatterns(cSapModel mySapModel)
         {
-this.mySapModel = mySapModel;
+            this.mySapModel = mySapModel;
             this.NumberNames = 0;
             this.loadPatternNames = new string[0];
-            this.SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.loadPatternNames);
+            this.mySapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.loadPatternNames);
         }
 
 

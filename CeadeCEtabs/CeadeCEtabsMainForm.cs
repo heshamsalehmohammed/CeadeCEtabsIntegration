@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -21,6 +22,15 @@ namespace CeadeCEtabs
 
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
+
+        etabsSelectedObjects selected;
+        List<string> selectedFrames;
+
+        etabsRunnedLoadCases runnedCases;
+        List<string> FinishedRunnedCases;
+        etabsCombos combonames;
+        List<string> Finishedcombonames;
+        etabsAnalysisResults analysisResults;
 
         public void contact_CeadeC()
         {
@@ -80,37 +90,30 @@ namespace CeadeCEtabs
 
         public int contact_Etabs()
         {
+            Clean();
             etabsAttach();
             modelAttach();
-            etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
-            List<string> selectedFrames = selected.selectedType(2);
-            listBox2.DataSource = selectedFrames;
+            selected = new etabsSelectedObjects(mySapModel);
+            selectedFrames = selected.selectedType(2);
+            listBox2.Items.AddRange(selectedFrames.ToArray());
 
 
 
-            etabsRunnedLoadCases runnedCases = new etabsRunnedLoadCases(mySapModel);
+            runnedCases = new etabsRunnedLoadCases(mySapModel);
+            FinishedRunnedCases = runnedCases.getWithStatues(4);
+            listBox3.Items.AddRange(FinishedRunnedCases.ToArray());
+            combonames = new etabsCombos(mySapModel);
+            Finishedcombonames = combonames.comboNames.ToList<string>();
+            listBox4.Items.AddRange(Finishedcombonames.ToArray());
 
-            listBox3.DataSource = runnedCases.getWithStatues(4);
-
-            etabsCombos combonames = new etabsCombos(mySapModel);
-
-            listBox4.DataSource = combonames.comboNames;
-
-            etabsAnalysisResults analysisResults = new etabsAnalysisResults(mySapModel, listBox2.SelectedItem.ToString(), eItemTypeElm.ObjectElm, runnedCases.getWithStatues(4), combonames.comboNames);
-
-
-
-
-
-
-
-            if (analysisResults.NumberResults == 0)
+            
+            if (getAnalysisResultForSelectedFrame() == 1)
             {
-                MessageBox.Show("Run the analysis and try again. ");
-                return 0;
+                
+                fillDataGridFromAnalysisResults();
+
             }
 
-            etabsClean();
             return 1;
 
         }
@@ -154,12 +157,142 @@ namespace CeadeCEtabs
 
             }
         }
-        public void etabsClean()
+
+        public int fillDataGridFromAnalysisResults()
         {
-            mySapModel = null;
-            myETABSObject = null;
+            dataGridView1.Rows.Clear();
+
+            if (listBox2.SelectedItem == null && listBox3.SelectedItem == null && listBox4.SelectedItem == null && listBox1.SelectedItem == null)
+            {
+                return 0;
+            }
+            if (listBox2.SelectedItem != null)
+            {
+                for (int i = 0; i < analysisResults.LoadCase.Length; i++)
+                {
+                    if (listBox1.SelectedItem != null)
+                    {
+                        if (listBox3.SelectedItem != null)
+                        {
+                            if (listBox3.SelectedItem.ToString() == analysisResults.LoadCase[i])
+                            {
+                                if (listBox1.SelectedItem.ToString() == analysisResults.ObjSta[i].ToString())
+                                {
+                                    string[] row = new string[] { analysisResults.P[i].ToString(), analysisResults.M2[i].ToString(), analysisResults.M3[i].ToString(), analysisResults.V2[i].ToString(), analysisResults.V3[i].ToString(), analysisResults.T[i].ToString() };
+                                    dataGridView1.Rows.Add(row);
+                                }
+                            }
+                        }
+                        if (listBox4.SelectedItem != null)
+                        {
+                            if (listBox4.SelectedItem.ToString() == analysisResults.LoadCase[i])
+                            {
+                                if (listBox1.SelectedItem.ToString() == analysisResults.ObjSta[i].ToString())
+                                {
+                                    string[] row = new string[] { analysisResults.P[i].ToString(), analysisResults.M2[i].ToString(), analysisResults.M3[i].ToString(), analysisResults.V2[i].ToString(), analysisResults.V3[i].ToString(), analysisResults.T[i].ToString() };
+                                    dataGridView1.Rows.Add(row);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            return 1;
+        }
+
+        public int getAnalysisResultForSelectedFrame()
+        {
+
+            if (listBox2.SelectedItem != null)
+            {
+                analysisResults = new etabsAnalysisResults(mySapModel, listBox2.SelectedItem.ToString(), eItemTypeElm.ObjectElm, FinishedRunnedCases, Finishedcombonames);
+
+                if (analysisResults.NumberResults == 0)
+                {
+                    MessageBox.Show("Run the analysis and try again. ");
+                    return 0;
+                }
+                for (int i = 0; i < listBox3.Items.Count; i++)
+                {
+                    if (!analysisResults.LoadCase.Contains(listBox3.Items[i]))
+                    {
+                        listBox3.Items.Remove(listBox3.Items[i]);
+                        i--;
+                    }
+                }
+                for (int i = 0; i < listBox4.Items.Count; i++)
+                {
+                    if (!analysisResults.LoadCase.Contains(listBox4.Items[i]))
+                    {
+                        listBox3.Items.Remove(listBox4.Items[i]);
+                        i--;
+                    }
+                }
+                listBox1.Items.Clear();
+                for (int i = 0; i < analysisResults.ObjSta.Length; i++)
+                {
+                    if (!listBox1.Items.Contains(analysisResults.ObjSta[i]) && listBox2.SelectedItem.ToString() == analysisResults.Obj[i])
+                    {
+                        listBox1.Items.Add(analysisResults.ObjSta[i]);
+                    }
+                }
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
 
+
+        public void Clean()
+        {
+            mySapModel = null;
+            myETABSObject = null;
+            CleanContainers(true);
+        }
+
+        public void CleanContainers(bool clearSelectionContainer = false)
+        {
+            if (clearSelectionContainer)
+            {
+                listBox2.Items.Clear();
+            }
+            listBox1.Items.Clear();
+            listBox3.Items.Clear();
+            listBox4.Items.Clear();
+            dataGridView1.Rows.Clear();
+        }
+
+        private void ListBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBox4.SelectedIndexChanged -= new EventHandler(ListBox4_SelectedIndexChanged);
+            listBox4.ClearSelected();
+            fillDataGridFromAnalysisResults();
+            listBox4.SelectedIndexChanged += new EventHandler(ListBox4_SelectedIndexChanged);
+            
+        }
+
+        private void ListBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBox3.SelectedIndexChanged -= new EventHandler(ListBox3_SelectedIndexChanged);
+            listBox3.ClearSelected();
+            fillDataGridFromAnalysisResults();
+            listBox3.SelectedIndexChanged += new EventHandler(ListBox3_SelectedIndexChanged);
+            
+        }
+
+        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fillDataGridFromAnalysisResults();
+        }
+
+        private void ListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getAnalysisResultForSelectedFrame();
+        }
     }
 }

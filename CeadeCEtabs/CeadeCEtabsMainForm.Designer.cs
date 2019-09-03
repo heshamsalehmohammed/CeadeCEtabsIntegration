@@ -35,6 +35,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.P = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.M2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.M3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.V2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.V3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.T = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -44,7 +56,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(1235, 83);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Export To CeadeC";
+            this.button1.Text = "Get Analysis Results From Etabs";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -56,6 +68,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(212, 424);
             this.listBox2.TabIndex = 2;
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.ListBox2_SelectedIndexChanged);
             // 
             // listBox3
             // 
@@ -65,6 +78,7 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(250, 184);
             this.listBox3.TabIndex = 3;
+            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.ListBox3_SelectedIndexChanged);
             // 
             // listBox4
             // 
@@ -74,6 +88,7 @@
             this.listBox4.Name = "listBox4";
             this.listBox4.Size = new System.Drawing.Size(250, 204);
             this.listBox4.TabIndex = 4;
+            this.listBox4.SelectedIndexChanged += new System.EventHandler(this.ListBox4_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -102,11 +117,108 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Load Combinations";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(20, 593);
+            this.button2.Margin = new System.Windows.Forms.Padding(5);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(1235, 83);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Export To CeadeC";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.P,
+            this.M2,
+            this.M3,
+            this.V2,
+            this.V3,
+            this.T});
+            this.dataGridView1.Location = new System.Drawing.Point(525, 366);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(730, 204);
+            this.dataGridView1.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(521, 123);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 20);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Stations";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(525, 146);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(250, 184);
+            this.listBox1.TabIndex = 10;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(521, 343);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(146, 20);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Straining Actions";
+            // 
+            // P
+            // 
+            this.P.HeaderText = "P";
+            this.P.Name = "P";
+            this.P.ReadOnly = true;
+            // 
+            // M2
+            // 
+            this.M2.HeaderText = "M2";
+            this.M2.Name = "M2";
+            this.M2.ReadOnly = true;
+            // 
+            // M3
+            // 
+            this.M3.HeaderText = "M3";
+            this.M3.Name = "M3";
+            this.M3.ReadOnly = true;
+            // 
+            // V2
+            // 
+            this.V2.HeaderText = "V2";
+            this.V2.Name = "V2";
+            this.V2.ReadOnly = true;
+            // 
+            // V3
+            // 
+            this.V3.HeaderText = "V3";
+            this.V3.Name = "V3";
+            this.V3.ReadOnly = true;
+            // 
+            // T
+            // 
+            this.T.HeaderText = "T";
+            this.T.Name = "T";
+            this.T.ReadOnly = true;
+            // 
             // CeadeCEtabsMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1269, 595);
+            this.ClientSize = new System.Drawing.Size(1269, 690);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -118,6 +230,7 @@
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "CeadeCEtabsMainForm";
             this.Text = "CeadeCEtabs";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,6 +245,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn P;
+        private System.Windows.Forms.DataGridViewTextBoxColumn M2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn M3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn V2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn V3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn T;
     }
 }
 
