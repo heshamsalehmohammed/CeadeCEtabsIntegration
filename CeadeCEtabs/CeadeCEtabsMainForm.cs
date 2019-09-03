@@ -83,7 +83,10 @@ namespace CeadeCEtabs
             modelAttach();
             etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
             List<string> selectedFrames = selected.selectedType(2);
-            if (selectedFrames.Count != 1)
+            if(selectedFrames.Count == 0 ){
+                MessageBox.Show("select a frame object and try again. ");
+                return 0;
+            } else if (selectedFrames.Count != 1)
             {
                 MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
                 return 0;
@@ -92,7 +95,7 @@ namespace CeadeCEtabs
             etabsAnalysisResults analysisResults = new  etabsAnalysisResults( mySapModel , selectedFrames[0] ,eItemTypeElm.ObjectElm );
             if (analysisResults.NumberResults.Count == 0)
             {
-                MessageBox.Show("Run the analysis and try again ");
+                MessageBox.Show("Run the analysis and try again. ");
                 return 0;
             }
 
