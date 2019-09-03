@@ -45,7 +45,21 @@ namespace EtabsObjects
     }
 
 
+    
+    public class etabsSelectedObjects
+    {
+            Public  int NumberItems;
+            Public int[] ObjectType;
+            Public string[] ObjectName;
 
+            public etabsSelectedObjects(ETABS2016.cSapModel mySapModel )
+            {
+            this.NumberItems = 0;
+            this.ObjectType = new int[0];
+            this.ObjectName = new string[0];
+            mySapModel.Select.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
+            }
+    }
 
 
 
