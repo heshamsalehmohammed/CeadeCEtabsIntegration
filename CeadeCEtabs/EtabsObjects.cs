@@ -9,6 +9,7 @@ namespace EtabsObjects
 {
     public class etabsAnalysisResults
     {
+Private cSapModel mySapModel;
         public int NumberResults;
         public string[] Obj;
         public double[] ObjSta;
@@ -26,6 +27,7 @@ namespace EtabsObjects
 
         public etabsAnalysisResults(cSapModel mySapModel, string objectName, eItemTypeElm itemType, List<string> loadCaseNames, string[] comboNames)
         {
+this.mySapModel = mySapModel;
             this.NumberResults = 0;
             this.Obj = new string[0];
             this.ObjSta = new double[0];
@@ -41,20 +43,20 @@ namespace EtabsObjects
             this.M2 = new double[0];
             this.M3 = new double[0];
 
-            mySapModel.Results.Setup.DeselectAllCasesAndCombosForOutput();
+            this.mySapModel.Results.Setup.DeselectAllCasesAndCombosForOutput();
 
             for (int i = 0; i < loadCaseNames.Count; i++)
             {
-                mySapModel.Results.Setup.SetCaseSelectedForOutput(loadCaseNames[i]);
+                this.mySapModel.Results.Setup.SetCaseSelectedForOutput(loadCaseNames[i]);
             }
 
             for (int i = 0; i < comboNames.Length; i++)
             {
-                mySapModel.Results.Setup.SetComboSelectedForOutput(comboNames[i]);
+                this.mySapModel.Results.Setup.SetComboSelectedForOutput(comboNames[i]);
             }
 
 
-            mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
+            this.mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
         }
     }
 
@@ -62,16 +64,18 @@ namespace EtabsObjects
 
     public class etabsSelectedObjects
     {
+Private cSapModel mySapModel;
         public int NumberItems;
         public int[] ObjectType;
         public string[] ObjectName;
 
         public etabsSelectedObjects(cSapModel mySapModel)
         {
+this.mySapModel = mySapModel;
             this.NumberItems = 0;
             this.ObjectType = new int[0];
             this.ObjectName = new string[0];
-            mySapModel.SelectObj.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
+            this.mySapModel.SelectObj.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
         }
         public List<string> selectedType(int type)
         {
@@ -96,11 +100,12 @@ namespace EtabsObjects
 
         public etabsRunnedLoadCases(cSapModel mySapModel)
         {
+this.mySapModel = mySapModel;
             this.mySapModel = mySapModel;
             this.NumberItems = 0;
             this.CaseName = new string[0];
             this.Status = new int[0];
-            mySapModel.Analyze.GetCaseStatus(ref this.NumberItems, ref this.CaseName, ref this.Status);
+            this.mySapModel.Analyze.GetCaseStatus(ref this.NumberItems, ref this.CaseName, ref this.Status);
         }
 
         public List<string> getWithStatues(int statues ,bool withModal = false, bool onlyInLoadPatterns = true)
@@ -130,14 +135,16 @@ namespace EtabsObjects
 
     public class etabsCombos
     {
+Private cSapModel mySapModel;
         public int NumberNames;
         public string[] comboNames;
 
         public etabsCombos(cSapModel mySapModel)
         {
+this.mySapModel = mySapModel;
             this.NumberNames = 0;
             this.comboNames = new string[0];
-            mySapModel.RespCombo.GetNameList(ref this.NumberNames, ref this.comboNames);
+            this.mySapModel.RespCombo.GetNameList(ref this.NumberNames, ref this.comboNames);
         }
 
 
@@ -145,14 +152,16 @@ namespace EtabsObjects
 
      public class etabsLoadPatterns
     {
+Private cSapModel mySapModel;
         public int NumberNames;
         public string[] loadPatternNames;
 
         public etabsLoadPatterns(cSapModel mySapModel)
         {
+this.mySapModel = mySapModel;
             this.NumberNames = 0;
             this.loadPatternNames = new string[0];
-            SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.loadPatternNames);
+            this.SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.loadPatternNames);
         }
 
 
