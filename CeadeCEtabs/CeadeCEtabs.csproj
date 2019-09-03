@@ -60,6 +60,7 @@
     <Compile Include="CeadeCEtabsMainForm.Designer.cs">
       <DependentUpon>CeadeCEtabsMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EtabsObjects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CeadeCEtabsMainForm.resx">

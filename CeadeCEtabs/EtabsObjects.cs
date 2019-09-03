@@ -9,58 +9,58 @@ namespace EtabsObjects
 {
     public class etabsAnalysisResults
     {
-         Public   int NumberResults;
-         Public   string[] Obj;
-         Public   double[] ObjSta ;
-         Public   string[] Elm ;
-         Public   double[] ElmSta ;
-         Public   string[] LoadCase ;
-         Public   string[] StepType ;
-         Public   double[] StepNum ;
-         Public   double[] P ;
-         Public   double[] V2 ;
-         Public   double[] V3 ;
-         Public   double[] T ;
-         Public   double[] M2 ;
-         Public   double[] M3 ;
+        public int NumberResults;
+        public string[] Obj;
+        public double[] ObjSta;
+        public string[] Elm;
+        public double[] ElmSta;
+        public string[] LoadCase;
+        public string[] StepType;
+        public double[] StepNum;
+        public double[] P;
+        public double[] V2;
+        public double[] V3;
+        public double[] T;
+        public double[] M2;
+        public double[] M3;
 
-        public etabsAnalysisResults(ETABS2016.cSapModel mySapModel , string objectName ,eItemTypeElm itemType )
+        public etabsAnalysisResults(ETABS2016.cSapModel mySapModel, string objectName, eItemTypeElm itemType)
         {
-         this.NumberResults = 0;
-         this.Obj = new string[0];
-         this.ObjSta = new double[0];
-         this.Elm = new string[0];
-         this.ElmSta = new double[0];
-         this.LoadCase = new string[0];
-         this.StepType = new string[0];
-         this.StepNum = new double[0];
-         this.P = new double[0];
-         this.V2 = new double[0];
-         this.V3 = new double[0];
-         this.T = new double[0];
-         this.M2 = new double[0];
-         this.M3 = new double[0];
-         mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
+            this.NumberResults = 0;
+            this.Obj = new string[0];
+            this.ObjSta = new double[0];
+            this.Elm = new string[0];
+            this.ElmSta = new double[0];
+            this.LoadCase = new string[0];
+            this.StepType = new string[0];
+            this.StepNum = new double[0];
+            this.P = new double[0];
+            this.V2 = new double[0];
+            this.V3 = new double[0];
+            this.T = new double[0];
+            this.M2 = new double[0];
+            this.M3 = new double[0];
+            mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
         }
     }
 
 
-    
+
     public class etabsSelectedObjects
     {
-            Public  int NumberItems;
-            Public int[] ObjectType;
-            Public string[] ObjectName;
+        public int NumberItems;
+        public int[] ObjectType;
+        public string[] ObjectName;
 
-            public etabsSelectedObjects(ETABS2016.cSapModel mySapModel )
-            {
+        public etabsSelectedObjects(ETABS2016.cSapModel mySapModel)
+        {
             this.NumberItems = 0;
             this.ObjectType = new int[0];
             this.ObjectName = new string[0];
-            mySapModel.Select.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
-            }
-            public List<string> selectedType(int type)
-            {
+            mySapModel.SelectObj.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
+        }
+        public List<string> selectedType(int type)
+        {
             // Object Type 
             // 1 -  Point object
             // 2 -  Frame object
@@ -72,13 +72,13 @@ namespace EtabsObjects
             List<string> selectedType = new List<string>();
             for (int i = 0; i < this.NumberItems; i++)
             {
-                if (this. ObjectType[i] == type)
+                if (this.ObjectType[i] == type)
                 {
-                    selectedType.Add(this. ObjectName[i]);
+                    selectedType.Add(this.ObjectName[i]);
                 }
             }
             return selectedType;
-            }
+        }
     }
 
 
