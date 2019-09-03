@@ -111,18 +111,14 @@ namespace CeadeCEtabs
 
             List<string> selectedType = new List<string>();
 
+etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
 
-            int NumberItems = 0;
-            int[] ObjectType = new int[0];
-            string[] ObjectName = new string[0];
-
-            mySapModel.Select.GetSelected(ref NumberItems, ref ObjectType, ref ObjectName);
-
-            for (int i = 0; i < NumberItems; i++)
+            
+            for (int i = 0; i < selected.NumberItems; i++)
             {
-                if (ObjectType[i] == type)
+                if (selected. ObjectType[i] == type)
                 {
-                    selectedType.Add(ObjectName[i]);
+                    selectedType.Add(selected. ObjectName[i]);
                 }
             }
 
