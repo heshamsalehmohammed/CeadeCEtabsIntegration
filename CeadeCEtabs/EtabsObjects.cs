@@ -142,13 +142,13 @@ namespace EtabsObjects
      public class etabsLoadPatterns
     {
         public int NumberNames;
-        public string[] comboNames;
+        public string[] loadPatternNames;
 
         public etabsLoadPatterns(cSapModel mySapModel)
         {
             this.NumberNames = 0;
-            this.comboNames = new string[0];
-            SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.comboNames);
+            this.loadPatternNames = new string[0];
+            SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.loadPatternNames);
         }
 
 
