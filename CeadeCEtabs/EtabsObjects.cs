@@ -89,13 +89,14 @@ namespace EtabsObjects
     }
 
     public class etabsRunnedLoadCases
-    {
+        Private cSapModel mySapModel;
         public int NumberItems;
         public string[] CaseName;
         public int[] Status;
 
         public etabsRunnedLoadCases(cSapModel mySapModel)
         {
+            this.mySapModel = mySapModel;
             this.NumberItems = 0;
             this.CaseName = new string[0];
             this.Status = new int[0];
@@ -110,12 +111,15 @@ namespace EtabsObjects
             //3- Not finished
             //4- Finished
             List<string> cases = new List<string>();
+            etabsLoadPatterns loadPatterns = new etabsLoadPatterns(this.mySapModel);
             for (int i = 0; i < this.NumberItems; i++)
             {
                 if (this.Status[i] == statues )
                 {
                     if( withModal == true || (withModal == false && this.CaseName[i] != "modal") ){
-                       cases.Add(this.CaseName[i]);
+                       if( onlyInLoadPatterns == false || (onlyInLoadPatterns == true && loadPatterns.loadPatternNames.Contains(this.CaseName[i] ) ) ){
+                         cases.Add(this.CaseName[i]);
+                       }
                     }
                 }
             }
