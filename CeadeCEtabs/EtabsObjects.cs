@@ -102,7 +102,7 @@ namespace EtabsObjects
             mySapModel.Analyze.GetCaseStatus(ref this.NumberItems, ref this.CaseName, ref this.Status);
         }
 
-        public List<string> getWithStatues(int statues)
+        public List<string> getWithStatues(int statues ,bool withModal = false, bool onlyInLoadPatterns = true)
         {
             // statues 
             //1- Not run
@@ -112,9 +112,11 @@ namespace EtabsObjects
             List<string> cases = new List<string>();
             for (int i = 0; i < this.NumberItems; i++)
             {
-                if (this.Status[i] == statues)
+                if (this.Status[i] == statues )
                 {
-                    cases.Add(this.CaseName[i]);
+                    if( withModal == true || (withModal == false && this.CaseName[i] != "modal") ){
+                       cases.Add(this.CaseName[i]);
+                    }
                 }
             }
             return cases;
@@ -132,6 +134,21 @@ namespace EtabsObjects
             this.NumberNames = 0;
             this.comboNames = new string[0];
             mySapModel.RespCombo.GetNameList(ref this.NumberNames, ref this.comboNames);
+        }
+
+
+    }
+
+     public class etabsLoadPatterns
+    {
+        public int NumberNames;
+        public string[] comboNames;
+
+        public etabsLoadPatterns(cSapModel mySapModel)
+        {
+            this.NumberNames = 0;
+            this.comboNames = new string[0];
+            SapModel.LoadPatterns.GetNameList(ref this.NumberNames, ref this.comboNames);
         }
 
 
