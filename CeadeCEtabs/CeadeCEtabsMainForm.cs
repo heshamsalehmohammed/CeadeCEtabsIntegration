@@ -19,8 +19,8 @@ namespace CeadeCEtabs
             InitializeComponent();
         }
 
-        ETABS2016.cOAPI myETABSObject = null;
-        ETABS2016.cSapModel mySapModel = null;
+        cOAPI myETABSObject = null;
+        cSapModel mySapModel = null;
 
         public void contact_CeadeC()
         {
@@ -84,18 +84,26 @@ namespace CeadeCEtabs
             modelAttach();
             etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
             List<string> selectedFrames = selected.selectedType(2);
-            if (selectedFrames.Count == 0)
-            {
-                MessageBox.Show("select a frame object and try again. ");
-                return 0;
-            }
-            else if (selectedFrames.Count != 1)
-            {
-                MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
-                return 0;
-            }
+            listBox2.DataSource = selectedFrames;
 
-            etabsAnalysisResults analysisResults = new etabsAnalysisResults(mySapModel, selectedFrames[0], eItemTypeElm.ObjectElm);
+
+
+            etabsRunnedLoadCases runnedCases = new etabsRunnedLoadCases(mySapModel);
+
+            listBox3.DataSource = runnedCases.getWithStatues(4);
+
+            etabsCombos combonames = new etabsCombos(mySapModel);
+
+            listBox4.DataSource = combonames.comboNames;
+
+            etabsAnalysisResults analysisResults = new etabsAnalysisResults(mySapModel, listBox2.SelectedItem.ToString(), eItemTypeElm.ObjectElm, runnedCases.getWithStatues(4), combonames.comboNames);
+
+
+
+
+
+
+
             if (analysisResults.NumberResults == 0)
             {
                 MessageBox.Show("Run the analysis and try again. ");
@@ -119,17 +127,12 @@ namespace CeadeCEtabs
             contact_Etabs();
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            etabsAttach();
-        }
-
 
         public void etabsAttach()
         {
             try
             {
-                myETABSObject = (ETABS2016.cOAPI)System.Runtime.InteropServices.Marshal.GetActiveObject("CSI.ETABS.API.ETABSObject");
+                myETABSObject = (cOAPI)System.Runtime.InteropServices.Marshal.GetActiveObject("CSI.ETABS.API.ETABSObject");
             }
             catch (Exception ex)
             {
@@ -141,7 +144,7 @@ namespace CeadeCEtabs
         {
             try
             {
-                mySapModel = default(ETABS2016.cSapModel);
+                mySapModel = default(cSapModel);
                 mySapModel = myETABSObject.SapModel;
 
             }
@@ -156,6 +159,7 @@ namespace CeadeCEtabs
             mySapModel = null;
             myETABSObject = null;
         }
+
 
     }
 }
