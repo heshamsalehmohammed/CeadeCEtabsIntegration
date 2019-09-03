@@ -59,6 +59,26 @@ namespace EtabsObjects
             this.ObjectName = new string[0];
             mySapModel.Select.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
             }
+            public List<string> selectedType(int type)
+            {
+            // Object Type 
+            // 1 -  Point object
+            // 2 -  Frame object
+            // 3 -  Cable object
+            // 4 -  Tendon object
+            // 5 -  Area object
+            // 6 -  Solid object
+            // 7 -  Link object
+            List<string> selectedType = new List<string>();
+            for (int i = 0; i < this.NumberItems; i++)
+            {
+                if (this. ObjectType[i] == type)
+                {
+                    selectedType.Add(this. ObjectName[i]);
+                }
+            }
+            return selectedType;
+            }
     }
 
 
