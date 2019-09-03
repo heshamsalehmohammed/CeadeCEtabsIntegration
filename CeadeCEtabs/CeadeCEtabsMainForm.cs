@@ -94,30 +94,7 @@ namespace CeadeCEtabs
         }
 
 
-        public void etabsAnalysisResults(string objectName)
-        {
-            int NumberResults = 0;
-            string[] Obj = new string[0];
-            double[] ObjSta = new double[0];
-            string[] Elm = new string[0];
-            double[] ElmSta = new double[0];
-            string[] LoadCase = new string[0];
-            string[] StepType = new string[0];
-            double[] StepNum = new double[0];
-            double[] P = new double[0];
-            double[] V2 = new double[0];
-            double[] V3 = new double[0];
-            double[] T = new double[0];
-            double[] M2 = new double[0];
-            double[] M3 = new double[0];
-
-
-
-            mySapModel.Results.FrameForce(objectName, eItemTypeElm.ObjectElm, ref NumberResults, ref Obj, ref ObjSta, ref Elm, ref ElmSta, ref LoadCase, ref StepType, ref StepNum, ref P, ref V2, ref V3, ref T, ref M2, ref M3);
-
-
-        }
-
+        
 
 
 
