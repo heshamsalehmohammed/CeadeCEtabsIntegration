@@ -77,7 +77,7 @@ namespace CeadeCEtabs
         }
 
 
-        public void contact_Etabs()
+        public int contact_Etabs()
         {
             etabsAttach();
             modelAttach();
@@ -86,11 +86,18 @@ namespace CeadeCEtabs
             if (selectedFrames.Count != 1)
             {
                 MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
+                return 0;
             }
 
-
+            etabsAnalysisResults analysisResults = new  etabsAnalysisResults( mySapModel , selectedFrames[0] ,eItemTypeElm.ObjectElm );
+            if (analysisResults.NumberResults.Count == 0)
+            {
+                MessageBox.Show("Run the analysis and try again ");
+                return 0;
+            }
 
             etabsClean();
+            return 1;
 
         }
 
