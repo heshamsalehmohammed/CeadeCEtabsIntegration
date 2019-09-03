@@ -81,7 +81,8 @@ namespace CeadeCEtabs
         {
             etabsAttach();
             modelAttach();
-            List<string> selectedFrames = etabsSelected(2);
+            etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
+            List<string> selectedFrames = selected.selectedType(2);
             if (selectedFrames.Count != 1)
             {
                 MessageBox.Show("according to your membership : only 1 frame can be sent to the server ");
@@ -98,33 +99,7 @@ namespace CeadeCEtabs
 
 
 
-        public List<string> etabsSelected(int type)
-        {
-            // Object Type 
-            // 1 -  Point object
-            // 2 -  Frame object
-            // 3 -  Cable object
-            // 4 -  Tendon object
-            // 5 -  Area object
-            // 6 -  Solid object
-            // 7 -  Link object
-
-            List<string> selectedType = new List<string>();
-
-etabsSelectedObjects selected = new etabsSelectedObjects(mySapModel);
-
-            
-            for (int i = 0; i < selected.NumberItems; i++)
-            {
-                if (selected. ObjectType[i] == type)
-                {
-                    selectedType.Add(selected. ObjectName[i]);
-                }
-            }
-
-            return selectedType;
-
-        }
+        
 
         private void Button1_Click(object sender, EventArgs e)
         {
