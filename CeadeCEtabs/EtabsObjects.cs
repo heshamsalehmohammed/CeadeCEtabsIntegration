@@ -189,7 +189,7 @@ namespace EtabsObjects
 
 public class etabsAllFrameSections
 {
-
+        cSapModel mySapModel;
         public int NumberNames;
 	public string[] MyName;
 	public eFramePropType[] PropType;
@@ -200,8 +200,9 @@ public class etabsAllFrameSections
 	public double[] t2b;
 	public double[] tfb;
 
-public etabsAllFrameSections(){
+public etabsAllFrameSections(cSapModel mySapModel ){
 
+        this.mySapModel = mySapModel;
         this.NumberNames = 0;
 	this.MyName = new string[0];
         this.PropType = new eFramePropType[0];
@@ -212,7 +213,7 @@ public etabsAllFrameSections(){
         this.t2b = new double[0];
         this.tfb = new double[0];
 
-   GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
+  this.mySapModel.PropFrame.GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
 }
 
 
