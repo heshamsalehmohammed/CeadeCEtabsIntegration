@@ -285,7 +285,30 @@ public class etabsConcreteLSection
 
      }
 
+public class etabsCircleSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+	public string MatProp;
+	public double T3;
+	public int Color;
+	public string Notes;
+	public string GUID;
 
+        public etabsCircleSection(cSapModel mySapModel , string sectionName){
+
+        this.mySapModel = mySapModel;
+        this.FileName = string.Empty;
+	this.MatProp = string.Empty;
+	this.T3 = 0;
+	this.Color = 0;
+	this.Notes = string.Empty;
+	this.GUID = string.Empty;
+
+        this.mySapModel.PropFrame.GetCircle(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  Color,ref this.  Notes,ref this.  GUID);
+        }
+
+     }
 
 
 }
