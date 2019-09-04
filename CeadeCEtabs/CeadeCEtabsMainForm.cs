@@ -331,6 +331,8 @@ namespace CeadeCEtabs
         }
 
         public CeadeCShapes CeadeCConvertRectangular(string frameSectionPropertyName ){
+            List<CeadeCObject> children =  new List<CeadeCObject>();
+            // Parse solid 
             etabsRectangleSection rectangleSectionData = new etabsRectangleSection(mySapModel,  frameSectionPropertyName );
             Vector3 sectionCentroid = new Vector3(0,0,0);
             List<Vector3> sectionVertices = new List<Vector3>();
@@ -339,9 +341,12 @@ namespace CeadeCEtabs
             sectionVertices.Add(new Vector3( sectionCentroid.x + rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
             sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
             sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
-            
+            CeadeCRectangles solid_Rectangle = new CeadeCRectangles( sectionVertices );
+            solid_Rectangle.shapeChildType = "solid";
+            children.Add(solid_Rectangle);
+            // Parse RFT
 
-            List<CeadeCObject> children =  new List<CeadeCObject>();
+            
             return new CeadeCShapes(children);
         }
     }
