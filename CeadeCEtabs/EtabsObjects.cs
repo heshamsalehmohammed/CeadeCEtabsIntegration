@@ -248,6 +248,44 @@ public class etabsRectangleSection
 
 
 
+public class etabsConcreteLSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+	public string MatProp;
+	public double T3;
+	public double T2;
+        public double Tf;
+	public double TwC;
+	public double TwT;
+	public bool MirrorAbout2;
+	public bool MirrorAbout3;
+	public int Color;
+	public string Notes;
+	public string GUID;
+
+        public etabsConcreteLSection(cSapModel mySapModel , string sectionName){
+
+        this.mySapModel = mySapModel;
+        this.FileName = string.Empty;
+	this.MatProp = string.Empty;
+	this.T3 = 0;
+	this.T2 = 0;
+        this. Tf=0;
+	this.  TwC=0;
+	this.   TwT=0;
+	this.   MirrorAbout2= false;
+	this.   MirrorAbout3= false;
+	this.Color = 0;
+	this.Notes = string.Empty;
+	this.GUID = string.Empty;
+
+        this.mySapModel.PropFrame.GetConcreteL(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. TwC,ref this. TwT, ref this. MirrorAbout2,ref this. MirrorAbout3 ,ref this.  Color,ref this.  Notes,ref this.  GUID);
+        }
+
+     }
+
+
 
 
 }
