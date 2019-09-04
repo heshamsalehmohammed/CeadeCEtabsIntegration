@@ -187,4 +187,41 @@ namespace EtabsObjects
 
     }
 
+Public class etabsAllFrameSections
+{
+
+        public int NumberNames;
+	public string[] MyName;
+	public eFramePropType[] PropType;
+	public double[] t;
+	public double[] t2;
+	public double[] tf;
+	public double[] tw;
+	public double[] t2b;
+	public double[] tfb;
+
+Public etabsAllFrameSections(){
+
+        NumberNames = 0;
+	MyName = new string[0];
+        PropType = new eFramePropType[0];
+	t = new double[0];
+        t2 = new double[0];
+	tf = new double[0];
+        tw = new double[0];
+        t2b = new double[0];
+        tfb = new double[0];
+
+   GetAllFrameProperties(ref NumberNames,ref MyName,ref PropType,ref t3,ref t2,ref tf,ref tw,ref t2b,ref tfb);
+}
+
+
+}
+
+
+
+
+
+
+
 }
