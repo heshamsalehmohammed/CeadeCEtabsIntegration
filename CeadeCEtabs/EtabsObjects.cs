@@ -202,17 +202,17 @@ public class etabsAllFrameSections
 
 public etabsAllFrameSections(){
 
-        NumberNames = 0;
-	MyName = new string[0];
-        PropType = new eFramePropType[0];
-	t = new double[0];
-        t2 = new double[0];
-	tf = new double[0];
-        tw = new double[0];
-        t2b = new double[0];
-        tfb = new double[0];
+        this.NumberNames = 0;
+	this.MyName = new string[0];
+        this.PropType = new eFramePropType[0];
+	this.t = new double[0];
+        this.t2 = new double[0];
+	this.tf = new double[0];
+        this.tw = new double[0];
+        this.t2b = new double[0];
+        this.tfb = new double[0];
 
-   GetAllFrameProperties(ref NumberNames,ref MyName,ref PropType,ref t3,ref t2,ref tf,ref tw,ref t2b,ref tfb);
+   GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
 }
 
 
