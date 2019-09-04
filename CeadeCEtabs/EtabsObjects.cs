@@ -187,8 +187,8 @@ namespace EtabsObjects
 
     }
 
-public class etabsAllFrameSections
-{
+    public class etabsAllFrameSections
+    {
         cSapModel mySapModel;
         public int NumberNames;
 	public string[] MyName;
@@ -200,7 +200,7 @@ public class etabsAllFrameSections
 	public double[] t2b;
 	public double[] tfb;
 
-public etabsAllFrameSections(cSapModel mySapModel ){
+        public etabsAllFrameSections(cSapModel mySapModel ){
 
         this.mySapModel = mySapModel;
         this.NumberNames = 0;
@@ -213,13 +213,38 @@ public etabsAllFrameSections(cSapModel mySapModel ){
         this.t2b = new double[0];
         this.tfb = new double[0];
 
-  this.mySapModel.PropFrame.GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
-}
+        this.mySapModel.PropFrame.GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
+        }
+
+     }
 
 
-}
+public class etabsRectangleSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+	public string MatProp;
+	public double T3;
+	public double T2;
+	public int Color;
+	public string Notes;
+	public string GUID;
 
+        public etabsRectangleSection(cSapModel mySapModel , string sectionName){
 
+        this.mySapModel = mySapModel;
+        this.FileName = string.Empty;
+	this.MatProp = string.Empty;
+	this.T3 = 0;
+	this.T2 = 0;
+	this.Color = 0;
+	this.Notes = string.Empty;
+	this.GUID = string.Empty;
+
+        this.mySapModel.PropFrame.GetRectangle(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,ref this.  Color,ref this.  Notes,ref this.  GUID);
+        }
+
+     }
 
 
 
