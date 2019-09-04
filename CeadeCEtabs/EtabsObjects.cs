@@ -187,7 +187,7 @@ namespace EtabsObjects
 
     }
 
-Public class etabsAllFrameSections
+public class etabsAllFrameSections
 {
 
         public int NumberNames;
@@ -200,7 +200,7 @@ Public class etabsAllFrameSections
 	public double[] t2b;
 	public double[] tfb;
 
-Public etabsAllFrameSections(){
+public etabsAllFrameSections(){
 
         NumberNames = 0;
 	MyName = new string[0];
