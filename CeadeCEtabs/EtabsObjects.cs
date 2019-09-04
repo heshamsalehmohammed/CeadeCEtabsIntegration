@@ -176,12 +176,12 @@ namespace EtabsObjects
         public string PropName;
         public string SAut;
 
-        public etabsSectionProperty(cSapModel mySapModel , string frameName)
+        public etabsSectionProperty(cSapModel mySapModel, string frameName)
         {
             this.mySapModel = mySapModel;
             this.PropName = string.Empty;
             this.SAut = string.Empty;
-            this.mySapModel.FrameObj.GetSection(frameName,ref this.PropName, ref this.SAut);
+            this.mySapModel.FrameObj.GetSection(frameName, ref this.PropName, ref this.SAut);
         }
 
 
@@ -191,225 +191,232 @@ namespace EtabsObjects
     {
         cSapModel mySapModel;
         public int NumberNames;
-	public string[] MyName;
-	public eFramePropType[] PropType;
-	public double[] t;
-	public double[] t2;
-	public double[] tf;
-	public double[] tw;
-	public double[] t2b;
-	public double[] tfb;
+        public string[] MyName;
+        public eFramePropType[] PropType;
+        public double[] t3;
+        public double[] t2;
+        public double[] tf;
+        public double[] tw;
+        public double[] t2b;
+        public double[] tfb;
 
-        public etabsAllFrameSections(cSapModel mySapModel ){
+        public etabsAllFrameSections(cSapModel mySapModel)
+        {
 
-        this.mySapModel = mySapModel;
-        this.NumberNames = 0;
-	this.MyName = new string[0];
-        this.PropType = new eFramePropType[0];
-	this.t = new double[0];
-        this.t2 = new double[0];
-	this.tf = new double[0];
-        this.tw = new double[0];
-        this.t2b = new double[0];
-        this.tfb = new double[0];
+            this.mySapModel = mySapModel;
+            this.NumberNames = 0;
+            this.MyName = new string[0];
+            this.PropType = new eFramePropType[0];
+            this.t3 = new double[0];
+            this.t2 = new double[0];
+            this.tf = new double[0];
+            this.tw = new double[0];
+            this.t2b = new double[0];
+            this.tfb = new double[0];
 
-        this.mySapModel.PropFrame.GetAllFrameProperties(ref this.NumberNames,ref this.MyName,ref this.PropType,ref this.t3,ref this.t2,ref this.tf,ref this.tw,ref this.t2b,ref this.tfb);
+            this.mySapModel.PropFrame.GetAllFrameProperties(ref this.NumberNames, ref this.MyName, ref this.PropType, ref this.t3, ref this.t2, ref this.tf, ref this.tw, ref this.t2b, ref this.tfb);
         }
 
-     }
+    }
 
 
-public class etabsRectangleSection
+    public class etabsRectangleSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public double T2;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsRectangleSection(cSapModel mySapModel , string sectionName){
+        public etabsRectangleSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.T2 = 0;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetRectangle(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetRectangle(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
 
 
-public class etabsConcreteLSection
+    public class etabsConcreteLSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public double T2;
+        public string MatProp;
+        public double T3;
+        public double T2;
         public double Tf;
-	public double TwC;
-	public double TwT;
-	public bool MirrorAbout2;
-	public bool MirrorAbout3;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public double TwC;
+        public double TwT;
+        public bool MirrorAbout2;
+        public bool MirrorAbout3;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsConcreteLSection(cSapModel mySapModel , string sectionName){
+        public etabsConcreteLSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.T2 = 0;
-        this. Tf=0;
-	this.  TwC=0;
-	this.   TwT=0;
-	this.   MirrorAbout2= false;
-	this.   MirrorAbout3= false;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.TwC = 0;
+            this.TwT = 0;
+            this.MirrorAbout2 = false;
+            this.MirrorAbout3 = false;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetConcreteL(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. TwC,ref this. TwT, ref this. MirrorAbout2,ref this. MirrorAbout3 ,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetConcreteL(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.TwC, ref this.TwT, ref this.MirrorAbout2, ref this.MirrorAbout3, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
-public class etabsCircleSection
+    public class etabsCircleSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public string MatProp;
+        public double T3;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsCircleSection(cSapModel mySapModel , string sectionName){
+        public etabsCircleSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetCircle(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetCircle(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
 
-public class etabsAngleSection
+    public class etabsAngleSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public double T2;
+        public string MatProp;
+        public double T3;
+        public double T2;
         public double Tf;
-	public double Tw;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public double Tw;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsAngleSection(cSapModel mySapModel , string sectionName){
+        public etabsAngleSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.T2 = 0;
-        this. Tf=0;
-	this.  Tw=0;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetAngle(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. Tw,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetAngle(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
-public class etabsChannelSection
+    public class etabsChannelSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public double T2;
+        public string MatProp;
+        public double T3;
+        public double T2;
         public double Tf;
-	public double Tw;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public double Tw;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsChannelSection(cSapModel mySapModel , string sectionName){
+        public etabsChannelSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.T2 = 0;
-        this. Tf=0;
-	this.  Tw=0;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetChannel(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. Tw,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetChannel(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
 
 
 
-public class etabsConcreteTeeSection
+    public class etabsConcreteTeeSection
     {
         cSapModel mySapModel;
         public string FileName;
-	public string MatProp;
-	public double T3;
-	public double T2;
+        public string MatProp;
+        public double T3;
+        public double T2;
         public double Tf;
-	public double TwF;
-	public double TwT;
-	public bool MirrorAbout3;
-	public int Color;
-	public string Notes;
-	public string GUID;
+        public double TwF;
+        public double TwT;
+        public bool MirrorAbout3;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
-        public etabsConcreteTeeSection(cSapModel mySapModel , string sectionName){
+        public etabsConcreteTeeSection(cSapModel mySapModel, string sectionName)
+        {
 
-        this.mySapModel = mySapModel;
-        this.FileName = string.Empty;
-	this.MatProp = string.Empty;
-	this.T3 = 0;
-	this.T2 = 0;
-        this. Tf=0;
-	this.  TwF=0;
-	this.   TwT=0;
-	this.   MirrorAbout3= false;
-	this.Color = 0;
-	this.Notes = string.Empty;
-	this.GUID = string.Empty;
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.TwF = 0;
+            this.TwT = 0;
+            this.MirrorAbout3 = false;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
 
-        this.mySapModel.PropFrame.GetConcreteTee(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. TwF, ref this. MirrorAbout3 ,ref this.  Color,ref this.  Notes,ref this.  GUID);
+            this.mySapModel.PropFrame.GetConcreteTee(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.TwF, ref this.TwT, ref this.MirrorAbout3, ref this.Color, ref this.Notes, ref this.GUID);
         }
 
-     }
+    }
 
 
 }
