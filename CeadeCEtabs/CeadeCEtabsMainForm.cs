@@ -320,11 +320,29 @@ namespace CeadeCEtabs
         }
 
         public CeadeCShapes convertSectionPropertytoCeadecShape(string frameSectionPropertyName , eFramePropType sectionPropertyType ){
-           List<CeadeCObject> children =  new List<CeadeCObject>();
-
-           return new CeadeCShapes(children);
+           
+           CeadeCShapes shape ;
+           switch(sectionPropertyType) {
+             case eFramePropType.Rectangular  :
+              shape = CeadeCConvertRectangular(frameSectionPropertyName);
+             break;
+           }
+           return shape;
         }
 
+        public CeadeCShapes CeadeCConvertRectangular(string frameSectionPropertyName ){
+            etabsRectangleSection rectangleSectionData = new etabsRectangleSection(mySapModel,  frameSectionPropertyName );
+            Vector3 sectionCentroid = new Vector3(0,0,0);
+            List<Vector3> sectionVertices = new List<Vector3>();
+            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
+            sectionVertices.Add(new Vector3( sectionCentroid.x + rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
+            sectionVertices.Add(new Vector3( sectionCentroid.x + rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
+            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
+            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
+            
 
+            List<CeadeCObject> children =  new List<CeadeCObject>();
+            return new CeadeCShapes(children);
+        }
     }
 }
