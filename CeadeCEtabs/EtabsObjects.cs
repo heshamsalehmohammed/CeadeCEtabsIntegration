@@ -59,9 +59,6 @@ namespace EtabsObjects
             this.mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
         }
     }
-
-
-
     public class etabsSelectedObjects
     {
         cSapModel mySapModel;
@@ -91,7 +88,6 @@ namespace EtabsObjects
             return selectedType;
         }
     }
-
     public class etabsRunnedLoadCases
     {
         cSapModel mySapModel;
@@ -134,8 +130,6 @@ namespace EtabsObjects
             return cases;
         }
     }
-
-
     public class etabsCombos
     {
         cSapModel mySapModel;
@@ -152,7 +146,6 @@ namespace EtabsObjects
 
 
     }
-
     public class etabsLoadPatterns
     {
         cSapModel mySapModel;
@@ -169,7 +162,6 @@ namespace EtabsObjects
 
 
     }
-
     public class etabsSectionProperty
     {
         cSapModel mySapModel;
@@ -186,7 +178,40 @@ namespace EtabsObjects
 
 
     }
+    public class etabsSectionProperties
+    {
+        cSapModel mySapModel;
+        public double Area;
+        public double As2;
+        public double As3;
+        public double Torsion;
+        public double I22;
+        public double I33;
+        public double S22;
+        public double S33;
+        public double Z22;
+        public double Z33;
+        public double R22;
+        public double R33;
 
+        public etabsSectionProperties(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.Area = 0;
+            this.As2 = 0;
+            this.As3 = 0;
+            this.Torsion = 0;
+            this.I22 = 0;
+            this.I33 = 0;
+            this.S22 = 0;
+            this.S33 = 0;
+            this.Z22 = 0;
+            this.Z33 = 0;
+            this.R22 = 0;
+            this.R33 = 0;
+            this.mySapModel.PropFrame.GetSectProps(sectionName, ref this.Area, ref this.As2, ref this.As3, ref this.Torsion, ref this.I22, ref this.I33, ref this.S22, ref this.S33, ref this.Z22, ref this.Z33, ref this.R22, ref this.R33);
+        }
+    }
     public class etabsAllFrameSections
     {
         cSapModel mySapModel;
@@ -218,8 +243,6 @@ namespace EtabsObjects
         }
 
     }
-
-
     public class etabsRectangleSection
     {
         cSapModel mySapModel;
@@ -247,9 +270,6 @@ namespace EtabsObjects
         }
 
     }
-
-
-
     public class etabsConcreteLSection
     {
         cSapModel mySapModel;
@@ -287,7 +307,144 @@ namespace EtabsObjects
         }
 
     }
+    public class etabsISection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public double T2b;
+        public double Tfb;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
+        public etabsISection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.T2b = 0;
+            this.Tfb = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetISection(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.T2b, ref this.Tfb, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsDoubleChannelSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public double Dis;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsDoubleChannelSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Dis = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetDblChannel(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Dis, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsDoubleAngleSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public double Dis;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsDoubleAngleSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Dis = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetDblAngle(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Dis, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsSteelAngleSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public double r;
+        public bool MirrorAbout2;
+        public bool MirrorAbout3;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsSteelAngleSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.r = 0;
+            this.MirrorAbout2 = false;
+            this.MirrorAbout3 = false;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetSteelAngle(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.r, ref this.MirrorAbout2, ref this.MirrorAbout3, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
     public class etabsCircleSection
     {
         cSapModel mySapModel;
@@ -313,8 +470,6 @@ namespace EtabsObjects
         }
 
     }
-
-
     public class etabsAngleSection
     {
         cSapModel mySapModel;
@@ -346,7 +501,6 @@ namespace EtabsObjects
         }
 
     }
-
     public class etabsChannelSection
     {
         cSapModel mySapModel;
@@ -378,10 +532,6 @@ namespace EtabsObjects
         }
 
     }
-
-
-
-
     public class etabsConcreteTeeSection
     {
         cSapModel mySapModel;
@@ -417,6 +567,351 @@ namespace EtabsObjects
         }
 
     }
+    public class etabsSteelTeeSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public double r;
+        public bool MirrorAbout3;
+        public int Color;
+        public string Notes;
+        public string GUID;
 
+        public etabsSteelTeeSection(cSapModel mySapModel, string sectionName)
+        {
 
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.r = 0;
+            this.MirrorAbout3 = false;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetSteelTee(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.r, ref this.MirrorAbout3, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsTeeSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsTeeSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetTee(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsTubeSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public double Tf;
+        public double Tw;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsTubeSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetTube(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Tf, ref this.Tw, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsPipeSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double TW;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsPipeSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.TW = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetPipe(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.TW, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsRodSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsRodSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetRod(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsPlateSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+        public string MatProp;
+        public double T3;
+        public double T2;
+        public int Color;
+        public string Notes;
+        public string GUID;
+
+        public etabsPlateSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.FileName = string.Empty;
+            this.MatProp = string.Empty;
+            this.T3 = 0;
+            this.T2 = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+
+            this.mySapModel.PropFrame.GetPlate(sectionName, ref this.FileName, ref this.MatProp, ref this.T3, ref this.T2, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+
+    }
+    public class etabsGetCoverPlatedI
+    {
+        cSapModel mySapModel;
+        public string SectName;
+        public double FyTopFlange;
+        public double FyWeb;
+        public double FyBotFlange;
+        public double Tc;
+        public double Bc;
+        public string MatPropTop;
+        public double Tcb;
+        public double Bcb;
+        public string MatPropBot;
+        public int Color;
+        public string Notes;
+        public string GUID;
+        public etabsGetCoverPlatedI(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.SectName = string.Empty;
+            this.FyTopFlange = 0;
+            this.FyWeb = 0;
+            this.FyBotFlange = 0;
+            this.Tc = 0;
+            this.Bc = 0;
+            this.MatPropTop = string.Empty;
+            this.Tcb = 0;
+            this.Bcb = 0;
+            this.MatPropBot = string.Empty;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+            this.mySapModel.PropFrame.GetCoverPlatedI(sectionName, ref this.SectName, ref this.FyTopFlange, ref this.FyWeb, ref this.FyBotFlange, ref this.Tc, ref this.Bc, ref this.MatPropTop, ref this.Tcb, ref this.Bcb, ref this.MatPropBot, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+    }
+    public class etabsFramePropertiesNames
+    {
+        cSapModel mySapModel;
+        public int NumberNames;
+        public string[] MyNames;
+        public etabsFramePropertiesNames(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberNames = 0;
+            this.MyNames = new string[0];
+            this.mySapModel.PropFrame.GetNameList(ref this.NumberNames, ref this.MyNames);
+        }
+    }
+    public class etabsSectionType
+    {
+        cSapModel mySapModel;
+        eFramePropType propType;
+        public etabsSectionType(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.propType = eFramePropType.Rectangular;
+            this.mySapModel.PropFrame.GetTypeOAPI(sectionName, ref this.propType);
+        }
+    }
+    public class etabsNonPrismaticSection
+    {
+        cSapModel mySapModel;
+        public int NumberItems;
+        public string[] StartSec;
+        public string[] EndSec;
+        public double[] MyLength;
+        public int[] MyType;
+        public int[] EI33;
+        public int[] EI22;
+        public int Color;
+        public string Notes;
+        public string GUID;
+        public etabsNonPrismaticSection(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberItems = 0;
+            this.StartSec = new string[0];
+            this.EndSec = new string[0];
+            this.MyLength = new double[0];
+            this.MyType = new int[0];
+            this.EI33 = new int[0];
+            this.EI22 = new int[0];
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+            this.mySapModel.PropFrame.GetNonPrismatic(sectionName, ref this.NumberItems, ref this.StartSec, ref this.EndSec, ref this.MyLength, ref this.MyType, ref this.EI33, ref this.EI22, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+    }
+    public class etabsFrameRebarType
+    {
+        // This is 0, 1 or 2, indicating the rebar design type.
+        //  0 - None
+        //  1 -	Column
+        //  2 -	Beam
+        cSapModel mySapModel;
+        public int MyType;
+        public etabsFrameRebarType(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.MyType = 0;
+            //This function applies only to the following section property types. Calling this function for any other type of frame section property returns an error.
+            //Concrete Tee
+            //Concrete Angle
+            //Concrete Rectangle
+            //Concrete Circle
+            this.mySapModel.PropFrame.GetTypeRebar(sectionName, ref MyType);
+        }
+    }
+    public class etabsRebarColumn
+    {
+        cSapModel mySapModel;
+        public string MatPropLong;
+        public string MatPropConfine;
+        public int Pattern;
+        public int ConfineType;
+        public double Cover;
+        public int NumberCBars;
+        public int NumberR3Bars;
+        public int NumberR2Bars;
+        public string RebarSize;
+        public string TieSize;
+        public double TieSpacingLongit;
+        public int Number2DirTieBars;
+        public int Number3DirTieBars;
+        public bool ToBeDesigned;
+        public etabsRebarColumn(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatPropLong = string.Empty;
+            this.MatPropConfine = string.Empty;
+            this.Pattern = 0;
+            this.ConfineType = 0;
+            this.Cover = 0;
+            this.NumberCBars = 0;
+            this.NumberR3Bars = 0;
+            this.NumberR2Bars = 0;
+            this.RebarSize = string.Empty;
+            this.TieSize = string.Empty;
+            this.TieSpacingLongit = 0;
+            this.Number2DirTieBars = 0;
+            this.Number3DirTieBars = 0;
+            this.ToBeDesigned = false;
+            this.mySapModel.PropFrame.GetRebarColumn(sectionName, ref this.MatPropLong, ref this.MatPropConfine, ref this.Pattern, ref this.ConfineType, ref this.Cover, ref this.NumberCBars, ref this.NumberR3Bars, ref this.NumberR2Bars, ref this.RebarSize, ref this.TieSize, ref this.TieSpacingLongit, ref this.Number2DirTieBars, ref this.Number3DirTieBars, ref this.ToBeDesigned);
+        }
+    }
+
+    public class etabsRebarBeam
+    {
+        cSapModel mySapModel;
+        public string MatPropLong;
+        public string MatPropConfine;
+        public double CoverTop;
+        public double CoverBot;
+        public double TopLeftArea;
+        public double TopRightArea;
+        public double BotLeftArea;
+        public double BotRightArea;
+        public etabsRebarBeam(cSapModel mySapModel, string sectionName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatPropLong = string.Empty;
+            this.MatPropConfine = string.Empty;
+            this.CoverTop = 0;
+            this.CoverBot = 0;
+            this.TopLeftArea = 0;
+            this.TopRightArea = 0;
+            this.BotLeftArea = 0;
+            this.BotRightArea = 0;
+            this.mySapModel.PropFrame.GetRebarBeam(sectionName, ref this.MatPropLong, ref this.MatPropConfine, ref this.CoverTop, ref this.CoverBot, ref this.TopLeftArea, ref this.TopRightArea, ref this.BotLeftArea, ref this.BotRightArea);
+        }
+    }
 }
