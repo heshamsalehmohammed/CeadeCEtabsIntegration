@@ -167,12 +167,12 @@ namespace EtabsObjects
 
     }
     // FrameObj
-    public class etabsSectionProperty
+    public class etabsFrameSectionProperty
     {
         cSapModel mySapModel;
         public string PropName;
         public string SAut;
-        public etabsSectionProperty(cSapModel mySapModel, string frameName)
+        public etabsFrameSectionProperty(cSapModel mySapModel, string frameName)
         {
             this.mySapModel = mySapModel;
             this.PropName = string.Empty;
@@ -935,7 +935,7 @@ namespace EtabsObjects
         }
     }
     public class etabsNonPrismaticSection
-    {
+    { 
         cSapModel mySapModel;
         public int NumberItems;
         public string[] StartSec;
@@ -1043,6 +1043,37 @@ namespace EtabsObjects
             this.BotLeftArea = 0;
             this.BotRightArea = 0;
             this.mySapModel.PropFrame.GetRebarBeam(sectionName, ref this.MatPropLong, ref this.MatPropConfine, ref this.CoverTop, ref this.CoverBot, ref this.TopLeftArea, ref this.TopRightArea, ref this.BotLeftArea, ref this.BotRightArea);
+        }
+    }
+    // Units
+    public class etabsDataBaseUnits
+    {
+        cSapModel mySapModel;
+        public eForce forceUnits;
+        public eLength lengthUnits;
+        public eTemperature temperatureUnits;
+        public etabsDataBaseUnits(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.forceUnits = eForce.N;
+            this.lengthUnits = eLength.mm;
+            this.temperatureUnits = eTemperature.C;
+            this.mySapModel.GetDatabaseUnits_2(ref this.forceUnits, ref this.lengthUnits, ref this.temperatureUnits);
+        }
+    }
+    public class etabsPresentUnits
+    {
+        cSapModel mySapModel;
+        public eForce forceUnits;
+        public eLength lengthUnits;
+        public eTemperature temperatureUnits;
+        public etabsPresentUnits(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.forceUnits = eForce.N;
+            this.lengthUnits = eLength.mm;
+            this.temperatureUnits = eTemperature.C;
+            this.mySapModel.GetPresentUnits_2(ref this.forceUnits, ref this.lengthUnits, ref this.temperatureUnits);
         }
     }
 }

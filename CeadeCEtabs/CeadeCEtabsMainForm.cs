@@ -31,6 +31,8 @@ namespace CeadeCEtabs
         List<string> Finishedcombonames;
         etabsAnalysisResults analysisResults;
 
+        etabsAllFrames etabsAllFrames;
+
         public void contact_CeadeC()
         {
             model model = new model();
@@ -90,15 +92,15 @@ namespace CeadeCEtabs
         public int contact_Etabs()
         {
             Clean();
-            if (etabsAttach() ==0)
+            if (etabsAttach() == 0)
             {
                 return 0;
             }
-            if (modelAttach()==0)
+            if (modelAttach() == 0)
             {
                 return 0;
             }
-            
+
             selected = new etabsSelectedObjects(mySapModel);
             selectedFrames = selected.selectedType(2);
             listBox2.Items.AddRange(selectedFrames.ToArray());
@@ -112,16 +114,13 @@ namespace CeadeCEtabs
             Finishedcombonames = combonames.comboNames.ToList<string>();
             listBox4.Items.AddRange(Finishedcombonames.ToArray());
 
-            
+
             if (getAnalysisResultForSelectedFrame() == 1)
             {
                 fillDataGridFromAnalysisResults();
             }
-
-
-
+            etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
             return 1;
-
         }
 
 
@@ -281,7 +280,7 @@ namespace CeadeCEtabs
             listBox4.ClearSelected();
             fillDataGridFromAnalysisResults();
             listBox4.SelectedIndexChanged += new EventHandler(ListBox4_SelectedIndexChanged);
-            
+
         }
 
         private void ListBox4_SelectedIndexChanged(object sender, EventArgs e)
@@ -290,7 +289,7 @@ namespace CeadeCEtabs
             listBox3.ClearSelected();
             fillDataGridFromAnalysisResults();
             listBox3.SelectedIndexChanged += new EventHandler(ListBox3_SelectedIndexChanged);
-            
+
         }
 
         private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,9 +306,10 @@ namespace CeadeCEtabs
         {
             if (listBox1.SelectedItem != null && listBox2.SelectedItem != null && (listBox3.SelectedItem != null || listBox4.SelectedItem != null))
             {
+                etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
                 string frameUniqueName = listBox2.SelectedItem.ToString();
-                etabsSectionProperty frameSectionProperty = new etabsSectionProperty(mySapModel, frameUniqueName);
-                etabsSectionType frameSectionType = new etabsSectionType(mySapModel,frameUniqueName); 
+                string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName,frameUniqueName)];
+                etabsSectionType frameSectionType = new etabsSectionType(mySapModel, frameUniqueName);
 
 
             }
