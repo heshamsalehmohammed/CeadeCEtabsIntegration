@@ -342,4 +342,36 @@ public class etabsAngleSection
 
      }
 
+public class etabsChannelSection
+    {
+        cSapModel mySapModel;
+        public string FileName;
+	public string MatProp;
+	public double T3;
+	public double T2;
+        public double Tf;
+	public double Tw;
+	public int Color;
+	public string Notes;
+	public string GUID;
+
+        public etabsChannelSection(cSapModel mySapModel , string sectionName){
+
+        this.mySapModel = mySapModel;
+        this.FileName = string.Empty;
+	this.MatProp = string.Empty;
+	this.T3 = 0;
+	this.T2 = 0;
+        this. Tf=0;
+	this.  Tw=0;
+	this.Color = 0;
+	this.Notes = string.Empty;
+	this.GUID = string.Empty;
+
+        this.mySapModel.PropFrame.GetChannel(sectionName ,ref this. FileName,ref this.  MatProp,ref this.  T3,ref this.  T2,  ref this. Tf,ref this. Tw,ref this.  Color,ref this.  Notes,ref this.  GUID);
+        }
+
+     }
+
+
 }
