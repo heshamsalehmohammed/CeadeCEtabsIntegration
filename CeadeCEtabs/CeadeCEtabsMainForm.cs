@@ -25,7 +25,6 @@ namespace CeadeCEtabs
 
         etabsSelectedObjects selected;
         List<string> selectedFrames;
-
         etabsRunnedLoadCases runnedCases;
         List<string> FinishedRunnedCases;
         etabsCombos combonames;
@@ -116,10 +115,10 @@ namespace CeadeCEtabs
             
             if (getAnalysisResultForSelectedFrame() == 1)
             {
-                
                 fillDataGridFromAnalysisResults();
-
             }
+
+
 
             return 1;
 
@@ -302,6 +301,22 @@ namespace CeadeCEtabs
         private void ListBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             getAnalysisResultForSelectedFrame();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem != null && listBox2.SelectedItem != null && (listBox3.SelectedItem != null || listBox4.SelectedItem != null))
+            {
+                string frameUniqueName = listBox2.SelectedItem.ToString();
+                etabsSectionProperty frameSectionProperty = new etabsSectionProperty(mySapModel, frameUniqueName);
+                etabsSectionType frameSectionType = new etabsSectionType(mySapModel,frameUniqueName); 
+
+
+            }
+            else
+            {
+                MessageBox.Show("No data to be exported. ");
+            }
         }
     }
 }

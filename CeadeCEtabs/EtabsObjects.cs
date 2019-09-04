@@ -7,6 +7,7 @@ using ETABS2016;
 
 namespace EtabsObjects
 {
+    // Analyze 
     public class etabsAnalysisResults
     {
         cSapModel mySapModel;
@@ -59,35 +60,6 @@ namespace EtabsObjects
             this.mySapModel.Results.FrameForce(objectName, itemType, ref this.NumberResults, ref this.Obj, ref this.ObjSta, ref this.Elm, ref this.ElmSta, ref this.LoadCase, ref this.StepType, ref this.StepNum, ref this.P, ref this.V2, ref this.V3, ref this.T, ref this.M2, ref this.M3);
         }
     }
-    public class etabsSelectedObjects
-    {
-        cSapModel mySapModel;
-        public int NumberItems;
-        public int[] ObjectType;
-        public string[] ObjectName;
-
-        public etabsSelectedObjects(cSapModel mySapModel)
-        {
-            this.mySapModel = mySapModel;
-            this.NumberItems = 0;
-            this.ObjectType = new int[0];
-            this.ObjectName = new string[0];
-            this.mySapModel.SelectObj.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
-        }
-        public List<string> selectedType(int type)
-        {
-            // Object Type  :           // 1 -  Point object            // 2 -  Frame object            // 3 -  Cable object            // 4 -  Tendon object            // 5 -  Area object            // 6 -  Solid object            // 7 -  Link object
-            List<string> selectedType = new List<string>();
-            for (int i = 0; i < this.NumberItems; i++)
-            {
-                if (this.ObjectType[i] == type)
-                {
-                    selectedType.Add(this.ObjectName[i]);
-                }
-            }
-            return selectedType;
-        }
-    }
     public class etabsRunnedLoadCases
     {
         cSapModel mySapModel;
@@ -130,6 +102,37 @@ namespace EtabsObjects
             return cases;
         }
     }
+    // SelectObj
+    public class etabsSelectedObjects
+    {
+        cSapModel mySapModel;
+        public int NumberItems;
+        public int[] ObjectType;
+        public string[] ObjectName;
+
+        public etabsSelectedObjects(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberItems = 0;
+            this.ObjectType = new int[0];
+            this.ObjectName = new string[0];
+            this.mySapModel.SelectObj.GetSelected(ref this.NumberItems, ref this.ObjectType, ref this.ObjectName);
+        }
+        public List<string> selectedType(int type)
+        {
+            // Object Type  :           // 1 -  Point object            // 2 -  Frame object            // 3 -  Cable object            // 4 -  Tendon object            // 5 -  Area object            // 6 -  Solid object            // 7 -  Link object
+            List<string> selectedType = new List<string>();
+            for (int i = 0; i < this.NumberItems; i++)
+            {
+                if (this.ObjectType[i] == type)
+                {
+                    selectedType.Add(this.ObjectName[i]);
+                }
+            }
+            return selectedType;
+        }
+    }
+    // RespCombo
     public class etabsCombos
     {
         cSapModel mySapModel;
@@ -146,6 +149,7 @@ namespace EtabsObjects
 
 
     }
+    // LoadPatterns
     public class etabsLoadPatterns
     {
         cSapModel mySapModel;
@@ -162,12 +166,12 @@ namespace EtabsObjects
 
 
     }
+    // FrameObj
     public class etabsSectionProperty
     {
         cSapModel mySapModel;
         public string PropName;
         public string SAut;
-
         public etabsSectionProperty(cSapModel mySapModel, string frameName)
         {
             this.mySapModel = mySapModel;
@@ -175,10 +179,138 @@ namespace EtabsObjects
             this.SAut = string.Empty;
             this.mySapModel.FrameObj.GetSection(frameName, ref this.PropName, ref this.SAut);
         }
-
-
     }
-    public class etabsSectionProperties
+    public class etabsFrameNames
+    {
+        cSapModel mySapModel;
+        public int NumberNames;
+        public string[] MyNames;
+        public etabsFrameNames(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberNames = 0;
+            this.MyNames = new string[0];
+            this.mySapModel.FrameObj.GetNameList(ref this.NumberNames, ref this.MyNames);
+        }
+    }
+    public class etabsFrameLocalAxes
+    {
+        cSapModel mySapModel;
+        public double Ang;
+        public bool Advanced;
+        public etabsFrameLocalAxes(cSapModel mySapModel, string frameName)
+        {
+            this.mySapModel = mySapModel;
+            this.Ang = 0;
+            this.Advanced = false;
+            this.mySapModel.FrameObj.GetLocalAxes(frameName, ref this.Ang, ref this.Advanced);
+        }
+    }
+    public class etabsFrameEndPointNames
+    {
+        cSapModel mySapModel;
+        public string Point1Name;
+        public string Point2Name;
+        public etabsFrameEndPointNames(cSapModel mySapModel, string frameName)
+        {
+            this.mySapModel = mySapModel;
+            this.Point1Name = string.Empty;
+            this.Point2Name = string.Empty;
+            this.mySapModel.FrameObj.GetPoints(frameName, ref this.Point1Name, ref this.Point2Name);
+        }
+    }
+    public class etabsFramePierName
+    {
+        cSapModel mySapModel;
+        string PierName;
+        public etabsFramePierName(cSapModel mySapModel, string frameName)
+        {
+            this.mySapModel = mySapModel;
+            this.PierName = string.Empty;
+            this.mySapModel.FrameObj.GetPier(frameName, ref this.PierName);
+        }
+    }
+    public class etabsFrameTransformationMatrix
+    {
+        cSapModel mySapModel;
+        public double[] Value;
+        public etabsFrameTransformationMatrix(cSapModel mySapModel, string frameName, bool IsGlobal)
+        {
+            this.mySapModel = mySapModel;
+            this.Value = new double[0];
+            this.mySapModel.FrameObj.GetTransformationMatrix(frameName, ref this.Value, IsGlobal);
+        }
+    }
+    public class etabsFrameOutputStations
+    {
+        cSapModel mySapModel;
+        public int MyType;
+        public double MaxSegSize;
+        public int MinSections;
+        public bool NoOutPutAndDesignAtElementEnds;
+        public bool NoOutPutAndDesignAtPointLoads;
+        public etabsFrameOutputStations(cSapModel mySapModel, string frameName)
+        {
+            this.mySapModel = mySapModel;
+            this.MyType = 0;
+            this.MaxSegSize = 0;
+            this.NoOutPutAndDesignAtElementEnds = false;
+            this.NoOutPutAndDesignAtPointLoads = false;
+            this.mySapModel.FrameObj.GetOutputStations(frameName, ref this.MyType, ref this.MaxSegSize, ref this.MinSections, ref this.NoOutPutAndDesignAtElementEnds, ref this.NoOutPutAndDesignAtPointLoads);
+        }
+    }
+    public class etabsAllFrames
+    {
+        cSapModel mySapModel;
+        public int NumberNames;
+        public string[] MyName;
+        public string[] PropName;
+        public string[] StoryName;
+        public string[] PointName1;
+        public string[] PointName2;
+        public double[] Point1X;
+        public double[] Point1Y;
+        public double[] Point1Z;
+        public double[] Point2X;
+        public double[] Point2Y;
+        public double[] Point2Z;
+        public double[] Angle;
+        public double[] Offset1X;
+        public double[] Offset2X;
+        public double[] Offset1Y;
+        public double[] Offset2Y;
+        public double[] Offset1Z;
+        public double[] Offset2Z;
+        public int[] CardinalPoint;
+
+        public etabsAllFrames(cSapModel mySapModel, string csys)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberNames = 0;
+            this.MyName = new string[0];
+            this.PropName = new string[0];
+            this.StoryName = new string[0];
+            this.PointName1 = new string[0];
+            this.PointName2 = new string[0];
+            this.Point1X = new double[0];
+            this.Point1Y = new double[0];
+            this.Point1Z = new double[0];
+            this.Point2X = new double[0];
+            this.Point2Y = new double[0];
+            this.Point2Z = new double[0];
+            this.Angle = new double[0];
+            this.Offset1X = new double[0];
+            this.Offset2X = new double[0];
+            this.Offset1Y = new double[0];
+            this.Offset2Y = new double[0];
+            this.Offset1Z = new double[0];
+            this.Offset2Z = new double[0];
+            this.CardinalPoint = new int[0];
+            this.mySapModel.FrameObj.GetAllFrames(ref this.NumberNames, ref this.MyName, ref this.PropName, ref this.StoryName, ref this.PointName1, ref this.PointName2, ref this.Point1X, ref this.Point1Y, ref this.Point1Z, ref this.Point2X, ref this.Point2Y, ref this.Point2Z, ref this.Angle, ref this.Offset1X, ref this.Offset2X, ref this.Offset1Y, ref this.Offset2Y, ref this.Offset1Z, ref this.Offset2Z, ref this.CardinalPoint);
+        }
+    }
+    //PropFrame
+    public class etabsSectionAreaProperties
     {
         cSapModel mySapModel;
         public double Area;
@@ -194,7 +326,7 @@ namespace EtabsObjects
         public double R22;
         public double R33;
 
-        public etabsSectionProperties(cSapModel mySapModel, string sectionName)
+        public etabsSectionAreaProperties(cSapModel mySapModel, string sectionName)
         {
             this.mySapModel = mySapModel;
             this.Area = 0;
@@ -888,7 +1020,6 @@ namespace EtabsObjects
             this.mySapModel.PropFrame.GetRebarColumn(sectionName, ref this.MatPropLong, ref this.MatPropConfine, ref this.Pattern, ref this.ConfineType, ref this.Cover, ref this.NumberCBars, ref this.NumberR3Bars, ref this.NumberR2Bars, ref this.RebarSize, ref this.TieSize, ref this.TieSpacingLongit, ref this.Number2DirTieBars, ref this.Number3DirTieBars, ref this.ToBeDesigned);
         }
     }
-
     public class etabsRebarBeam
     {
         cSapModel mySapModel;
