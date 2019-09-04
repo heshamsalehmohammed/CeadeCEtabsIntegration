@@ -318,5 +318,13 @@ namespace CeadeCEtabs
                 MessageBox.Show("No data to be exported. ");
             }
         }
+
+        public CeadeCShapes convertSectionPropertytoCeadecShape(string frameSectionPropertyName , eFramePropType sectionPropertyType ){
+           List<CeadeCObject> children =  new List<CeadeCObject>();
+
+           return new CeadeCShapes(children);
+        }
+
+
     }
 }
