@@ -926,7 +926,7 @@ namespace EtabsObjects
     public class etabsSectionType
     {
         cSapModel mySapModel;
-        eFramePropType propType;
+        public eFramePropType propType;
         public etabsSectionType(cSapModel mySapModel, string sectionName)
         {
             this.mySapModel = mySapModel;

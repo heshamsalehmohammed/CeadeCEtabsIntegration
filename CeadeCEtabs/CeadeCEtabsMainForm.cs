@@ -33,59 +33,21 @@ namespace CeadeCEtabs
 
         etabsAllFrames etabsAllFrames;
 
-        public void contact_CeadeC()
+        public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
             model model = new model();
-
-            CeadeCRectangles rectangle1 = new CeadeCRectangles(
-                new List<Vector3>() {
-                new Vector3(0, 0, 0) ,
-                new Vector3(500, 0, 0) ,
-                new Vector3(500, 500, 0),
-                new Vector3(0,500,0),
-                new Vector3(0,0,0)
-               });
-            rectangle1.shapeChildType = "solid";
-
-            CeadeCRectangles rectangle2 = new CeadeCRectangles(
-                new List<Vector3>() {
-                new Vector3(50, 50, 0) ,
-                new Vector3(450, 50, 0) ,
-                new Vector3(450, 450, 0),
-                new Vector3(50,450,0),
-                new Vector3(50,50,0)
-                });
-            rectangle2.shapeChildType = "rebarsObject";
-            rectangle2.rebars = new RectangleRebar(10, 400, false, true, true);
-
-            var singleRebar1 = new CeadeCSingleRebar(new Vector3(50, 50, 0), 10, "mm", true);
-            rectangle2.rebars.singleRebars.Add(singleRebar1);
-
-            var singleRebar2 = new CeadeCSingleRebar(new Vector3(450, 50, 0), 10, "mm", true);
-            rectangle2.rebars.singleRebars.Add(singleRebar2);
-
-            var singleRebar3 = new CeadeCSingleRebar(new Vector3(450, 450, 0), 10, "mm", true);
-            rectangle2.rebars.singleRebars.Add(singleRebar3);
-
-            var singleRebar4 = new CeadeCSingleRebar(new Vector3(50, 450, 0), 10, "mm", true);
-            rectangle2.rebars.singleRebars.Add(singleRebar4);
-
-            CeadeCShapes shape1 = new CeadeCShapes(new List<CeadeCObject>() { rectangle1, rectangle2 });
-            model.objects.Add(shape1);
-
-
+            for (int i = 0; i < ParsedEtabsObjects.Count; i++)
+            {
+                if (ParsedEtabsObjects[i] != null)
+                {
+                    model.objects.Add(ParsedEtabsObjects[i]);
+                }
+            }
             string result = JsonConvert.SerializeObject(model);
-
             byte[] byt = System.Text.Encoding.UTF8.GetBytes(result);
-
             // convert the byte array to a Base64 string
-
             string strModified = Convert.ToBase64String(byt);
-
-
             System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php" + "?" + "model=" + strModified);
-
-
         }
 
 
@@ -308,10 +270,12 @@ namespace CeadeCEtabs
             {
                 etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
                 string frameUniqueName = listBox2.SelectedItem.ToString();
-                string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName,frameUniqueName)];
+                string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName, frameUniqueName)];
                 etabsSectionType frameSectionType = new etabsSectionType(mySapModel, frameUniqueName);
 
-
+                List<CeadeCObject> ParsedEtabsObjects = new List<CeadeCObject>();
+                ParsedEtabsObjects.Add(convertSectionPropertytoCeadecShape(frameSectionPropertyName, frameSectionType.propType));
+                contact_CeadeC(ParsedEtabsObjects);
             }
             else
             {
@@ -319,34 +283,73 @@ namespace CeadeCEtabs
             }
         }
 
-        public CeadeCShapes convertSectionPropertytoCeadecShape(string frameSectionPropertyName , eFramePropType sectionPropertyType ){
-           
-           CeadeCShapes shape ;
-           switch(sectionPropertyType) {
-             case eFramePropType.Rectangular  :
-              shape = CeadeCConvertRectangular(frameSectionPropertyName);
-             break;
-           }
-           return shape;
+        public CeadeCShapes convertSectionPropertytoCeadecShape(string frameSectionPropertyName, eFramePropType sectionPropertyType)
+        {
+
+            CeadeCShapes shape = null;
+            switch (sectionPropertyType)
+            {
+                case eFramePropType.Rectangular:
+                    shape = CeadeCConvertRectangular(frameSectionPropertyName);
+                    break;
+            }
+            return shape;
         }
 
-        public CeadeCShapes CeadeCConvertRectangular(string frameSectionPropertyName ){
-            List<CeadeCObject> children =  new List<CeadeCObject>();
+        public CeadeCShapes CeadeCConvertRectangular(string frameSectionPropertyName)
+        {
+            List<CeadeCObject> children = new List<CeadeCObject>();
             // Parse solid 
-            etabsRectangleSection rectangleSectionData = new etabsRectangleSection(mySapModel,  frameSectionPropertyName );
-            Vector3 sectionCentroid = new Vector3(0,0,0);
+            etabsRectangleSection rectangleSectionData = new etabsRectangleSection(mySapModel, frameSectionPropertyName);
+            Vector3 sectionCentroid = new Vector3(0, 0, 0);
             List<Vector3> sectionVertices = new List<Vector3>();
-            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
-            sectionVertices.Add(new Vector3( sectionCentroid.x + rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
-            sectionVertices.Add(new Vector3( sectionCentroid.x + rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
-            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y + rectangleSectionData.T2 / 2 , 0 ));
-            sectionVertices.Add(new Vector3( sectionCentroid.x - rectangleSectionData.T3 / 2 , sectionCentroid.y - rectangleSectionData.T2 / 2 , 0 ));
-            CeadeCRectangles solid_Rectangle = new CeadeCRectangles( sectionVertices );
+            Vector3 p1 = new Vector3(sectionCentroid.x - rectangleSectionData.T3 / 2, sectionCentroid.y - rectangleSectionData.T2 / 2, 0);
+            sectionVertices.Add(p1);
+            Vector3 p2 = new Vector3(sectionCentroid.x + rectangleSectionData.T3 / 2, sectionCentroid.y - rectangleSectionData.T2 / 2, 0);
+            sectionVertices.Add(p2);
+            Vector3 p3 = new Vector3(sectionCentroid.x + rectangleSectionData.T3 / 2, sectionCentroid.y + rectangleSectionData.T2 / 2, 0);
+            sectionVertices.Add(p3);
+            Vector3 p4 = new Vector3(sectionCentroid.x - rectangleSectionData.T3 / 2, sectionCentroid.y + rectangleSectionData.T2 / 2, 0);
+            sectionVertices.Add(p4);
+            sectionVertices.Add(p1);
+            CeadeCRectangles solid_Rectangle = new CeadeCRectangles(sectionVertices);
             solid_Rectangle.shapeChildType = "solid";
             children.Add(solid_Rectangle);
             // Parse RFT
+            etabsFrameRebarType rebarType = new etabsFrameRebarType(mySapModel, frameSectionPropertyName);
+            if (rebarType.MyType == 1) // column rebar
+            {
+                etabsRebarColumn rebarData = new etabsRebarColumn(mySapModel, frameSectionPropertyName);
+                CeadeCRectangles rebarRectangle = new CeadeCRectangles(
+                new List<Vector3>() {
+                new Vector3(p1.x + rebarData.Cover, p1.y + rebarData.Cover, 0) ,
+                new Vector3(p2.x - rebarData.Cover, p2.y + rebarData.Cover, 0) ,
+                new Vector3(p1.x - rebarData.Cover, p1.y - rebarData.Cover, 0),
+                new Vector3(p1.x + rebarData.Cover, p1.y - rebarData.Cover, 0),
+                new Vector3(p1.x + rebarData.Cover, p1.y + rebarData.Cover, 0)
+                });
+                rebarRectangle.shapeChildType = "rebarsObject";
+                rebarRectangle.rebars = new RectangleRebar(0,0,true,true,true);
 
-            
+                var singleRebar1 = new CeadeCSingleRebar(new Vector3(50, 50, 0), 10, "mm", true);
+                rebarRectangle.rebars.singleRebars.Add(singleRebar1);
+
+                var singleRebar2 = new CeadeCSingleRebar(new Vector3(450, 50, 0), 10, "mm", true);
+                rebarRectangle.rebars.singleRebars.Add(singleRebar2);
+
+                var singleRebar3 = new CeadeCSingleRebar(new Vector3(450, 450, 0), 10, "mm", true);
+                rebarRectangle.rebars.singleRebars.Add(singleRebar3);
+
+                var singleRebar4 = new CeadeCSingleRebar(new Vector3(50, 450, 0), 10, "mm", true);
+                rebarRectangle.rebars.singleRebars.Add(singleRebar4);
+                children.Add(rebarRectangle);
+            }
+            else if (rebarType.MyType == 2) // beam rabar
+            {
+                etabsRebarBeam rebarData = new etabsRebarBeam(mySapModel, frameSectionPropertyName);
+
+            }
+
             return new CeadeCShapes(children);
         }
     }

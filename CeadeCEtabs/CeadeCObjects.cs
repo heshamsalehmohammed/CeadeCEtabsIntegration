@@ -8,8 +8,8 @@ namespace CeadeCEtabs
 {
     public class Vector3
     {
-        public float x, y, z;
-        public Vector3(float x, float y, float z)
+        public double x, y, z;
+        public Vector3(double x, double y, double z)
         {
             this.x = x;
             this.y = y;
