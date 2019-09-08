@@ -1076,4 +1076,23 @@ namespace EtabsObjects
             this.mySapModel.GetPresentUnits_2(ref this.forceUnits, ref this.lengthUnits, ref this.temperatureUnits);
         }
     }
+    // RebarsProps
+    public class etabsRebarData
+    {
+        cSapModel mySapModel;
+        public double Area;
+        public double Diameter;
+        
+        public etabsRebarData(cSapModel mySapModel, string RebarName)
+        {
+            this.mySapModel = mySapModel;
+            this.Area = 0;
+            this.Diameter = 0;
+            this.mySapModel.GetRebarProps(RebarName,ref this.Area, ref this.Diameter);
+        }
+    }
+
+
+
+
 }
