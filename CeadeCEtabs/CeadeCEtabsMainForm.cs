@@ -87,9 +87,59 @@ namespace CeadeCEtabs
 
 
 
+        public string getCurrentEtabsLengthUnit()
+        {
+            etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
+            switch (LU.lengthUnits)
+            {
+                case eLength.cm:
+                    return "cm";
+                    break;
+                case eLength.ft:
+                    return "ft";
+                    break;
+                case eLength.inch:
+                    return "in";
+                    break;
+                case eLength.m:
+                    return "m";
+                    break;
+                case eLength.micron:
+                    return "micron";
+                    break;
+                case eLength.mm:
+                    return "mm";
+                    break;
+            }
+            return "null";
+        }
 
-
-
+        public string getCurrentEtabsForceUnit()
+        {
+            etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
+            switch (LU.forceUnits)
+            {
+                case eForce.N:
+                    return "N";
+                    break;
+                case eForce.tonf:
+                    return "ton";
+                    break;
+                case eForce.kN:
+                    return "KN";
+                    break;
+                case eForce.lb:
+                    return "lb";
+                    break;
+                case eForce.kgf:
+                    return "kg";
+                    break;
+                case eForce.kip:
+                    return "kip";
+                    break;
+            }
+            return "null";
+        }
 
 
         private void Button1_Click(object sender, EventArgs e)
@@ -321,23 +371,24 @@ namespace CeadeCEtabs
             {
                 etabsRebarColumn rebarData = new etabsRebarColumn(mySapModel, frameSectionPropertyName);
                 etabsRebarData rebarSizeData = new etabsRebarData(mySapModel, rebarData.RebarSize );
+                etabsAllRebarData allRebData = new etabsAllRebarData(mySapModel);
                 Vector3 p1_RecRebar = new Vector3(p1.x + rebarData.Cover, p1.y + rebarData.Cover, 0);
                 Vector3 p2_RecRebar = new Vector3(p2.x - rebarData.Cover, p2.y + rebarData.Cover, 0);
-                Vector3 p3_RecRebar = new Vector3(p1.x - rebarData.Cover, p1.y - rebarData.Cover, 0);
-                Vector3 p4_RecRebar = new Vector3(p1.x + rebarData.Cover, p1.y - rebarData.Cover, 0);
+                Vector3 p3_RecRebar = new Vector3(p3.x - rebarData.Cover, p3.y - rebarData.Cover, 0);
+                Vector3 p4_RecRebar = new Vector3(p4.x + rebarData.Cover, p4.y - rebarData.Cover, 0);
                 CeadeCRectangles rebarRectangle = new CeadeCRectangles(new List<Vector3>() {p1_RecRebar,p2_RecRebar,p3_RecRebar,p4_RecRebar,p1_RecRebar});
                 rebarRectangle.shapeChildType = "rebarsObject";
-                rebarRectangle.rebars = new RectangleRebar(rebarSizeData.Diameter,0,true,true,true);
+                rebarRectangle.rebars = new RectangleRebar(rebarSizeData.Diameter, 0,true,true,true);
                 if(rebarData.NumberR3Bars > 2){
                   double rebarWidth = p2_RecRebar.x - p1_RecRebar.x ;
                   int internalRebarsNumbers = rebarData.NumberR3Bars - 2 ;
                   double internalRebarsSpacing = rebarWidth / ( internalRebarsNumbers + 1 );
                   for( double i = internalRebarsSpacing; i < rebarWidth ; i+= internalRebarsSpacing ){
-                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p1_RecRebar.x + i  , p1_RecRebar.y ,0), rebarSizeData.Diameter, "mm", true);
+                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p1_RecRebar.x + i  , p1_RecRebar.y ,0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                      rebarRectangle.rebars.singleRebars.Add(singleRebar);
                   }
                   for( double i = internalRebarsSpacing; i < rebarWidth ; i+= internalRebarsSpacing ){
-                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p4_RecRebar.x + i  , p4_RecRebar.y ,0), rebarSizeData.Diameter, "mm", true);
+                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p4_RecRebar.x + i  , p4_RecRebar.y ,0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                      rebarRectangle.rebars.singleRebars.Add(singleRebar);
                   }
                 }
@@ -346,25 +397,25 @@ namespace CeadeCEtabs
                   int internalRebarsNumbers = rebarData.NumberR2Bars - 2 ;
                   double internalRebarsSpacing = rebarHeight / ( internalRebarsNumbers + 1 );
                   for( double i = internalRebarsSpacing; i < rebarHeight ; i+= internalRebarsSpacing ){
-                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p1_RecRebar.x  , p1_RecRebar.y + i ,0), rebarSizeData.Diameter, "mm", true);
+                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p1_RecRebar.x  , p1_RecRebar.y + i ,0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                      rebarRectangle.rebars.singleRebars.Add(singleRebar);
                   }
                   for( double i = internalRebarsSpacing; i < rebarHeight ; i+= internalRebarsSpacing ){
-                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p2_RecRebar.x   , p2_RecRebar.y + i ,0), rebarSizeData.Diameter, "mm", true);
+                     var singleRebar = new CeadeCSingleRebar(new Vector3(  p2_RecRebar.x   , p2_RecRebar.y + i ,0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                      rebarRectangle.rebars.singleRebars.Add(singleRebar);
                   }
                 }
                 // Corner Rebars
-                var singleRebar1 = new CeadeCSingleRebar(p1_RecRebar, rebarSizeData.Diameter, "mm", true);
+                var singleRebar1 = new CeadeCSingleRebar(p1_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar1);
 
-                var singleRebar2 = new CeadeCSingleRebar(p2_RecRebar, rebarSizeData.Diameter, "mm", true);
+                var singleRebar2 = new CeadeCSingleRebar(p2_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar2);
 
-                var singleRebar3 = new CeadeCSingleRebar(p3_RecRebar, rebarSizeData.Diameter, "mm", true);
+                var singleRebar3 = new CeadeCSingleRebar(p3_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar3);
 
-                var singleRebar4 = new CeadeCSingleRebar(p4_RecRebar, rebarSizeData.Diameter, "mm", true);
+                var singleRebar4 = new CeadeCSingleRebar(p4_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar4);
                 children.Add(rebarRectangle);
             }
@@ -377,4 +428,10 @@ namespace CeadeCEtabs
             return new CeadeCShapes(children);
         }
     }
+
+
+
+
+
+
 }

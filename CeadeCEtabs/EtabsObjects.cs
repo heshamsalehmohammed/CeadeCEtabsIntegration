@@ -935,7 +935,7 @@ namespace EtabsObjects
         }
     }
     public class etabsNonPrismaticSection
-    { 
+    {
         cSapModel mySapModel;
         public int NumberItems;
         public string[] StartSec;
@@ -1082,16 +1082,35 @@ namespace EtabsObjects
         cSapModel mySapModel;
         public double Area;
         public double Diameter;
-        
+
         public etabsRebarData(cSapModel mySapModel, string RebarName)
         {
             this.mySapModel = mySapModel;
             this.Area = 0;
             this.Diameter = 0;
-            this.mySapModel.GetRebarProps(RebarName,ref this.Area, ref this.Diameter);
+            this.mySapModel.PropRebar.GetRebarProps(RebarName, ref this.Area, ref this.Diameter);
         }
     }
+    public class etabsAllRebarData
+    {
+        cSapModel mySapModel;
+        public int NumberNames;
+        public string[] MyName;
+        public double[] Areas;
+        public double[] Diameters;
+        public string[] MyGUID;
 
+        public etabsAllRebarData(cSapModel mySapModel)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberNames = 0;
+            this.MyName = new string[0];
+            this.Areas = new double[0];
+            this.Diameters = new double[0];
+            this.MyGUID = new string[0];
+            this.mySapModel.PropRebar.GetNameListWithData(ref this.NumberNames, ref this.MyName, ref this.Areas, ref this.Diameters, ref this.MyGUID);
+        }
+    }
 
 
 

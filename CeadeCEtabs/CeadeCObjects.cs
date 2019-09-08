@@ -206,13 +206,13 @@ namespace CeadeCEtabs
     public class RectangleRebar : CeadeCRebarsObject
     {
         public string type = "RectangleRebar";
-        public float defaultRebarDiameter;
-        public float spacing;
+        public double defaultRebarDiameter;
+        public double spacing;
         public bool start;
         public bool end;
         public bool corner;
 
-        public RectangleRebar(float defaultRebarDiameter, float spacing, bool start, bool end, bool corner)
+        public RectangleRebar(double defaultRebarDiameter, double spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;
@@ -267,10 +267,10 @@ namespace CeadeCEtabs
     public class CeadeCSingleRebar
     {
         public Vector3 vertex;
-        public float rebarDiameter;
+        public double rebarDiameter;
         public string rebarDiameterUnit;
         public bool Active;
-        public CeadeCSingleRebar(Vector3 vertex, float rebarDiameter, string rebarDiameterUnit, bool Active)
+        public CeadeCSingleRebar(Vector3 vertex, double rebarDiameter, string rebarDiameterUnit, bool Active)
         {
             this.vertex = vertex;
             this.rebarDiameter = rebarDiameter;
