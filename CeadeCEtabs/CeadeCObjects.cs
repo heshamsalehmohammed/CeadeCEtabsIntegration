@@ -136,14 +136,43 @@ namespace CeadeCEtabs
     public class CeadeCShapes : CeadeCObject
     {
         public string type = "shapes";
-
+        public ShapeAutoDesign AutoDesign;
         public CeadeCShapes(List<CeadeCObject> children)
         {
             this.children = children;
+            AutoDesign = new ShapeAutoDesign();
         }
 
     }
 
+    public class ShapeAutoDesign
+    {
+        public List<string> shapeUnit;
+        public List<double> fy;
+        public List<string> fyUnit;
+        public List<double> fcu;
+        public List<string> fcuUnit;
+        public List<double> P;
+        public List<string> PUnit;
+        public List<double> Mx;
+        public List<string> MxUnit;
+        public List<double> My;
+        public List<string> MyUnit;
+        public ShapeAutoDesign()
+        {
+            this.shapeUnit = new List<string>();
+            this.fy = new List<double>();
+            this.fyUnit = new List<string>();
+            this.fcu = new List<double>();
+            this.fcuUnit = new List<string>();
+            this.P = new List<double>();
+            this.PUnit = new List<string>();
+            this.Mx = new List<double>();
+            this.MxUnit = new List<string>();
+            this.My = new List<double>();
+            this.MyUnit = new List<string>();
+        }
+    }
 
     public class CeadeCRebarsObject
     {
@@ -171,13 +200,13 @@ namespace CeadeCEtabs
         public bool start;
         public bool end;
 
-        public LineRebar(float defaultRebarDiameter, float spacing, bool start,bool end)
+        public LineRebar(float defaultRebarDiameter, float spacing, bool start, bool end)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;
             this.start = start;
             this.end = end;
-        }       
+        }
 
     }
 
@@ -191,7 +220,7 @@ namespace CeadeCEtabs
         public bool end;
         public bool corner;
 
-        public PolylineRebar(float defaultRebarDiameter, float spacing, bool start, bool end,bool corner)
+        public PolylineRebar(float defaultRebarDiameter, float spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;

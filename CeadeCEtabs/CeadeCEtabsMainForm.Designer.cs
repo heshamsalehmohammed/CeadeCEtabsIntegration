@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CeadeCEtabsMainForm));
             this.button1 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
@@ -37,16 +38,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.P = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.M2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.M3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.V2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.V3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label4 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -93,6 +96,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label1.Location = new System.Drawing.Point(16, 123);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 20);
@@ -102,6 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label2.Location = new System.Drawing.Point(250, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 20);
@@ -111,6 +116,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label3.Location = new System.Drawing.Point(254, 343);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(163, 20);
@@ -146,45 +152,10 @@
             this.dataGridView1.Size = new System.Drawing.Size(730, 204);
             this.dataGridView1.TabIndex = 9;
             // 
-            // P
-            // 
-            this.P.HeaderText = "P";
-            this.P.Name = "P";
-            this.P.ReadOnly = true;
-            // 
-            // M2
-            // 
-            this.M2.HeaderText = "M2";
-            this.M2.Name = "M2";
-            this.M2.ReadOnly = true;
-            // 
-            // M3
-            // 
-            this.M3.HeaderText = "M3";
-            this.M3.Name = "M3";
-            this.M3.ReadOnly = true;
-            // 
-            // V2
-            // 
-            this.V2.HeaderText = "V2";
-            this.V2.Name = "V2";
-            this.V2.ReadOnly = true;
-            // 
-            // V3
-            // 
-            this.V3.HeaderText = "V3";
-            this.V3.Name = "V3";
-            this.V3.ReadOnly = true;
-            // 
-            // T
-            // 
-            this.T.HeaderText = "T";
-            this.T.Name = "T";
-            this.T.ReadOnly = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label4.Location = new System.Drawing.Point(521, 123);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(76, 20);
@@ -204,17 +175,65 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label5.Location = new System.Drawing.Point(521, 343);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(146, 20);
             this.label5.TabIndex = 12;
             this.label5.Text = "Straining Actions";
             // 
+            // P
+            // 
+            this.P.HeaderText = "P (ton)";
+            this.P.Name = "P";
+            this.P.ReadOnly = true;
+            // 
+            // M2
+            // 
+            this.M2.HeaderText = "M2 (ton.m)";
+            this.M2.Name = "M2";
+            this.M2.ReadOnly = true;
+            // 
+            // M3
+            // 
+            this.M3.HeaderText = "M3 (ton.m)";
+            this.M3.Name = "M3";
+            this.M3.ReadOnly = true;
+            // 
+            // V2
+            // 
+            this.V2.HeaderText = "V2 (ton)";
+            this.V2.Name = "V2";
+            this.V2.ReadOnly = true;
+            // 
+            // V3
+            // 
+            this.V3.HeaderText = "V3 (ton)";
+            this.V3.Name = "V3";
+            this.V3.ReadOnly = true;
+            // 
+            // T
+            // 
+            this.T.HeaderText = "T (ton.m)";
+            this.T.Name = "T";
+            this.T.ReadOnly = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(920, 146);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(177, 214);
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
             // CeadeCEtabsMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Maroon;
             this.ClientSize = new System.Drawing.Size(1269, 690);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.listBox1);
@@ -228,10 +247,12 @@
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.button1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "CeadeCEtabsMainForm";
             this.Text = "CeadeCEtabs";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +278,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn V2;
         private System.Windows.Forms.DataGridViewTextBoxColumn V3;
         private System.Windows.Forms.DataGridViewTextBoxColumn T;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

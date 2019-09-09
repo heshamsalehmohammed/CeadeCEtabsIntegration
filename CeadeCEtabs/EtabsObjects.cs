@@ -7,6 +7,83 @@ using ETABS2016;
 
 namespace EtabsObjects
 {
+    // material 
+    public class etabsMaterialType
+    {
+        cSapModel mySapModel;
+        public eMatType MatType;
+        public int SymType;
+        public etabsMaterialType(cSapModel mySapModel, string MaterialPropertyName)
+        {
+            // Steel	1	
+            // Concrete    2
+            // NoDesign    3
+            // Aluminum    4
+            // ColdFormed  5
+            // Rebar   6
+            // Tendon  7
+            // Masonry 8
+            this.mySapModel = mySapModel;
+            this.SymType = 0;
+            this.mySapModel.PropMaterial.GetTypeOAPI(MaterialPropertyName, ref this.MatType, ref this.SymType);
+        }
+    }
+    public class etabsMaterialConcrete
+    {
+        cSapModel mySapModel;
+        public double Fc;
+        public double Fcu;
+        public bool IsLightweight;
+        public double FcsFactor;
+        public int SSType;
+        public int SSHysType;
+        public double StrainAtFc;
+        public double StrainUltimate;
+        public double FrictionAngle;
+        public double DilatationalAngle;
+        public etabsMaterialConcrete(cSapModel mySapModel, string MaterialPropertyName)
+        {
+            this.mySapModel = mySapModel;
+            this.Fc = 0;
+            this.IsLightweight = false;
+            this.FcsFactor = 0;
+            this.SSType = 0;
+            this.SSHysType = 0;
+            this.StrainAtFc = 0;
+            this.StrainUltimate = 0;
+            this.FrictionAngle = 0;
+            this.DilatationalAngle = 0;
+            this.mySapModel.PropMaterial.GetOConcrete(MaterialPropertyName, ref this.Fc, ref this.IsLightweight, ref this.FcsFactor, ref this.SSType, ref this.SSHysType, ref this.StrainAtFc, ref this.StrainUltimate, ref this.FrictionAngle, ref this.DilatationalAngle);
+            this.Fcu = 1.25 * this.Fc;
+        }
+    }
+    public class etabsMaterialRebar
+    {
+        cSapModel mySapModel;
+        public double Fy;
+        public double Fu;
+        public double EFy;
+        public double EFu;
+        public int SSType;
+        public int SSHysType;
+        public double StrainAtHardening;
+        public double StrainUltimate;
+        public bool UseCaltransSSDefaults;
+        public etabsMaterialRebar(cSapModel mySapModel, string MaterialPropertyName)
+        {
+            this.mySapModel = mySapModel;
+            this.Fy = 0;
+            this.Fu = 0;
+            this.EFy = 0;
+            this.EFu = 0;
+            this.SSType = 0;
+            this.SSHysType = 0;
+            this.StrainAtHardening = 0;
+            this.StrainUltimate = 0;
+            this.UseCaltransSSDefaults = false;
+            this.mySapModel.PropMaterial.GetORebar(MaterialPropertyName, ref this.Fy, ref this.Fu, ref this.EFy, ref this.EFu, ref this.SSType, ref this.SSHysType, ref this.StrainAtHardening, ref this.StrainUltimate, ref this.UseCaltransSSDefaults);
+        }
+    }
     // Analyze 
     public class etabsAnalysisResults
     {
@@ -380,8 +457,8 @@ namespace EtabsObjects
         cSapModel mySapModel;
         public string FileName;
         public string MatProp;
-        public double T3;
-        public double T2;
+        public double T3; // depth
+        public double T2; // width
         public int Color;
         public string Notes;
         public string GUID;
@@ -1076,6 +1153,13 @@ namespace EtabsObjects
             this.mySapModel.GetPresentUnits_2(ref this.forceUnits, ref this.lengthUnits, ref this.temperatureUnits);
         }
     }
+    public static class etabsSetUnits
+    {
+        public static void etabsSetPresentUnits(cSapModel mySapModel, eForce forceUnit, eLength lengthUnit, eTemperature temperatureUnit)
+        {
+            mySapModel.SetPresentUnits_2(forceUnit, lengthUnit, temperatureUnit);
+        }
+    }
     // RebarsProps
     public class etabsRebarData
     {
@@ -1111,7 +1195,14 @@ namespace EtabsObjects
             this.mySapModel.PropRebar.GetNameListWithData(ref this.NumberNames, ref this.MyName, ref this.Areas, ref this.Diameters, ref this.MyGUID);
         }
     }
+    // sectionDesign
+    public class etabsReinforcedCorners
+    {
+        cSapModel mySapModel;
+        public int NumberItems;
+        public int[] PointNum;
+        public string[] RebarSize;
 
-
+    }
 
 }
