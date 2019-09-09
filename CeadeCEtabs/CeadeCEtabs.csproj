@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CeadeCEtabsSectionParser.cs" />
     <Compile Include="CeadeCObjects.cs" />
     <Compile Include="CeadeCEtabsMainForm.cs">
       <SubType>Form</SubType>
