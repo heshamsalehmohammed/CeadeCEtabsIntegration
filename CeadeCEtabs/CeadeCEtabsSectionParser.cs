@@ -8,6 +8,9 @@ using EtabsObjects;
 
 namespace CeadeCEtabsSectionParser
 {
-   
+   public static class CESectionParser
+   {
+       
+   }
 }
 
