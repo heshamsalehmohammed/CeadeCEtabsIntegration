@@ -1122,6 +1122,408 @@ namespace EtabsObjects
             this.mySapModel.PropFrame.GetRebarBeam(sectionName, ref this.MatPropLong, ref this.MatPropConfine, ref this.CoverTop, ref this.CoverBot, ref this.TopLeftArea, ref this.TopRightArea, ref this.BotLeftArea, ref this.BotRightArea);
         }
     }
+
+    // SDSection
+
+    public class etabsSDSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public int NumberItems;
+        public string[] ShapeName;
+        public int[] MyType;
+        public int DesignType;
+        public int Color;
+        public string Notes;
+        public string GUID;
+        public etabsSDSection(cSapModel mySapModel, string sectionName)
+        {
+
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.NumberItems = 0;
+            this.ShapeName = new string[0];
+            this.MyType = new int[0];
+
+            //1	I-Section
+            //2	Channel
+            //3	Tee
+            //4	Angle
+            //5	Double Angle
+            //6	Box
+            //7	Pipe
+            //8	Plate
+            //61	Concrete Tee
+            //62	Concrete L
+            //63	Concrete Box
+            //64	Concrete Pipe
+            //65	Concrete Cross
+            //101	Solid Rectangle
+            //102	Solid Circle
+            //103	Solid Segment
+            //104	Solid Sector
+            //201	Polygon
+            //301	Reinforcing Single
+            //302	Reinforcing Line
+            //303	Reinforcing Rectangle
+            //304	Reinforcing Circle
+            //401	Reference Line
+            //402	Reference Circle
+
+            this.DesignType = 0;
+            this.Color = 0;
+            this.Notes = string.Empty;
+            this.GUID = string.Empty;
+            this.mySapModel.PropFrame.GetSDSection(sectionName, ref this.MatProp, ref this.NumberItems, ref this.ShapeName, ref this.MyType, ref this.DesignType, ref this.Color, ref this.Notes, ref this.GUID);
+        }
+    }
+    public class SDSectionAngleSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string PropName;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double Bf;
+        public double Tf;
+        public double Tw;
+        public double Rotation;
+        public SDSectionAngleSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.PropName = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.Bf = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Rotation = 0;
+            this.mySapModel.PropFrame.SDShape.GetAngle(sectionName, shapeName, ref this.MatProp, ref this.PropName, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.Bf, ref this.Tf, ref this.Tw, ref this.Rotation);
+        }
+    }
+    public class SDSectionConcreteLSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string PropName;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double Bf;
+        public double Tf;
+        public double Tw;
+        public double Rotation;
+        public bool MirrorAbout2;
+        public bool MirrorAbout3;
+        public SDSectionConcreteLSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.PropName = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.Bf = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Rotation = 0;
+            this.MirrorAbout2 = false;
+            this.MirrorAbout3 = false;
+            this.mySapModel.PropFrame.SDShape.GetConcreteL(sectionName, shapeName, ref this.MatProp, ref this.PropName, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.Bf, ref this.Tf, ref this.Tw, ref this.Rotation, ref this.MirrorAbout2, ref this.MirrorAbout3);
+        }
+    }
+    public class SDSectionConcreteTeeSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string PropName;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double Bf;
+        public double Tf;
+        public double Tw;
+        public double Rotation;
+        public bool MirrorAbout3;
+        public SDSectionConcreteTeeSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.PropName = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.Bf = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Rotation = 0;
+            this.MirrorAbout3 = false;
+            this.mySapModel.PropFrame.SDShape.GetConcreteTee(sectionName, shapeName, ref this.MatProp, ref this.PropName, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.Bf, ref this.Tf, ref this.Tw, ref this.Rotation, ref this.MirrorAbout3);
+        }
+    }
+    public class SDSectionISection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string PropName;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double Bf;
+        public double Tf;
+        public double Tw;
+        public double Bfb;
+        public double Tfb;
+        public double Rotation;
+
+        public SDSectionISection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.PropName = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.Bf = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Bfb = 0;
+            this.Tfb = 0;
+            this.Rotation = 0;
+            this.mySapModel.PropFrame.SDShape.GetISection(sectionName, shapeName, ref this.MatProp, ref this.PropName, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.Bf, ref this.Tf, ref this.Tw, ref this.Bfb, ref this.Tfb, ref this.Rotation);
+        }
+    }
+    public class SDSectionTeeSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string PropName;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double Bf;
+        public double Tf;
+        public double Tw;
+        public double Rotation;
+
+        public SDSectionTeeSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.PropName = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.Bf = 0;
+            this.Tf = 0;
+            this.Tw = 0;
+            this.Rotation = 0;
+            this.mySapModel.PropFrame.SDShape.GetTee(sectionName, shapeName, ref this.MatProp, ref this.PropName, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.Bf, ref this.Tf, ref this.Tw, ref this.Rotation);
+        }
+    }
+    public class SDSectionSolidRectangleSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string SSOverwrite;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double W;
+        public double Rotation;
+        public bool Reinf;
+        public string MatRebar;
+
+        public SDSectionSolidRectangleSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.SSOverwrite = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.W = 0;
+            this.Rotation = 0;
+            this.Reinf = false;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetSolidRect(sectionName, shapeName, ref this.MatProp, ref this.SSOverwrite, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.H, ref this.W, ref this.Rotation, ref this.Reinf, ref this.MatRebar);
+        }
+    }
+    public class SDSectionSolidCircleSection
+    {
+        cSapModel mySapModel;
+        public string MatProp;
+        public string SSOverwrite;
+        public int Color;
+        public double XCenter;
+        public double YCenter;
+        public double Diameter;
+        public bool Reinf;
+        public int NumberBars;
+        public double Rotation;
+        public double Cover;
+        public string RebarSize;
+        public string MatRebar;
+
+        public SDSectionSolidCircleSection(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.MatProp = string.Empty;
+            this.SSOverwrite = string.Empty;
+            this.Color = 0;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.Diameter = 0;
+            this.Reinf = false;
+            this.NumberBars = 0;
+            this.Rotation = 0;
+            this.Cover = 0;
+            this.RebarSize = string.Empty;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetSolidCircle(sectionName, shapeName, ref this.MatProp, ref this.SSOverwrite, ref this.Color, ref this.XCenter, ref this.YCenter, ref this.Diameter, ref this.Reinf, ref this.NumberBars, ref this.Rotation, ref this.Cover, ref this.RebarSize, ref this.MatRebar);
+        }
+    }
+    public class SDSectionReinfSingle
+    {
+        cSapModel mySapModel;
+        public double XCenter;
+        public double YCenter;
+        public string RebarSize;
+        public string MatRebar;
+
+        public SDSectionReinfSingle(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.RebarSize = string.Empty;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetReinfSingle(sectionName, shapeName, ref this.XCenter, ref this.YCenter, ref this.RebarSize, ref this.MatRebar);
+        }
+    }
+    public class SDSectionReinfRectangle
+    {
+        cSapModel mySapModel;
+        public double XCenter;
+        public double YCenter;
+        public double H;
+        public double W;
+        public double Rotation;
+        public string MatRebar;
+
+        public SDSectionReinfRectangle(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.H = 0;
+            this.W = 0;
+            this.Rotation = 0;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetReinfRectangular(sectionName, shapeName, ref this.XCenter, ref this.YCenter, ref this.H, ref this.W, ref this.Rotation, ref this.MatRebar);
+        }
+    }
+    public class SDSectionReinfCircle
+    {
+        cSapModel mySapModel;
+        public double XCenter;
+        public double YCenter;
+        public double Diameter;
+        public int NumBars;
+        public double Rotation;
+        public string RebarSize;
+        public string MatRebar;
+
+        public SDSectionReinfCircle(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.XCenter = 0;
+            this.YCenter = 0;
+            this.Diameter = 0;
+            this.NumBars = 0;
+            this.Rotation = 0;
+            this.RebarSize = string.Empty;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetReinfCircle(sectionName, shapeName, ref this.XCenter, ref this.YCenter, ref this.Diameter, ref this.NumBars, ref this.Rotation, ref this.RebarSize, ref this.MatRebar);
+        }
+    }
+    public class SDSectionReinfCorner
+    {
+        cSapModel mySapModel;
+        public int NumberItems;
+        public int[] PointNum;
+        public string[] RebarSize;
+
+        public SDSectionReinfCorner(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberItems = 0;
+            this.PointNum = new int[0];
+            this.RebarSize = new string[0];
+            this.mySapModel.PropFrame.SDShape.GetReinfCorner(sectionName, shapeName, ref this.NumberItems, ref this.PointNum, ref this.RebarSize);
+        }
+    }
+    public class SDSectionReinfEdge
+    {
+        cSapModel mySapModel;
+        public int NumberItems;
+        public int[] EdgeNum;
+        public string[] RebarSize;
+        public double[] Spacing;
+        public double[] Cover;
+
+        public SDSectionReinfEdge(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.NumberItems = 0;
+            this.EdgeNum = new int[0];
+            this.RebarSize = new string[0];
+            this.Spacing = new double[0];
+            this.Cover = new double[0];
+            this.mySapModel.PropFrame.SDShape.GetReinfEdge(sectionName, shapeName, ref this.NumberItems, ref this.EdgeNum, ref this.RebarSize, ref this.Spacing, ref this.Cover);
+        }
+    }
+    public class SDSectionReinfLine
+    {
+        cSapModel mySapModel;
+        public double X1;
+        public double Y1;
+        public double X2;
+        public double Y2;
+        public double Spacing;
+        public string RebarSize;
+        public bool EndBars;
+        public string MatRebar;
+
+        public SDSectionReinfLine(cSapModel mySapModel, string sectionName, string shapeName)
+        {
+            this.mySapModel = mySapModel;
+            this.X1 = 0;
+            this.Y1 = 0;
+            this.X2 = 0;
+            this.Y2 = 0;
+            this.Spacing = 0;
+            this.RebarSize = string.Empty;
+            this.EndBars = false;
+            this.MatRebar = string.Empty;
+            this.mySapModel.PropFrame.SDShape.GetReinfLine(sectionName, shapeName, ref this.X1, ref this.Y1, ref this.X2, ref this.Y2, ref this.Spacing, ref this.RebarSize, ref this.EndBars, ref this.MatRebar);
+        }
+    }
     // Units
     public class etabsDataBaseUnits
     {

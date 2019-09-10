@@ -12,19 +12,22 @@ namespace CeadeCEtabsSectionParser
 {
    public static class CESectionParser
    {
-        public static CeadeCShapes convertSectionPropertytoCeadecShape(string frameSectionPropertyName, eFramePropType sectionPropertyType)
+        public static CeadeCShapes convertSectionPropertytoCeadecShape(cSapModel mySapModel, string frameSectionPropertyName, eFramePropType sectionPropertyType)
         {
 
             CeadeCShapes shape = null;
             switch (sectionPropertyType)
             {
                 case eFramePropType.Rectangular:
-                    shape = CeadeCConvertRectangular(frameSectionPropertyName);
+                    shape = CeadeCConvertRectangular(mySapModel,frameSectionPropertyName);
+                    break;
+                case eFramePropType.SD:
+                    shape = CeadeCConvertSD(mySapModel, frameSectionPropertyName);
                     break;
             }
             return shape;
         }
-        public static CeadeCShapes CeadeCConvertRectangular(string frameSectionPropertyName)
+        public static CeadeCShapes CeadeCConvertRectangular(cSapModel mySapModel, string frameSectionPropertyName)
         {
             CeadeCShapes Shape = null;
             List<CeadeCObject> children = new List<CeadeCObject>();
@@ -74,12 +77,12 @@ namespace CeadeCEtabsSectionParser
                     double internalRebarsSpacing = rebarWidth / (internalRebarsNumbers + 1);
                     for (double i = internalRebarsSpacing; i < rebarWidth; i += internalRebarsSpacing)
                     {
-                        var singleRebar = new CeadeCSingleRebar(new Vector3(p1_RecRebar.x + i, p1_RecRebar.y, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                        var singleRebar = new CeadeCSingleRebar(new Vector3(p1_RecRebar.x + i, p1_RecRebar.y, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                         rebarRectangle.rebars.singleRebars.Add(singleRebar);
                     }
                     for (double i = internalRebarsSpacing; i < rebarWidth; i += internalRebarsSpacing)
                     {
-                        var singleRebar = new CeadeCSingleRebar(new Vector3(p4_RecRebar.x + i, p4_RecRebar.y, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                        var singleRebar = new CeadeCSingleRebar(new Vector3(p4_RecRebar.x + i, p4_RecRebar.y, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                         rebarRectangle.rebars.singleRebars.Add(singleRebar);
                     }
                 }
@@ -90,31 +93,31 @@ namespace CeadeCEtabsSectionParser
                     double internalRebarsSpacing = rebarHeight / (internalRebarsNumbers + 1);
                     for (double i = internalRebarsSpacing; i < rebarHeight; i += internalRebarsSpacing)
                     {
-                        var singleRebar = new CeadeCSingleRebar(new Vector3(p1_RecRebar.x, p1_RecRebar.y + i, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                        var singleRebar = new CeadeCSingleRebar(new Vector3(p1_RecRebar.x, p1_RecRebar.y + i, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                         rebarRectangle.rebars.singleRebars.Add(singleRebar);
                     }
                     for (double i = internalRebarsSpacing; i < rebarHeight; i += internalRebarsSpacing)
                     {
-                        var singleRebar = new CeadeCSingleRebar(new Vector3(p2_RecRebar.x, p2_RecRebar.y + i, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                        var singleRebar = new CeadeCSingleRebar(new Vector3(p2_RecRebar.x, p2_RecRebar.y + i, 0), rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                         rebarRectangle.rebars.singleRebars.Add(singleRebar);
                     }
                 }
                 // Corner Rebars
 
-                var singleRebar1 = new CeadeCSingleRebar(p1_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                var singleRebar1 = new CeadeCSingleRebar(p1_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar1);
 
-                var singleRebar2 = new CeadeCSingleRebar(p2_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                var singleRebar2 = new CeadeCSingleRebar(p2_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar2);
 
-                var singleRebar3 = new CeadeCSingleRebar(p3_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                var singleRebar3 = new CeadeCSingleRebar(p3_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar3);
 
-                var singleRebar4 = new CeadeCSingleRebar(p4_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(), true);
+                var singleRebar4 = new CeadeCSingleRebar(p4_RecRebar, rebarSizeData.Diameter, getCurrentEtabsLengthUnit(mySapModel), true);
                 rebarRectangle.rebars.singleRebars.Add(singleRebar4);
                 children.Add(rebarRectangle);
                 Shape = new CeadeCShapes(children);
-                AsignAutoDesign_Data(Shape, "mm", getFy(RFTMatProp), "N/mm2", getFcu(ShapeMatProp), "N/mm2");
+                AsignAutoDesign_Data(Shape, "mm", getFy(mySapModel,RFTMatProp), "N/mm2", getFcu(mySapModel,ShapeMatProp), "N/mm2");
 
             }
             else if (rebarType.MyType == 2) // beam rabar or none rebar
@@ -130,7 +133,29 @@ namespace CeadeCEtabsSectionParser
 
             return Shape;
         }
-        public static double getFy(string materialPropertyName)
+
+        public static CeadeCShapes CeadeCConvertSD(cSapModel mySapModel, string frameSectionPropertyName)
+        {
+            CeadeCShapes Shape = null;
+            List<CeadeCObject> children = new List<CeadeCObject>();
+            string RFTMatProp = string.Empty;
+            string ShapeMatProp = string.Empty;
+            // Parse solid 
+            etabsSDSection rectangleSectionData = new etabsSDSection(mySapModel, frameSectionPropertyName);
+            ShapeMatProp = rectangleSectionData.MatProp;
+
+
+            return Shape;
+        }
+
+
+
+
+
+
+
+
+        public static double getFy(cSapModel mySapModel,string materialPropertyName)
         {
             etabsMaterialType type = new etabsMaterialType(mySapModel, materialPropertyName);
             if (type.MatType == eMatType.Rebar)
@@ -140,7 +165,7 @@ namespace CeadeCEtabsSectionParser
             }
             return 0;
         }
-        public static double getFcu(string materialPropertyName)
+        public static double getFcu(cSapModel mySapModel,string materialPropertyName)
         {
             etabsMaterialType type = new etabsMaterialType(mySapModel, materialPropertyName);
             if (type.MatType == eMatType.Concrete)
@@ -150,8 +175,7 @@ namespace CeadeCEtabsSectionParser
             }
             return 0;
         }
-
-        public static string getCurrentEtabsLengthUnit()
+        public static string getCurrentEtabsLengthUnit(cSapModel mySapModel)
         {
             etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
             switch (LU.lengthUnits)
@@ -177,7 +201,7 @@ namespace CeadeCEtabsSectionParser
             }
             return "null";
         }
-        public static string getCurrentEtabsForceUnit()
+        public static string getCurrentEtabsForceUnit(cSapModel mySapModel)
         {
             etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
             switch (LU.forceUnits)
@@ -202,6 +226,23 @@ namespace CeadeCEtabsSectionParser
                     break;
             }
             return "null";
+        }
+        public static void AsignAutoDesign_Data(CeadeCShapes shape, string shapeUnit, double fy, string fyUnit, double fcu, string fcuUnit)
+        {
+            shape.AutoDesign.shapeUnit.Add(shapeUnit);
+            shape.AutoDesign.fy.Add(fy);
+            shape.AutoDesign.fyUnit.Add(fyUnit);
+            shape.AutoDesign.fcu.Add(fcu);
+            shape.AutoDesign.fcuUnit.Add(fcuUnit);
+        }
+        public static void AsignAutoDesign_SA(CeadeCShapes shape, double P, string PUnit, double Mx, string MxUnit, double My, string MyUnit)
+        {
+            shape.AutoDesign.P.Add(P);
+            shape.AutoDesign.PUnit.Add(PUnit);
+            shape.AutoDesign.Mx.Add(Mx);
+            shape.AutoDesign.MxUnit.Add(MxUnit);
+            shape.AutoDesign.My.Add(My);
+            shape.AutoDesign.MyUnit.Add(MyUnit);
         }
     }
 }
