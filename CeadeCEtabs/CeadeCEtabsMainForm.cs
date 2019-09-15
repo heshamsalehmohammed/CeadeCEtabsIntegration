@@ -30,6 +30,27 @@ namespace CeadeCEtabs
         List<string> Finishedcombonames;
         etabsAnalysisResults analysisResults;
         etabsAllFrames etabsAllFrames;
+
+
+static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
+{
+      RegistryKey key = Registry.ClassesRoot.OpenSubKey("myApp");  //open myApp protocol's subkey
+
+      if (key == null)  //if the protocol is not registered yet...we register it
+      {
+          key = Registry.ClassesRoot.CreateSubKey("myApp"); 
+          key.SetValue(string.Empty, "URL: myApp Protocol");
+          key.SetValue("URL Protocol", string.Empty);
+
+          key = key.CreateSubKey(@"shell\open\command");
+          key.SetValue(string.Empty, myAppPath + " " + "%1");  
+         //%1 represents the argument - this tells windows to open this program with an argument / parameter
+      }
+
+      key.Close();
+}
+
+
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
             model model = new model();
