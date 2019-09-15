@@ -45,7 +45,7 @@ static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to you
           key.SetValue("URL Protocol", string.Empty);
 
           key = key.CreateSubKey(@"shell\open\command");
-          key.SetValue(string.Empty, myAppPath + " " + "%1");  
+          key.SetValue(string.Empty, myAppPath + "\\CeadeCEtabs.exe" + " " + "%1");  
          //%1 represents the argument - this tells windows to open this program with an argument / parameter
       }
 
