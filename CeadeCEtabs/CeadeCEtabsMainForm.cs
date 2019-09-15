@@ -353,7 +353,7 @@ namespace CeadeCEtabs
         {
             for (int i = 0; i < args.Length; i++)
             {
-                listBox2.Items.Add(args[i]);
+                MessageBox.Show(args[i]);
             }
         }
     }
