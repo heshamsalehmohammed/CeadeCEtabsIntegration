@@ -11,15 +11,19 @@ using System.Web;
 using System.Windows.Forms;
 using EtabsObjects;
 using CeadeCEtabsSectionParser;
+using Microsoft.Win32;
 
 namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm()
+        public CeadeCEtabsMainForm(string[] args)
         {
+            this.args = args;
+            RegisterMyProtocol();
             InitializeComponent();
         }
+        string[] args;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
@@ -32,25 +36,27 @@ namespace CeadeCEtabs
         etabsAllFrames etabsAllFrames;
 
 
-static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
-{
+        static void RegisterMyProtocol()  //myAppPath = full path to your application
+        {
 
-      string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); 
-      RegistryKey key = Registry.ClassesRoot.OpenSubKey("myApp");  //open myApp protocol's subkey
+            string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            RegistryKey key = Registry.ClassesRoot.OpenSubKey("CeadeCEtabs");  //open myApp protocol's subkey
 
-      if (key == null)  //if the protocol is not registered yet...we register it
-      {
-          key = Registry.ClassesRoot.CreateSubKey("CeadeCEtabs"); 
-          key.SetValue(string.Empty, "URL: CeadeCEtabs Protocol");
-          key.SetValue("URL Protocol", string.Empty);
+            if (key == null)  //if the protocol is not registered yet...we register it
+            {
+                key = Registry.ClassesRoot.CreateSubKey("CeadeCEtabs");
+                key.SetValue(string.Empty, "URL: CeadeCEtabs Protocol");
+                key.SetValue("URL Protocol", string.Empty);
 
-          key = key.CreateSubKey(@"shell\open\command");
-          key.SetValue(string.Empty, myAppPath + "\\CeadeCEtabs.exe" + " " + "%1");  
-         //%1 represents the argument - this tells windows to open this program with an argument / parameter
-      }
+                key = key.CreateSubKey("shell");
+                key = key.CreateSubKey("open");
+                key = key.CreateSubKey("command");
+                key.SetValue(string.Empty, currentDirectory + "\\CeadeCEtabs.exe" + " " + "%1");
+                //%1 represents the argument - this tells windows to open this program with an argument / parameter
+            }
 
-      key.Close();
-}
+            key.Close();
+        }
 
 
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
@@ -343,6 +349,13 @@ static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to you
             }
         }
 
+        private void CeadeCEtabsMainForm_Load(object sender, EventArgs e)
+        {
+            for (int i = 0; i < args.Length; i++)
+            {
+                listBox2.Items.Add(args[i]);
+            }
+        }
     }
 
 
