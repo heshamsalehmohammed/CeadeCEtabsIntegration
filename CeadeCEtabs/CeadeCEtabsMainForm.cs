@@ -34,12 +34,14 @@ namespace CeadeCEtabs
 
 static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
 {
+
+      string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); 
       RegistryKey key = Registry.ClassesRoot.OpenSubKey("myApp");  //open myApp protocol's subkey
 
       if (key == null)  //if the protocol is not registered yet...we register it
       {
-          key = Registry.ClassesRoot.CreateSubKey("myApp"); 
-          key.SetValue(string.Empty, "URL: myApp Protocol");
+          key = Registry.ClassesRoot.CreateSubKey("CeadeCEtabs"); 
+          key.SetValue(string.Empty, "URL: CeadeCEtabs Protocol");
           key.SetValue("URL Protocol", string.Empty);
 
           key = key.CreateSubKey(@"shell\open\command");
