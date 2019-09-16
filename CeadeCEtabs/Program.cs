@@ -16,7 +16,13 @@ namespace CeadeCEtabs
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CeadeCEtabsMainForm(args));
+            if (args != null && args.Length > 0)
+            {
+                if (Uri.TryCreate(args[0], UriKind.Absolute, out var uri) && string.Equals(uri.Scheme, "CeadeCEtabs", StringComparison.OrdinalIgnoreCase))
+                {
+                    Application.Run(new CeadeCEtabsMainForm(args));
+                }  
+            }
         }
     }
-}
+}           
