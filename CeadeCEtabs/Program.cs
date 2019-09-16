@@ -20,7 +20,7 @@ namespace CeadeCEtabs
             {
                 if (Uri.TryCreate(args[0], UriKind.Absolute, out var uri) && string.Equals(uri.Scheme, "CeadeCEtabs", StringComparison.OrdinalIgnoreCase))
                 {
-                    Application.Run(new CeadeCEtabsMainForm(args));
+                    Application.Run(new CeadeCEtabsMainForm(args[0]));
                 }  
             }
         }

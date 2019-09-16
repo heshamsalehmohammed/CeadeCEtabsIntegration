@@ -17,13 +17,13 @@ namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(string[] args)
+        public CeadeCEtabsMainForm(string arg)
         {
-            this.args = args;
+            this.arg = arg;
             RegisterMyProtocol();
             InitializeComponent();
         }
-        string[] args;
+        string arg;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
@@ -34,31 +34,48 @@ namespace CeadeCEtabs
         List<string> Finishedcombonames;
         etabsAnalysisResults analysisResults;
         etabsAllFrames etabsAllFrames;
-
-
-        static void RegisterMyProtocol()  //myAppPath = full path to your application
+        public string[] analyzeArg(string arg)
         {
-
+            char[] spearator = { ':', '/' };
+            String[] strlist = arg.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
+            return strlist;
+        }
+        static void RegisterMyProtocol()
+        {
             string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            RegistryKey key = Registry.ClassesRoot.OpenSubKey("CeadeCEtabs");  //open myApp protocol's subkey
-
-            if (key == null)  //if the protocol is not registered yet...we register it
+            RegistryKey key = Registry.ClassesRoot.OpenSubKey("CeadeCEtabs");
+            if (key == null)
             {
                 key = Registry.ClassesRoot.CreateSubKey("CeadeCEtabs");
                 key.SetValue(string.Empty, "URL: CeadeCEtabs Protocol");
                 key.SetValue("URL Protocol", string.Empty);
-
                 key = key.CreateSubKey("shell");
                 key = key.CreateSubKey("open");
                 key = key.CreateSubKey("command");
                 key.SetValue(string.Empty, currentDirectory + "\\CeadeCEtabs.exe" + " " + "%1");
-                //%1 represents the argument - this tells windows to open this program with an argument / parameter
             }
-
             key.Close();
         }
-
-
+        public string httpRequestResponse(string postData)
+        {
+            WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
+            request.Method = "POST";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = byteArray.Length;
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            string responseFromServer;
+            using (dataStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(dataStream);
+                responseFromServer = reader.ReadToEnd();
+            }
+            response.Close();
+            return responseFromServer;
+        }
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
             model model = new model();
@@ -348,19 +365,12 @@ namespace CeadeCEtabs
                 MessageBox.Show("No data to be exported. ");
             }
         }
-
         private void CeadeCEtabsMainForm_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < args.Length; i++)
-            {
-                MessageBox.Show(args[i]);
-            }
+            string[] IDKEY =  analyzeArg(this. arg);
+            string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
+            string response = httpRequestResponse(postData);
+            MessageBox.Show(response);
         }
     }
-
-
-
-
-
-
 }
