@@ -370,7 +370,11 @@ namespace CeadeCEtabs
             string[] IDKEY =  analyzeArg(this. arg);
             string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
             string response = httpRequestResponse(postData);
-            MessageBox.Show(response);
+
+            byte[] data = Convert.FromBase64String(response);
+            string decodedString = Encoding.UTF8.GetString(data);
+
+            MessageBox.Show(decodedString);
         }
     }
 }
