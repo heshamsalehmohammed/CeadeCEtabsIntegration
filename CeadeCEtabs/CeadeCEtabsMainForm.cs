@@ -32,13 +32,27 @@ namespace CeadeCEtabs
         public int version;
         public bool isVersionUpdated()
         {
-            if(httpRequestResponse("version="+this.version.toString()) == "true"){
+            string responseVersion = httpRequestResponse("version="+this.version.toString());
+            if(responseVersion == "true"){
               return true;
             }else{
               return false;
             }
             
         }
+public static bool CheckForInternetConnection()
+{
+    try
+    {
+        using (var client = new WebClient())
+            using (client.OpenRead("http://google.com/generate_204")) 
+                return true; 
+    }
+    catch
+    {
+        return false;
+    }
+}
         string arg;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
