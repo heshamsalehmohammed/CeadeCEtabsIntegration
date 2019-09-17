@@ -54,7 +54,7 @@ namespace CeadeCEtabs
                             }
                             else
                             {
-                                Application.Run(new CeadeCEtabsMainForm(E2KObject));
+                                Application.Run(new CeadeCEtabsMainForm(E2KObject as model));
                             }
                         }
                     }
@@ -66,7 +66,7 @@ namespace CeadeCEtabs
                         StreamReader sr = new StreamReader("C:\\Users\\Hesham\\Desktop\\Test.txt");
                         string E2KStringObject = sr.ReadToEnd();
                         object E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
-                        Application.Run(new CeadeCEtabsMainForm(E2KObject));
+                        Application.Run(new CeadeCEtabsMainForm(E2KObject as model));
                     }
                     else
                     {

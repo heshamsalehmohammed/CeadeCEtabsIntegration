@@ -36,6 +36,7 @@ namespace CeadeCEtabs
     public class CeadeCPoints : CeadeCObject
     {
         public string type = "points";
+        public string Name = "";
         public List<Vector3> vertices;
 
         public CeadeCPoints(List<Vector3> vertices)

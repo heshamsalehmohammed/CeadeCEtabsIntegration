@@ -17,13 +17,13 @@ namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(object E2KData)
+        public CeadeCEtabsMainForm(model E2KData)
         {     
             InitializeComponent();
             this.E2KData = E2KData;
             
         }
-        object E2KData;
+        model E2KData;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
