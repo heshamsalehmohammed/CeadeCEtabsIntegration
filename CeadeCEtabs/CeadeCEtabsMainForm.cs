@@ -20,39 +20,45 @@ namespace CeadeCEtabs
         public CeadeCEtabsMainForm(string arg)
         {
             this.version = 1;
-            if( isVersionUpdated() ){
-               this.arg = arg;
-               RegisterMyProtocol();
-               InitializeComponent();
-            }else{
-               // Version Needs Update
+            if (isVersionUpdated())
+            {
+                this.arg = arg;
+                RegisterMyProtocol();
+                InitializeComponent();
             }
-            
+            else
+            {
+                // Version Needs Update
+            }
+
         }
         public int version;
         public bool isVersionUpdated()
         {
-            string responseVersion = httpRequestResponse("version="+this.version.ToString());
-            if(responseVersion == "true"){
-              return true;
-            }else{
-              return false;
+            string responseVersion = httpRequestResponse("version=" + this.version.ToString());
+            if (responseVersion == "true")
+            {
+                return true;
             }
-            
+            else
+            {
+                return false;
+            }
+
         }
-public static bool CheckForInternetConnection()
-{
-    try
-    {
-        using (var client = new WebClient())
-            using (client.OpenRead("http://google.com/generate_204")) 
-                return true; 
-    }
-    catch
-    {
-        return false;
-    }
-}
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         string arg;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
@@ -88,36 +94,39 @@ public static bool CheckForInternetConnection()
         }
         public string httpRequestResponse(string postData)
         {
-    try
-    {
-        WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
-            request.Method = "POST";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = byteArray.Length;
-            Stream dataStream = request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            WebResponse response = request.GetResponse();
-            string responseFromServer;
-            using (dataStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
+                WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
+                request.Method = "POST";
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+                WebResponse response = request.GetResponse();
+                string responseFromServer;
+                using (dataStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseFromServer = reader.ReadToEnd();
+                }
+                response.Close();
+                if (responseFromServer.Contains("ERROR"))
+                {
+                    return "ERROR";
+                }
+                else
+                {
+                    return responseFromServer;
+                }
+
             }
-            response.Close();
-            if( responseFromServer.Contains( "ERROR" ) ){
-              return "ERROR";
-            }else{
-              return responseFromServer;
+            catch
+            {
+                return "ERROR";
             }
-            
-    }
-    catch
-    {
-        return "ERROR";
-    }
-            
+
         }
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
@@ -410,7 +419,7 @@ public static bool CheckForInternetConnection()
         }
         private void CeadeCEtabsMainForm_Load(object sender, EventArgs e)
         {
-            string[] IDKEY =  analyzeArg(this. arg);
+            string[] IDKEY = analyzeArg(this.arg);
             string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
             string response = httpRequestResponse(postData);
 
