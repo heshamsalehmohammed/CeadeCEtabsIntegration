@@ -32,7 +32,7 @@ namespace CeadeCEtabs
         public int version;
         public bool isVersionUpdated()
         {
-            string responseVersion = httpRequestResponse("version="+this.version.toString());
+            string responseVersion = httpRequestResponse("version="+this.version.ToString());
             if(responseVersion == "true"){
               return true;
             }else{
