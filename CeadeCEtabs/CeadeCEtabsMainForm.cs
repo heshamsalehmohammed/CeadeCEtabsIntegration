@@ -17,49 +17,13 @@ namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(string arg)
-        {
-            this.version = 1;
-            if (isVersionUpdated())
-            {
-                this.arg = arg;
-                RegisterMyProtocol();
-                InitializeComponent();
-            }
-            else
-            {
-                // Version Needs Update
-            }
-
+        public CeadeCEtabsMainForm(object E2KData)
+        {     
+            InitializeComponent();
+            this.E2KData = E2KData;
+            
         }
-        public int version;
-        public bool isVersionUpdated()
-        {
-            string responseVersion = httpRequestResponse("version=" + this.version.ToString());
-            if (responseVersion == "true")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-        public static bool CheckForInternetConnection()
-        {
-            try
-            {
-                using (var client = new WebClient())
-                using (client.OpenRead("http://google.com/generate_204"))
-                    return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        string arg;
+        object E2KData;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
@@ -70,64 +34,7 @@ namespace CeadeCEtabs
         List<string> Finishedcombonames;
         etabsAnalysisResults analysisResults;
         etabsAllFrames etabsAllFrames;
-        public string[] analyzeArg(string arg)
-        {
-            char[] spearator = { ':', '/' };
-            String[] strlist = arg.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
-            return strlist;
-        }
-        static void RegisterMyProtocol()
-        {
-            string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            RegistryKey key = Registry.ClassesRoot.OpenSubKey("CeadeCEtabs");
-            if (key == null)
-            {
-                key = Registry.ClassesRoot.CreateSubKey("CeadeCEtabs");
-                key.SetValue(string.Empty, "URL: CeadeCEtabs Protocol");
-                key.SetValue("URL Protocol", string.Empty);
-                key = key.CreateSubKey("shell");
-                key = key.CreateSubKey("open");
-                key = key.CreateSubKey("command");
-                key.SetValue(string.Empty, currentDirectory + "\\CeadeCEtabs.exe" + " " + "%1");
-            }
-            key.Close();
-        }
-        public string httpRequestResponse(string postData)
-        {
-            try
-            {
-                WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
-                request.Method = "POST";
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = byteArray.Length;
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
-                WebResponse response = request.GetResponse();
-                string responseFromServer;
-                using (dataStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(dataStream);
-                    responseFromServer = reader.ReadToEnd();
-                }
-                response.Close();
-                if (responseFromServer.Contains("ERROR"))
-                {
-                    return "ERROR";
-                }
-                else
-                {
-                    return responseFromServer;
-                }
 
-            }
-            catch
-            {
-                return "ERROR";
-            }
-
-        }
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
             model model = new model();
@@ -184,58 +91,6 @@ namespace CeadeCEtabs
             }
             etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
             return 1;
-        }
-        public string getCurrentEtabsLengthUnit()
-        {
-            etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
-            switch (LU.lengthUnits)
-            {
-                case eLength.cm:
-                    return "cm";
-                    break;
-                case eLength.ft:
-                    return "ft";
-                    break;
-                case eLength.inch:
-                    return "in";
-                    break;
-                case eLength.m:
-                    return "m";
-                    break;
-                case eLength.micron:
-                    return "micron";
-                    break;
-                case eLength.mm:
-                    return "mm";
-                    break;
-            }
-            return "null";
-        }
-        public string getCurrentEtabsForceUnit()
-        {
-            etabsPresentUnits LU = new etabsPresentUnits(mySapModel);
-            switch (LU.forceUnits)
-            {
-                case eForce.N:
-                    return "N";
-                    break;
-                case eForce.tonf:
-                    return "ton";
-                    break;
-                case eForce.kN:
-                    return "KN";
-                    break;
-                case eForce.lb:
-                    return "lb";
-                    break;
-                case eForce.kgf:
-                    return "kg";
-                    break;
-                case eForce.kip:
-                    return "kip";
-                    break;
-            }
-            return "null";
         }
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -417,16 +272,9 @@ namespace CeadeCEtabs
                 MessageBox.Show("No data to be exported. ");
             }
         }
-        private void CeadeCEtabsMainForm_Load(object sender, EventArgs e)
+        private void CeadeCEtabsMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string[] IDKEY = analyzeArg(this.arg);
-            string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
-            string response = httpRequestResponse(postData);
-
-            byte[] data = Convert.FromBase64String(response);
-            string decodedString = Encoding.UTF8.GetString(data);
-
-            MessageBox.Show(decodedString);
+            Application.Exit();
         }
     }
 }
