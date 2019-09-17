@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,8 +38,16 @@ namespace CeadeCEtabs
                         }
                         else
                         {
-
-                            StreamWriter sw = new StreamWriter("C:\\Users\\Hesham\\Desktop\\Test.txt");
+                            string root= "C:\\";
+                            if (Directory.Exists("C:\\Users\\ENG. Hesham Saleh\\Desktop"))
+                            {
+                                root = "C:\\Users\\ENG. Hesham Saleh\\Desktop\\";
+                            }
+                            else if (Directory.Exists("C:\\Users\\Hesham\\Desktop"))
+                            {
+                                root = "C:\\Users\\Hesham\\Desktop\\";
+                            }
+                            StreamWriter sw = new StreamWriter(root+"Test.txt");
 
                             //Write a line of text
                             sw.Write(E2KStringObject);
@@ -47,14 +56,14 @@ namespace CeadeCEtabs
                             sw.Close();
 
 
-                            object E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
+                            ExpandoObject E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
                             if (E2KObject == null)
                             {
                                 Application.Run(new ErrorForm("ERROR", "error handling server data ,contact us", true));
                             }
                             else
                             {
-                                Application.Run(new CeadeCEtabsMainForm(E2KObject as model));
+                                Application.Run(new CeadeCEtabsMainForm(E2KObject));
                             }
                         }
                     }
@@ -63,10 +72,19 @@ namespace CeadeCEtabs
                 {      
                     if (System.Diagnostics.Debugger.IsAttached)
                     {
-                        StreamReader sr = new StreamReader("C:\\Users\\Hesham\\Desktop\\Test.txt");
+                        string root = "C:\\";
+                        if (Directory.Exists("C:\\Users\\ENG. Hesham Saleh\\Desktop"))
+                        {
+                            root = "C:\\Users\\ENG. Hesham Saleh\\Desktop\\";
+                        }
+                        else if (Directory.Exists("C:\\Users\\Hesham\\Desktop"))
+                        {
+                            root = "C:\\Users\\Hesham\\Desktop\\";
+                        }
+                        StreamReader sr = new StreamReader(root+"Test.txt");
                         string E2KStringObject = sr.ReadToEnd();
-                        object E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
-                        Application.Run(new CeadeCEtabsMainForm(E2KObject as model));
+                        ExpandoObject E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
+                        Application.Run(new CeadeCEtabsMainForm(E2KObject));
                     }
                     else
                     {

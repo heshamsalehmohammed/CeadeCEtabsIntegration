@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -123,12 +124,13 @@ namespace CeadeCEtabs
                 return decodedString;
             }
 
-            public static object convertE2KStringToObject(string E2KString)
+            public static ExpandoObject convertE2KStringToObject(string E2KString)
             {
-                object E2KObject;
+                ExpandoObject E2KObject;
                 try
                 {
-                    E2KObject = JsonConvert.DeserializeObject(E2KString);
+                    E2KObject = JsonConvert.DeserializeObject<ExpandoObject>(E2KString);
+                    //E2KObject = JsonConvert.DeserializeObject(E2KString);
                 }
                 catch
                 {

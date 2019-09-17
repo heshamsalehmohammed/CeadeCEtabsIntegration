@@ -12,18 +12,19 @@ using System.Windows.Forms;
 using EtabsObjects;
 using CeadeCEtabsSectionParser;
 using Microsoft.Win32;
+using System.Dynamic;
 
 namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(model E2KData)
+        public CeadeCEtabsMainForm(dynamic E2KData)
         {     
             InitializeComponent();
             this.E2KData = E2KData;
-            
+           // MessageBox.Show(E2KData.objects.Count.ToString());
         }
-        model E2KData;
+        dynamic E2KData;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
