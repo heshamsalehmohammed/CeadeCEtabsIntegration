@@ -19,9 +19,25 @@ namespace CeadeCEtabs
     {
         public CeadeCEtabsMainForm(string arg)
         {
-            this.arg = arg;
-            RegisterMyProtocol();
-            InitializeComponent();
+            this.version = 1;
+            if( isVersionUpdated() ){
+               this.arg = arg;
+               RegisterMyProtocol();
+               InitializeComponent();
+            }else{
+               // Version Needs Update
+            }
+            
+        }
+        public int version;
+        public bool isVersionUpdated()
+        {
+            if(httpRequestResponse("version="+this.version.toString()) == "true"){
+              return true;
+            }else{
+              return false;
+            }
+            
         }
         string arg;
         cOAPI myETABSObject = null;
