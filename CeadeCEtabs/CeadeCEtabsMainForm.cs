@@ -88,7 +88,9 @@ public static bool CheckForInternetConnection()
         }
         public string httpRequestResponse(string postData)
         {
-            WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
+    try
+    {
+        WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
             request.Method = "POST";
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             request.ContentType = "application/x-www-form-urlencoded";
@@ -104,7 +106,18 @@ public static bool CheckForInternetConnection()
                 responseFromServer = reader.ReadToEnd();
             }
             response.Close();
-            return responseFromServer;
+            if( responseFromServer.Contains( "ERROR" ) ){
+              return "ERROR";
+            }else{
+              return responseFromServer;
+            }
+            
+    }
+    catch
+    {
+        return "ERROR";
+    }
+            
         }
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
