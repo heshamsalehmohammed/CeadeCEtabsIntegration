@@ -18,13 +18,12 @@ namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(dynamic E2KData)
-        {     
+        public CeadeCEtabsMainForm(model E2KData)
+        {
             InitializeComponent();
             this.E2KData = E2KData;
-           // MessageBox.Show(E2KData.objects.Count.ToString());
         }
-        dynamic E2KData;
+        model E2KData;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
@@ -39,13 +38,7 @@ namespace CeadeCEtabs
         public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
         {
             model model = new model();
-            for (int i = 0; i < ParsedEtabsObjects.Count; i++)
-            {
-                if (ParsedEtabsObjects[i] != null)
-                {
-                    model.objects.Add(ParsedEtabsObjects[i]);
-                }
-            }
+            model.objects = ParsedEtabsObjects;
             if (model.objects.Count != 0)
             {
                 string result = JsonConvert.SerializeObject(model);
@@ -56,7 +49,8 @@ namespace CeadeCEtabs
             }
             else
             {
-                MessageBox.Show("No Data To Export . ");
+                ErrorForm errorForm = new ErrorForm("ERROR", "No Data To Export . ", false);
+                errorForm.ShowDialog();
             }
 
         }
@@ -103,9 +97,10 @@ namespace CeadeCEtabs
             {
                 myETABSObject = (cOAPI)System.Runtime.InteropServices.Marshal.GetActiveObject("CSI.ETABS.API.ETABSObject");
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("No running instance of the program found or failed to attach.");
+                ErrorForm errorForm = new ErrorForm("ERROR", "No running instance of the program found or failed to attach.", false);
+                errorForm.ShowDialog();
                 return 0;
             }
             return 1;
@@ -118,9 +113,10 @@ namespace CeadeCEtabs
                 mySapModel = myETABSObject.SapModel;
 
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("No running model found or failed to attach.");
+                ErrorForm errorForm = new ErrorForm("ERROR", "No running model found or failed to attach.", false);
+                errorForm.ShowDialog();
                 return 0;
             }
             return 1;
@@ -176,7 +172,8 @@ namespace CeadeCEtabs
 
                 if (analysisResults.NumberResults == 0)
                 {
-                    MessageBox.Show("Run the analysis and try again. ");
+                    ErrorForm errorForm = new ErrorForm("ERROR", "Run the analysis and try again. ", false);
+                    errorForm.ShowDialog();
                     return 0;
                 }
                 for (int i = 0; i < listBox3.Items.Count; i++)
@@ -260,17 +257,19 @@ namespace CeadeCEtabs
                 etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
                 string frameUniqueName = listBox2.SelectedItem.ToString();
                 string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName, frameUniqueName)];
-                etabsSectionType frameSectionType = new etabsSectionType(mySapModel, frameSectionPropertyName);
-
                 List<CeadeCObject> ParsedEtabsObjects = new List<CeadeCObject>();
-                var shape = CESectionParser.convertSectionPropertytoCeadecShape(mySapModel, frameSectionPropertyName, frameSectionType.propType);
-                CESectionParser.AsignAutoDesign_SA(shape, Convert.ToDouble(dataGridView1.Rows[0].Cells[0].Value), "ton", Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value), "ton.m", Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value), "ton.m");
-                ParsedEtabsObjects.Add(shape);
+                var shape = CEParser.fetch_CeadeCShape_From_E2KObjects(mySapModel, E2KData, frameSectionPropertyName);
+                CEParser.AsignAutoDesign_SA(shape, Convert.ToDouble(dataGridView1.Rows[0].Cells[0].Value), "ton", Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value), "ton.m", Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value), "ton.m");
+                if (shape != null)
+                {
+                    ParsedEtabsObjects.Add(shape);
+                }
                 contact_CeadeC(ParsedEtabsObjects);
             }
             else
             {
-                MessageBox.Show("No data to be exported. ");
+                ErrorForm errorForm = new ErrorForm("ERROR", "No data to be exported. ", false);
+                errorForm.ShowDialog();
             }
         }
         private void CeadeCEtabsMainForm_FormClosed(object sender, FormClosedEventArgs e)

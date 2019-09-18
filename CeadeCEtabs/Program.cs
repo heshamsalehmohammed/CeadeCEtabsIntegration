@@ -56,7 +56,7 @@ namespace CeadeCEtabs
                             sw.Close();
 
 
-                            ExpandoObject E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
+                            model E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
                             if (E2KObject == null)
                             {
                                 Application.Run(new ErrorForm("ERROR", "error handling server data ,contact us", true));
@@ -83,7 +83,7 @@ namespace CeadeCEtabs
                         }
                         StreamReader sr = new StreamReader(root+"Test.txt");
                         string E2KStringObject = sr.ReadToEnd();
-                        ExpandoObject E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
+                        model E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
                         Application.Run(new CeadeCEtabsMainForm(E2KObject));
                     }
                     else

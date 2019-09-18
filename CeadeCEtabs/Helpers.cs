@@ -124,18 +124,18 @@ namespace CeadeCEtabs
                 return decodedString;
             }
 
-            public static ExpandoObject convertE2KStringToObject(string E2KString)
+            public static model convertE2KStringToObject(string E2KString)
             {
-                ExpandoObject E2KObject;
-                try
-                {
-                    E2KObject = JsonConvert.DeserializeObject<ExpandoObject>(E2KString);
-                    //E2KObject = JsonConvert.DeserializeObject(E2KString);
-                }
-                catch
-                {
-                    return null;
-                }
+                model E2KObject;
+         //       try
+         //       {
+                    dynamic  jsonObject = JsonConvert.DeserializeObject<dynamic>(E2KString);
+                    E2KObject = new model(jsonObject);
+         //       }
+         //       catch
+         //       {
+         //           E2KObject = null;
+         //       }
                 return E2KObject;
             }
         }

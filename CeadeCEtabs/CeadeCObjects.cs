@@ -15,20 +15,74 @@ namespace CeadeCEtabs
             this.y = y;
             this.z = z;
         }
+        public Vector3(dynamic o)
+        {
+            this.x = o.x.Value;
+            this.y = o.y.Value;
+            this.z = o.z.Value;
+        }
     }
 
 
     public class model
     {
-        public List<CeadeCObject> objects = new List<CeadeCObject>();
+        public List<CeadeCObject> objects;
+        public model()
+        {
+            this.objects = new List<CeadeCObject>();
+        }
+        public model(dynamic o)
+        {
+            this.objects = new List<CeadeCObject>();
+            for (int i = 0; i < o.objects.Count; i++)
+            {
+                dynamic ob = o.objects[i];
+                CeadeCObject castedOb;
+                switch (ob.type.Value)
+                {
+                    case "points":
+                        castedOb = new CeadeCPoints(ob);
+                        break;
+                    case "lines":
+                        castedOb = new CeadeCLines(ob);
+                        break;
+                    case "polylines":
+                        castedOb = new CeadeCPolylines(ob);
+                        break;
+                    case "Gpolylines":
+                        castedOb = new CeadeCGpolylines(ob);
+                        break;
+                    case "rectangles":
+                        castedOb = new CeadeCRectangles(ob);
+                        break;
+                    case "circles":
+                        castedOb = new CeadeCCircles(ob);
+                        break;
+                    case "arcs":
+                        castedOb = new CeadeCArcs(ob);
+                        break;
+                    case "shapes":
+                        castedOb = new CeadeCShapes(ob);
+                        break;
+                    default:
+                        castedOb = null;
+                        break;
+                }
+                if (castedOb != null)
+                {
+                    this.objects.Add(castedOb);
+                }
+            }
+        }
     }
-    
+
 
     public class CeadeCObject
     {
         public string shapeChildType;
         public string voidIndex;
         public CeadeCRebarsObject rebars;
+        public string Name = "";
         public List<CeadeCObject> children = new List<CeadeCObject>();
     }
 
@@ -36,12 +90,32 @@ namespace CeadeCEtabs
     public class CeadeCPoints : CeadeCObject
     {
         public string type = "points";
-        public string Name = "";
         public List<Vector3> vertices;
 
         public CeadeCPoints(List<Vector3> vertices)
         {
             this.vertices = vertices;
+        }
+        public CeadeCPoints(dynamic ob)
+        {
+            List<Vector3> verts = new List<Vector3>();
+            for (int i = 0; i < ob.vertices.Count; i++)
+            {
+                verts.Add(new Vector3(ob.vertices[i]));
+            }
+            this.vertices = verts;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCPointRebar(ob.rebars);
+            }
         }
     }
 
@@ -54,7 +128,27 @@ namespace CeadeCEtabs
         {
             this.vertices = vertices;
         }
-
+        public CeadeCLines(dynamic ob)
+        {
+            List<Vector3> verts = new List<Vector3>();
+            for (int i = 0; i < ob.vertices.Count; i++)
+            {
+                verts.Add(new Vector3(ob.vertices[i]));
+            }
+            this.vertices = verts;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCLineRebar(ob.rebars);
+            }
+        }
     }
 
 
@@ -68,7 +162,27 @@ namespace CeadeCEtabs
         {
             this.vertices = vertices;
         }
-
+        public CeadeCPolylines(dynamic ob)
+        {
+            List<Vector3> verts = new List<Vector3>();
+            for (int i = 0; i < ob.vertices.Count; i++)
+            {
+                verts.Add(new Vector3(ob.vertices[i]));
+            }
+            this.vertices = verts;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCPolylineRebar(ob.rebars);
+            }
+        }
     }
 
 
@@ -82,7 +196,28 @@ namespace CeadeCEtabs
         {
             this.vertices = vertices;
         }
+        public CeadeCRectangles(dynamic ob)
+        {
+            List<Vector3> verts = new List<Vector3>();
+            for (int i = 0; i < ob.vertices.Count; i++)
+            {
+                verts.Add(new Vector3(ob.vertices[i]));
+            }
+            this.vertices = verts;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCRectangleRebar(ob.rebars);
+            }
 
+        }
     }
 
 
@@ -101,7 +236,25 @@ namespace CeadeCEtabs
             this.ePoint = ePoint;
             this.cw = cw;
         }
-
+        public CeadeCArcs(dynamic ob)
+        {
+            this.cPoint = ob.cPoint.Value;
+            this.sPoint = ob.sPoint.Value;
+            this.ePoint = ob.ePoint.Value;
+            this.cw = ob.cw.Value;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCArcRebar(ob.rebars);
+            }
+        }
     }
 
 
@@ -116,7 +269,23 @@ namespace CeadeCEtabs
             this.cPoint = cPoint;
             this.radius = radius;
         }
-
+        public CeadeCCircles(dynamic ob)
+        {
+            this.cPoint = ob.cPoint.Value;
+            this.radius = ob.radius.Value;
+            if (ob.Name != null)
+            {
+                this.Name = ob.Name.Value;
+            }
+            if (ob.shapeChildType != null)
+            {
+                this.shapeChildType = ob.shapeChildType.Value;
+            }
+            if (ob.rebars != null)
+            {
+                this.rebars = new CeadeCCircleRebar(ob.rebars);
+            }
+        }
     }
 
 
@@ -129,7 +298,51 @@ namespace CeadeCEtabs
         {
             this.children = children;
         }
-
+        public CeadeCGpolylines(dynamic o)
+        {
+            this.children = new List<CeadeCObject>();
+            for (int i = 0; i < o.children.Count; i++)
+            {
+                dynamic ob = o.children[i];
+                CeadeCObject castedOb;
+                switch (ob.type.Value)
+                {
+                    case "points":
+                        castedOb = new CeadeCPoints(ob);
+                        break;
+                    case "lines":
+                        castedOb = new CeadeCLines(ob);
+                        break;
+                    case "polylines":
+                        castedOb = new CeadeCPolylines(ob);
+                        break;
+                    case "rectangles":
+                        castedOb = new CeadeCRectangles(ob);
+                        break;
+                    case "circles":
+                        castedOb = new CeadeCCircles(ob);
+                        break;
+                    case "arcs":
+                        castedOb = new CeadeCArcs(ob);
+                        break;
+                    default:
+                        castedOb = null;
+                        break;
+                }
+                if (castedOb != null)
+                {
+                    this.children.Add(castedOb);
+                }
+            }
+            if (o.Name != null)
+            {
+                this.Name = o.Name.Value;
+            }
+            if (o.shapeChildType != null)
+            {
+                this.shapeChildType = o.shapeChildType.Value;
+            }
+        }
     }
 
 
@@ -137,43 +350,81 @@ namespace CeadeCEtabs
     public class CeadeCShapes : CeadeCObject
     {
         public string type = "shapes";
-        public ShapeAutoDesign AutoDesign;
+        public List<ShapeAutoDesign> AutoDesign;
         public CeadeCShapes(List<CeadeCObject> children)
         {
             this.children = children;
-            AutoDesign = new ShapeAutoDesign();
+            AutoDesign = new List<ShapeAutoDesign>();
         }
+        public CeadeCShapes(dynamic o)
+        {
+            this.children = new List<CeadeCObject>();
+            for (int i = 0; i < o.children.Count; i++)
+            {
+                dynamic ob = o.children[i];
+                CeadeCObject castedOb;
+                switch (ob.type.Value)
+                {
+                    case "points":
+                        castedOb = new CeadeCPoints(ob);
+                        break;
+                    case "lines":
+                        castedOb = new CeadeCLines(ob);
+                        break;
+                    case "polylines":
+                        castedOb = new CeadeCPolylines(ob);
+                        break;
+                    case "Gpolylines":
+                        castedOb = new CeadeCGpolylines(ob);
+                        break;
+                    case "rectangles":
+                        castedOb = new CeadeCRectangles(ob);
+                        break;
+                    case "circles":
+                        castedOb = new CeadeCCircles(ob);
+                        break;
+                    case "arcs":
+                        castedOb = new CeadeCArcs(ob);
+                        break;
+                    default:
+                        castedOb = null;
+                        break;
+                }
+                if (castedOb != null)
+                {
+                    this.children.Add(castedOb);
+                }
+            }
+            this.Name = o.Name.Value;
+            AutoDesign = new List<ShapeAutoDesign>();
 
+        }
     }
 
     public class ShapeAutoDesign
     {
-        public List<string> shapeUnit;
-        public List<double> fy;
-        public List<string> fyUnit;
-        public List<double> fcu;
-        public List<string> fcuUnit;
-        public List<double> P;
-        public List<string> PUnit;
-        public List<double> Mx;
-        public List<string> MxUnit;
-        public List<double> My;
-        public List<string> MyUnit;
-        public ShapeAutoDesign()
+
+        public double P;
+        public string PUnit;
+        public double Mx;
+        public string MxUnit;
+        public double My;
+        public string MyUnit;
+        public ShapeAutoDesign(double P, string PUnit, double Mx, string MxUnit, double My, string MyUnit)
         {
-            this.shapeUnit = new List<string>();
-            this.fy = new List<double>();
-            this.fyUnit = new List<string>();
-            this.fcu = new List<double>();
-            this.fcuUnit = new List<string>();
-            this.P = new List<double>();
-            this.PUnit = new List<string>();
-            this.Mx = new List<double>();
-            this.MxUnit = new List<string>();
-            this.My = new List<double>();
-            this.MyUnit = new List<string>();
+
+            this.P = P;
+            this.PUnit = PUnit;
+            this.Mx = Mx;
+            this.MxUnit = MxUnit;
+            this.My = My;
+            this.MyUnit = MyUnit;
         }
     }
+
+    /// <summary>
+    /// //////////////////////////////////////////////////////Rebars//////////////////////////////////////////////////////
+    /// </summary>
 
     public class CeadeCRebarsObject
     {
@@ -181,19 +432,29 @@ namespace CeadeCEtabs
     }
 
 
-    public class PointRebar : CeadeCRebarsObject
+    public class CeadeCPointRebar : CeadeCRebarsObject
     {
         public string type = "PointRebar";
         public float defaultRebarDiameter;
 
-        public PointRebar(float defaultRebarDiameter)
+        public CeadeCPointRebar(float defaultRebarDiameter)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
         }
-
+        public CeadeCPointRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
-    public class LineRebar : CeadeCRebarsObject
+    public class CeadeCLineRebar : CeadeCRebarsObject
     {
         public string type = "LineRebar";
         public float defaultRebarDiameter;
@@ -201,18 +462,31 @@ namespace CeadeCEtabs
         public bool start;
         public bool end;
 
-        public LineRebar(float defaultRebarDiameter, float spacing, bool start, bool end)
+        public CeadeCLineRebar(float defaultRebarDiameter, float spacing, bool start, bool end)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;
             this.start = start;
             this.end = end;
         }
-
+        public CeadeCLineRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.spacing = (float)ob.spacing.Value;
+            this.start = ob.start.Value;
+            this.end = ob.end.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
 
-    public class PolylineRebar : CeadeCRebarsObject
+    public class CeadeCPolylineRebar : CeadeCRebarsObject
     {
         public string type = "PolylineRebar";
         public float defaultRebarDiameter;
@@ -221,7 +495,7 @@ namespace CeadeCEtabs
         public bool end;
         public bool corner;
 
-        public PolylineRebar(float defaultRebarDiameter, float spacing, bool start, bool end, bool corner)
+        public CeadeCPolylineRebar(float defaultRebarDiameter, float spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;
@@ -229,11 +503,25 @@ namespace CeadeCEtabs
             this.end = end;
             this.corner = corner;
         }
-
+        public CeadeCPolylineRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.spacing = (float)ob.spacing.Value;
+            this.start = ob.start.Value;
+            this.end = ob.end.Value;
+            this.corner = ob.corner.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
 
-    public class RectangleRebar : CeadeCRebarsObject
+    public class CeadeCRectangleRebar : CeadeCRebarsObject
     {
         public string type = "RectangleRebar";
         public double defaultRebarDiameter;
@@ -242,7 +530,7 @@ namespace CeadeCEtabs
         public bool end;
         public bool corner;
 
-        public RectangleRebar(double defaultRebarDiameter, double spacing, bool start, bool end, bool corner)
+        public CeadeCRectangleRebar(double defaultRebarDiameter, double spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacing = spacing;
@@ -250,11 +538,25 @@ namespace CeadeCEtabs
             this.end = end;
             this.corner = corner;
         }
-
+        public CeadeCRectangleRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.spacing = (float)ob.spacing.Value;
+            this.start = ob.start.Value;
+            this.end = ob.end.Value;
+            this.corner = ob.corner.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
 
-    public class ArcRebar : CeadeCRebarsObject
+    public class CeadeCArcRebar : CeadeCRebarsObject
     {
         public string type = "ArcRebar";
         public float defaultRebarDiameter;
@@ -264,7 +566,7 @@ namespace CeadeCEtabs
         public bool end;
 
 
-        public ArcRebar(float defaultRebarDiameter, float spacingA, float spacingL, bool start, bool end)
+        public CeadeCArcRebar(float defaultRebarDiameter, float spacingA, float spacingL, bool start, bool end)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacingA = spacingA;
@@ -273,11 +575,25 @@ namespace CeadeCEtabs
             this.end = end;
 
         }
-
+        public CeadeCArcRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.spacingA = (float)ob.spacingA.Value;
+            this.spacingL = (float)ob.spacingL.Value;
+            this.start = ob.start.Value;
+            this.end = ob.end.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
 
-    public class CircleRebar : CeadeCRebarsObject
+    public class CeadeCCircleRebar : CeadeCRebarsObject
     {
         public string type = "CircleRebar";
         public float defaultRebarDiameter;
@@ -285,13 +601,25 @@ namespace CeadeCEtabs
         public float spacingL;
 
 
-        public CircleRebar(float defaultRebarDiameter, float spacingA, float spacingL)
+        public CeadeCCircleRebar(float defaultRebarDiameter, float spacingA, float spacingL)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
             this.spacingA = spacingA;
             this.spacingL = spacingL;
         }
-
+        public CeadeCCircleRebar(dynamic ob)
+        {
+            this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.spacingA =(float)ob.spacingA.Value;
+            this.spacingL = (float)ob.spacingL.Value;
+            if (ob.singleRebars != null)
+            {
+                for (int i = 0; i < ob.singleRebars.Count; i++)
+                {
+                    this.singleRebars.Add(new CeadeCSingleRebar(ob.singleRebars[i]));
+                }
+            }
+        }
     }
 
     public class CeadeCSingleRebar
@@ -306,6 +634,13 @@ namespace CeadeCEtabs
             this.rebarDiameter = rebarDiameter;
             this.rebarDiameterUnit = rebarDiameterUnit;
             this.Active = Active;
+        }
+        public CeadeCSingleRebar(dynamic ob)
+        {
+            this.vertex = new Vector3(ob.vertex);
+            this.rebarDiameter = (float)ob.rebarDiameter.Value;
+            this.rebarDiameterUnit = ob.rebarDiameterUnit.Value;
+            this.Active = ob.Active.Value;
         }
     }
 
