@@ -428,6 +428,10 @@ namespace CeadeCEtabs
 
     public class CeadeCRebarsObject
     {
+        public float defaultRebarDiameter;
+        public string defaultRebarDiameterUnit;
+        public float defaultRebarFy;
+        public string defaultRebarFyUnit;
         public List<CeadeCSingleRebar> singleRebars = new List<CeadeCSingleRebar>();
     }
 
@@ -435,15 +439,20 @@ namespace CeadeCEtabs
     public class CeadeCPointRebar : CeadeCRebarsObject
     {
         public string type = "PointRebar";
-        public float defaultRebarDiameter;
 
-        public CeadeCPointRebar(float defaultRebarDiameter)
+        public CeadeCPointRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
         }
         public CeadeCPointRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             if (ob.singleRebars != null)
             {
                 for (int i = 0; i < ob.singleRebars.Count; i++)
@@ -457,14 +466,16 @@ namespace CeadeCEtabs
     public class CeadeCLineRebar : CeadeCRebarsObject
     {
         public string type = "LineRebar";
-        public float defaultRebarDiameter;
         public float spacing;
         public bool start;
         public bool end;
 
-        public CeadeCLineRebar(float defaultRebarDiameter, float spacing, bool start, bool end)
+        public CeadeCLineRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit, float spacing, bool start, bool end)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
             this.spacing = spacing;
             this.start = start;
             this.end = end;
@@ -472,6 +483,9 @@ namespace CeadeCEtabs
         public CeadeCLineRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             this.spacing = (float)ob.spacing.Value;
             this.start = ob.start.Value;
             this.end = ob.end.Value;
@@ -489,15 +503,17 @@ namespace CeadeCEtabs
     public class CeadeCPolylineRebar : CeadeCRebarsObject
     {
         public string type = "PolylineRebar";
-        public float defaultRebarDiameter;
         public float spacing;
         public bool start;
         public bool end;
         public bool corner;
 
-        public CeadeCPolylineRebar(float defaultRebarDiameter, float spacing, bool start, bool end, bool corner)
+        public CeadeCPolylineRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit, float spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
             this.spacing = spacing;
             this.start = start;
             this.end = end;
@@ -506,6 +522,9 @@ namespace CeadeCEtabs
         public CeadeCPolylineRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             this.spacing = (float)ob.spacing.Value;
             this.start = ob.start.Value;
             this.end = ob.end.Value;
@@ -524,15 +543,17 @@ namespace CeadeCEtabs
     public class CeadeCRectangleRebar : CeadeCRebarsObject
     {
         public string type = "RectangleRebar";
-        public double defaultRebarDiameter;
         public double spacing;
         public bool start;
         public bool end;
         public bool corner;
 
-        public CeadeCRectangleRebar(double defaultRebarDiameter, double spacing, bool start, bool end, bool corner)
+        public CeadeCRectangleRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit, double spacing, bool start, bool end, bool corner)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
             this.spacing = spacing;
             this.start = start;
             this.end = end;
@@ -541,6 +562,9 @@ namespace CeadeCEtabs
         public CeadeCRectangleRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             this.spacing = (float)ob.spacing.Value;
             this.start = ob.start.Value;
             this.end = ob.end.Value;
@@ -559,16 +583,18 @@ namespace CeadeCEtabs
     public class CeadeCArcRebar : CeadeCRebarsObject
     {
         public string type = "ArcRebar";
-        public float defaultRebarDiameter;
         public float spacingA;
         public float spacingL;
         public bool start;
         public bool end;
 
 
-        public CeadeCArcRebar(float defaultRebarDiameter, float spacingA, float spacingL, bool start, bool end)
+        public CeadeCArcRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit, float spacingA, float spacingL, bool start, bool end)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
             this.spacingA = spacingA;
             this.spacingL = spacingL;
             this.start = start;
@@ -578,6 +604,9 @@ namespace CeadeCEtabs
         public CeadeCArcRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             this.spacingA = (float)ob.spacingA.Value;
             this.spacingL = (float)ob.spacingL.Value;
             this.start = ob.start.Value;
@@ -596,20 +625,26 @@ namespace CeadeCEtabs
     public class CeadeCCircleRebar : CeadeCRebarsObject
     {
         public string type = "CircleRebar";
-        public float defaultRebarDiameter;
+
         public float spacingA;
         public float spacingL;
 
 
-        public CeadeCCircleRebar(float defaultRebarDiameter, float spacingA, float spacingL)
+        public CeadeCCircleRebar(float defaultRebarDiameter, string defaultRebarDiameterUnit, float defaultRebarFy, string defaultRebarFyUnit, float spacingA, float spacingL)
         {
             this.defaultRebarDiameter = defaultRebarDiameter;
+            this.defaultRebarDiameterUnit = defaultRebarDiameterUnit;
+            this.defaultRebarFy = defaultRebarFy;
+            this.defaultRebarFyUnit = defaultRebarFyUnit;
             this.spacingA = spacingA;
             this.spacingL = spacingL;
         }
         public CeadeCCircleRebar(dynamic ob)
         {
             this.defaultRebarDiameter = (float)ob.defaultRebarDiameter.Value;
+            this.defaultRebarDiameterUnit = ob.defaultRebarDiameterUnit.Value;
+            this.defaultRebarFy = (float)ob.defaultRebarFy.Value;
+            this.defaultRebarFyUnit = ob.defaultRebarFyUnit.Value;
             this.spacingA =(float)ob.spacingA.Value;
             this.spacingL = (float)ob.spacingL.Value;
             if (ob.singleRebars != null)
@@ -627,12 +662,16 @@ namespace CeadeCEtabs
         public Vector3 vertex;
         public double rebarDiameter;
         public string rebarDiameterUnit;
+        public double fy;
+        public string fyUnit;
         public bool Active;
-        public CeadeCSingleRebar(Vector3 vertex, double rebarDiameter, string rebarDiameterUnit, bool Active)
+        public CeadeCSingleRebar(Vector3 vertex, double rebarDiameter, string rebarDiameterUnit, double fy, string fyUnit, bool Active)
         {
             this.vertex = vertex;
             this.rebarDiameter = rebarDiameter;
             this.rebarDiameterUnit = rebarDiameterUnit;
+            this.fy = fy;
+            this.fyUnit = fyUnit;
             this.Active = Active;
         }
         public CeadeCSingleRebar(dynamic ob)
@@ -640,6 +679,8 @@ namespace CeadeCEtabs
             this.vertex = new Vector3(ob.vertex);
             this.rebarDiameter = (float)ob.rebarDiameter.Value;
             this.rebarDiameterUnit = ob.rebarDiameterUnit.Value;
+            this.fy = (float)ob.fy.Value;
+            this.fyUnit = ob.fyUnit.Value;
             this.Active = ob.Active.Value;
         }
     }
