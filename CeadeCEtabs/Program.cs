@@ -27,6 +27,7 @@ namespace CeadeCEtabs
                 {
                     if (Uri.TryCreate(args[0], UriKind.Absolute, out var uri) && string.Equals(uri.Scheme, "CeadeCEtabs", StringComparison.OrdinalIgnoreCase))
                     {
+                        
                         string E2KStringObject = Helpers.CeadeCHelpers.getEtabsE2KDataFromServer(args[0]);
                         if (E2KStringObject == "ERROR")
                         {

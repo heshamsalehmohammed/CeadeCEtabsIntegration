@@ -24,7 +24,6 @@ namespace CeadeCEtabsSectionParser
             }
             return shape;
         }
-
         public static double getFy(cSapModel mySapModel, string materialPropertyName)
         {
             etabsMaterialType type = new etabsMaterialType(mySapModel, materialPropertyName);

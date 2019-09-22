@@ -55,6 +55,7 @@ namespace CeadeCEtabs
             }
             try
             {
+                MessageBox.Show(postData );
                 WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
                 request.Method = "POST";
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
@@ -70,7 +71,7 @@ namespace CeadeCEtabs
                     StreamReader reader = new StreamReader(dataStream);
                     responseFromServer = reader.ReadToEnd();
                 }
-                response.Close();
+                response.Close(); MessageBox.Show(postData + " => " + responseFromServer);
                 if (responseFromServer.Contains("ERROR"))
                 {
                     return "ERROR";
@@ -104,10 +105,10 @@ namespace CeadeCEtabs
                 {
                     return "ERROR";
                 }
-                string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
-                string response = Helpers.httpRequestResponse(postData);
+                string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2]; 
+                string response = Helpers.httpRequestResponse(postData); 
                 if (response == "INTERNETERROR" || response == "ERROR")
-                {
+                { 
                     return response;
                 }
                 byte[] data;
