@@ -18,12 +18,12 @@ namespace CeadeCEtabs
 {
     public partial class CeadeCEtabsMainForm : Form
     {
-        public CeadeCEtabsMainForm(model E2KData)
+        public CeadeCEtabsMainForm(string userEtabsPointer)
         {
             InitializeComponent();
-            this.E2KData = E2KData;
+            Designing = new Designing(userEtabsPointer);
         }
-        model E2KData;
+        Designing Designing;
         cOAPI myETABSObject = null;
         cSapModel mySapModel = null;
         etabsSelectedObjects selected;
@@ -35,24 +35,26 @@ namespace CeadeCEtabs
         etabsAnalysisResults analysisResults;
         etabsAllFrames etabsAllFrames;
 
-        public void contact_CeadeC(List<CeadeCObject> ParsedEtabsObjects)
+        public void contact_CeadeC()
         {
-            model model = new model();
-            model.objects = ParsedEtabsObjects;
-            if (model.objects.Count != 0)
+            if (Designing.autoDesginList.Count != 0)
             {
-                string result = JsonConvert.SerializeObject(model);
-                byte[] byt = System.Text.Encoding.UTF8.GetBytes(result);
-                // convert the byte array to a Base64 string
+                string Arg1 = "userEtabsPointer=";
+                byte[] byt = System.Text.Encoding.UTF8.GetBytes(Designing.userEtabsPointer);
                 string strModified = Convert.ToBase64String(byt);
-                System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php" + "?" + "model=" + strModified);
+                Arg1 += strModified;
+                string Arg2 = "autoDesignList=";
+                string result2 = JsonConvert.SerializeObject(Designing.autoDesginList);
+                byte[] byt2 = System.Text.Encoding.UTF8.GetBytes(result2);
+                string strModified2 = Convert.ToBase64String(byt2);
+                Arg2 += strModified2;
+                System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php" + "?" + Arg1 + "&" + Arg2);
             }
             else
             {
                 ErrorForm errorForm = new ErrorForm("ERROR", "No Data To Export . ", false);
                 errorForm.ShowDialog();
             }
-
         }
         public int contact_Etabs()
         {
@@ -257,14 +259,9 @@ namespace CeadeCEtabs
                 etabsAllFrames = new etabsAllFrames(mySapModel, "Global");
                 string frameUniqueName = listBox2.SelectedItem.ToString();
                 string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName, frameUniqueName)];
-                List<CeadeCObject> ParsedEtabsObjects = new List<CeadeCObject>();
-                var shape = CEParser.fetch_CeadeCShape_From_E2KObjects(mySapModel, E2KData, frameSectionPropertyName);
-                CEParser.AsignAutoDesign_SA(shape, Convert.ToDouble(dataGridView1.Rows[0].Cells[0].Value), "ton", Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value), "ton.m", Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value), "ton.m");
-                if (shape != null)
-                {
-                    ParsedEtabsObjects.Add(shape);
-                }
-                contact_CeadeC(ParsedEtabsObjects);
+                ShapeAutoDesign AD = new ShapeAutoDesign(frameSectionPropertyName, Convert.ToDouble(dataGridView1.Rows[0].Cells[0].Value), "ton", Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value), "ton.m", Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value), "ton.m");
+                Designing.autoDesginList.Add(AD);
+                contact_CeadeC();
             }
             else
             {
@@ -275,6 +272,10 @@ namespace CeadeCEtabs
         private void CeadeCEtabsMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+        private void CeadeCEtabsMainForm_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }

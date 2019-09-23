@@ -403,16 +403,16 @@ namespace CeadeCEtabs
 
     public class ShapeAutoDesign
     {
-
+        public string shapeName;
         public double P;
         public string PUnit;
         public double Mx;
         public string MxUnit;
         public double My;
         public string MyUnit;
-        public ShapeAutoDesign(double P, string PUnit, double Mx, string MxUnit, double My, string MyUnit)
+        public ShapeAutoDesign(string shapeName ,double P, string PUnit, double Mx, string MxUnit, double My, string MyUnit)
         {
-
+            this.shapeName = shapeName;
             this.P = P;
             this.PUnit = PUnit;
             this.Mx = Mx;
@@ -421,6 +421,18 @@ namespace CeadeCEtabs
             this.MyUnit = MyUnit;
         }
     }
+
+    public class Designing
+    {
+        public string userEtabsPointer;
+        public List<ShapeAutoDesign> autoDesginList;
+        public Designing(string userEtabsPointer)
+        {
+            this.userEtabsPointer = userEtabsPointer;
+            this.autoDesginList = new List<ShapeAutoDesign>();
+        }
+    }
+
 
     /// <summary>
     /// //////////////////////////////////////////////////////Rebars//////////////////////////////////////////////////////

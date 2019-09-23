@@ -27,70 +27,37 @@ namespace CeadeCEtabs
                 {
                     if (Uri.TryCreate(args[0], UriKind.Absolute, out var uri) && string.Equals(uri.Scheme, "CeadeCEtabs", StringComparison.OrdinalIgnoreCase))
                     {
-                        
-                        string E2KStringObject = Helpers.CeadeCHelpers.getEtabsE2KDataFromServer(args[0]);
-                        if (E2KStringObject == "ERROR")
+                        string[] argList = Helpers.CeadeCHelpers.analyzeArg(args[0]);
+                        string shouldRun = Helpers.shouldIRun(argList); 
+                        if (shouldRun == "true")
+                        {
+                            Application.Run(new CeadeCEtabsMainForm(argList[1]+"&"+argList[2]));
+                        }
+                        else if (shouldRun == "false")
+                        {
+                            Application.Run(new UpdateForm());
+                        }
+                        else if (shouldRun == "ERROR")
                         {
                             Application.Run(new ErrorForm("ERROR", "error in retriving data from the server ,contact us", true));
                         }
-                        else if (E2KStringObject == "INTERNETERROR")
+                        else if (shouldRun == "INTERNETERROR")
                         {
                             Application.Run(new ErrorForm("INTERNETERROR", "", true));
                         }
-                        else
-                        {
-                            string root= "C:\\";
-                            if (Directory.Exists("C:\\Users\\ENG. Hesham Saleh\\Desktop"))
-                            {
-                                root = "C:\\Users\\ENG. Hesham Saleh\\Desktop\\";
-                            }
-                            else if (Directory.Exists("C:\\Users\\Hesham\\Desktop"))
-                            {
-                                root = "C:\\Users\\Hesham\\Desktop\\";
-                            }
-                            StreamWriter sw = new StreamWriter(root+"Test.txt");
 
-                            //Write a line of text
-                            sw.Write(E2KStringObject);
-
-                            //Close the file
-                            sw.Close();
-
-
-                            model E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
-                            if (E2KObject == null)
-                            {
-                                Application.Run(new ErrorForm("ERROR", "error handling server data ,contact us", true));
-                            }
-                            else
-                            {
-                                Application.Run(new CeadeCEtabsMainForm(E2KObject));
-                            }
-                        }
                     }
                 }
                 else
-                {      
-                    if (System.Diagnostics.Debugger.IsAttached)
-                    {
-                        string root = "C:\\";
-                        if (Directory.Exists("C:\\Users\\ENG. Hesham Saleh\\Desktop"))
-                        {
-                            root = "C:\\Users\\ENG. Hesham Saleh\\Desktop\\";
-                        }
-                        else if (Directory.Exists("C:\\Users\\Hesham\\Desktop"))
-                        {
-                            root = "C:\\Users\\Hesham\\Desktop\\";
-                        }
-                        StreamReader sr = new StreamReader(root+"Test.txt");
-                        string E2KStringObject = sr.ReadToEnd();
-                        model E2KObject = Helpers.CeadeCHelpers.convertE2KStringToObject(E2KStringObject);
-                        Application.Run(new CeadeCEtabsMainForm(E2KObject));
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }                    
+                {
+                //   if (System.Diagnostics.Debugger.IsAttached)
+                //   {
+                //      Application.Run(new CeadeCEtabsMainForm(string "userEtabsPointer"));
+                //   }
+                //   else
+                //   {
+                        Application.Run(new ErrorForm("ERROR", "not valid action , contact us", true));
+                //   }
                 }
             }
             else if (checkVersion == "false")

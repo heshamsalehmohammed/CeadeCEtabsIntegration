@@ -255,6 +255,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CeadeCEtabs";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CeadeCEtabsMainForm_FormClosed);
+            this.Load += new System.EventHandler(this.CeadeCEtabsMainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

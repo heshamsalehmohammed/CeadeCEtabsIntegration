@@ -98,10 +98,7 @@ namespace CeadeCEtabsSectionParser
             }
             return un;
         }
-        public static void AsignAutoDesign_SA(CeadeCShapes shape, double P, string PUnit, double Mx, string MxUnit, double My, string MyUnit)
-        {
-            shape.AutoDesign.Add(new ShapeAutoDesign(P, PUnit, Mx, MxUnit, My, MyUnit));
-        }
+
     }
 }
 

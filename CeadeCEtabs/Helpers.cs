@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,10 @@ namespace CeadeCEtabs
         public static string isVersionUpdated(string currentVersion)
         {
             return httpRequestResponse("version=" + currentVersion);
+        }
+        public static string shouldIRun(string[] args)
+        {
+            return httpRequestResponse("id=" + args[1] + "&key=" + args[2]);
         }
         public static bool CheckForInternetConnection()
         {
@@ -55,7 +60,7 @@ namespace CeadeCEtabs
             }
             try
             {
-                MessageBox.Show(postData );
+
                 WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
                 request.Method = "POST";
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
@@ -71,7 +76,7 @@ namespace CeadeCEtabs
                     StreamReader reader = new StreamReader(dataStream);
                     responseFromServer = reader.ReadToEnd();
                 }
-                response.Close(); MessageBox.Show(postData + " => " + responseFromServer);
+                response.Close();
                 if (responseFromServer.Contains("ERROR"))
                 {
                     return "ERROR";
@@ -105,38 +110,23 @@ namespace CeadeCEtabs
                 {
                     return "ERROR";
                 }
-                string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2]; 
-                string response = Helpers.httpRequestResponse(postData); 
-                if (response == "INTERNETERROR" || response == "ERROR")
-                { 
-                    return response;
-                }
-                byte[] data;
-                string decodedString;
-                try
-                {
-                    data = Convert.FromBase64String(response);
-                    decodedString = Encoding.UTF8.GetString(data);
-                }
-                catch
-                {
-                    return "ERROR";
-                }
-                return decodedString;
+                string postData = "id=" + IDKEY[1] + "&key=" + IDKEY[2];
+                string response = Helpers.httpRequestResponse(postData);
+                return response;
             }
 
             public static model convertE2KStringToObject(string E2KString)
             {
                 model E2KObject;
-         //       try
-         //       {
-                    dynamic  jsonObject = JsonConvert.DeserializeObject<dynamic>(E2KString);
-                    E2KObject = new model(jsonObject);
-         //       }
-         //       catch
-         //       {
-         //           E2KObject = null;
-         //       }
+                //       try
+                //       {
+                dynamic jsonObject = JsonConvert.DeserializeObject<dynamic>(E2KString);
+                E2KObject = new model(jsonObject);
+                //       }
+                //       catch
+                //       {
+                //           E2KObject = null;
+                //       }
                 return E2KObject;
             }
         }
