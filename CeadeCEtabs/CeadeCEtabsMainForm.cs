@@ -260,6 +260,7 @@ namespace CeadeCEtabs
                 string frameUniqueName = listBox2.SelectedItem.ToString();
                 string frameSectionPropertyName = etabsAllFrames.PropName[Array.IndexOf(etabsAllFrames.MyName, frameUniqueName)];
                 ShapeAutoDesign AD = new ShapeAutoDesign(frameSectionPropertyName, Convert.ToDouble(dataGridView1.Rows[0].Cells[0].Value), "ton", Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value), "ton.m", Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value), "ton.m");
+                Designing.autoDesginList = new List<ShapeAutoDesign>();
                 Designing.autoDesginList.Add(AD);
                 contact_CeadeC();
             }
