@@ -61,7 +61,7 @@ namespace CeadeCEtabs
             try
             {
 
-                WebRequest request = WebRequest.Create("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/users/CeadeCEtabs.php");
+                WebRequest request = WebRequest.Create("https://ceadec.xyz/CeadeCProducts/CeadeCEtabs/index.php");
                 request.Method = "POST";
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
                 request.ContentType = "application/x-www-form-urlencoded";

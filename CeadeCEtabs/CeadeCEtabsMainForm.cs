@@ -48,7 +48,7 @@ namespace CeadeCEtabs
                 byte[] byt2 = System.Text.Encoding.UTF8.GetBytes(result2);
                 string strModified2 = Convert.ToBase64String(byt2);
                 Arg2 += strModified2;
-                System.Diagnostics.Process.Start("http://localhost/CeadeC/CeadeC/public/CeadeC-PlatForm/index.php" + "?" + Arg1 + "&" + Arg2);
+                System.Diagnostics.Process.Start("https://ceadec.xyz/CeadeCProducts/CeadeCEtabs/index.php" + "?" + Arg1 + "&" + Arg2);
             }
             else
             {
@@ -101,7 +101,7 @@ namespace CeadeCEtabs
             }
             catch
             {
-                ErrorForm errorForm = new ErrorForm("ERROR", "No running instance of the program found or failed to attach.", false);
+                ErrorForm errorForm = new ErrorForm("ERROR", "Failed to attach , Run Etabs As Administrator and try again! ", false);
                 errorForm.ShowDialog();
                 return 0;
             }
